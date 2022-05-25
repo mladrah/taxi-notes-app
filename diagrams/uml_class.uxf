@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>680</x>
+      <y>160</y>
+      <w>160</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>Ride
+--
+-id : Long
+-name : String
+-title : Title
+-destination: String
+-start : Date
+-end : Date
+-price : BigDecimal
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>850</x>
+      <y>160</y>
+      <w>80</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enum&gt;&gt;
+Title
+--
+Herr
+Frau
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>280</x>
+      <y>150</y>
+      <w>260</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>Workday
+--
+-date : Date
+--
++addRide(ride : Ride)
++removeRide(id : Long)
++editRide(id : Long, updatedRide : ride)
++getTotalTime() : Time
++getTotalRevenue() : BigDecimal
++getTotalRideCount() : int
++print()
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>530</x>
+      <y>230</y>
+      <w>170</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
+m1=1..*</panel_attributes>
+    <additional_attributes>150.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
