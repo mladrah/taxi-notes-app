@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.3.0">
-  <zoom_level>10</zoom_level>
+  <zoom_level>9</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>680</x>
-      <y>160</y>
-      <w>160</w>
-      <h>150</h>
+      <x>999</x>
+      <y>450</y>
+      <w>153</w>
+      <h>153</h>
     </coordinates>
     <panel_attributes>Ride
 --
@@ -18,6 +18,8 @@
 -start : Date
 -end : Date
 -price : BigDecimal
+--
++updateRide(Ride : ride)
 
 
 </panel_attributes>
@@ -26,10 +28,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>850</x>
-      <y>160</y>
-      <w>80</w>
-      <h>80</h>
+      <x>999</x>
+      <y>369</y>
+      <w>72</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>&lt;&lt;enum&gt;&gt;
 Title
@@ -44,21 +46,70 @@ Frau
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>280</x>
-      <y>150</y>
-      <w>260</w>
-      <h>170</h>
+      <x>666</x>
+      <y>459</y>
+      <w>234</w>
+      <h>126</h>
     </coordinates>
-    <panel_attributes>Workday
+    <panel_attributes>WorkDay
 --
--date : Date
+
 --
 +addRide(ride : Ride)
 +removeRide(id : Long)
-+editRide(id : Long, updatedRide : ride)
++editRide(id : Long, ride : Ride)
 +getTotalTime() : Time
-+getTotalRevenue() : BigDecimal
 +getTotalRideCount() : int
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>891</x>
+      <y>513</y>
+      <w>126</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
+m1=1..*</panel_attributes>
+    <additional_attributes>120.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>432</x>
+      <y>459</y>
+      <w>216</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>WorkMonth
+--
+
+--
++addWorkday (workday : Workday)
++removeWorkday(id : Long)
++getTotalWorkdayCount() : int
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>441</x>
+      <y>288</y>
+      <w>198</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>WorkUnit
+{abstract}
+--
+-id : Long
+-date : Date
+--
++getTotalRevenue() : BigDecimal
 +print()
 
 </panel_attributes>
@@ -67,13 +118,65 @@ Frau
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>530</x>
-      <y>230</y>
-      <w>170</w>
-      <h>40</h>
+      <x>531</x>
+      <y>387</y>
+      <w>27</w>
+      <h>90</h>
     </coordinates>
-    <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
-m1=1..*</panel_attributes>
-    <additional_attributes>150.0;10.0;10.0;10.0</additional_attributes>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>531</x>
+      <y>387</y>
+      <w>270</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0;280.0;50.0;280.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>531</x>
+      <y>234</y>
+      <w>171</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m2=1..*</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0;170.0;10.0;170.0;130.0;120.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>162</x>
+      <y>459</y>
+      <w>252</w>
+      <h>81</h>
+    </coordinates>
+    <panel_attributes>WorkYear
+--
+
+--
++addWorkMonth (workMonth : WorkMonth)
++removeWorkMonth(id : Long)
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>306</x>
+      <y>387</y>
+      <w>252</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>260.0;10.0;260.0;50.0;10.0;50.0;10.0;80.0</additional_attributes>
   </element>
 </diagram>
