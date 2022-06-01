@@ -13,20 +13,22 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
   get_it: ^2.0.1 # service locator
-  flutter_bloc: ^0.21.0 # block for state management
-  equatable: ^0.4.0 # value equality
-  dartz: ^0.8.6 # functional programming
+  flutter_bloc: ^8.0.1 # block for state management
+  equatable: ^2.0.3 # value equality
+  dartz: ^0.10.1 # functional programming
   connectivity: ^0.4.3+7 # remote api
-  http: ^0.12.0+2 # "
-  shared_preferences: ^0.5.3+4 # local cache
+  http: ^0.13.4 # "
+  shared_preferences: ^2.0.15 # local cache
   decimal: ^2.2.0 # for currency
   uuid: ^3.0.6 # id generation
+  plugin_platform_interface: ^2.1.2
   
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^1.0.0
-  mockito: 
+  mockito: ^5.2.0
+  build_runner: ^2.1.11 # for mockito
 
 flutter:
   uses-material-design: true

@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         ),
         home: Scaffold(
           appBar: AppBar(
-            title: Text("Taxi Rahmati"),
+            title: const Text("Taxi Rahmati"),
             centerTitle: true,
           ),
         ));

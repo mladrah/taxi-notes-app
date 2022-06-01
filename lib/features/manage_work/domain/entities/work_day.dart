@@ -4,5 +4,9 @@ import 'work_unit.dart';
 class WorkDay extends WorkUnit {
   final List rides;
 
-  WorkDay({required date, this.rides = const <Ride>[]}) : super(date: date);
+  const WorkDay({required date, this.rides = const <Ride>[]})
+      : super(date: date);
+
+  @override
+  List<Object> get props => [date, rides];
 }
