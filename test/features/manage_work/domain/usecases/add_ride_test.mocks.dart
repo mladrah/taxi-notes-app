@@ -9,7 +9,7 @@ import 'package:mockito/mockito.dart' as _i1;
 import 'package:taxi_rahmati/core/error/failures.dart' as _i5;
 import 'package:taxi_rahmati/features/manage_work/domain/entities/ride.dart'
     as _i6;
-import 'package:taxi_rahmati/features/manage_work/domain/repositories/work_day_repository.dart'
+import 'package:taxi_rahmati/features/manage_work/domain/repositories/ride_repository.dart'
     as _i3;
 
 // ignore_for_file: type=lint
@@ -24,11 +24,11 @@ import 'package:taxi_rahmati/features/manage_work/domain/repositories/work_day_r
 
 class _FakeEither_0<L, R> extends _i1.Fake implements _i2.Either<L, R> {}
 
-/// A class which mocks [WorkDayRepository].
+/// A class which mocks [RideRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockWorkDayRepository extends _i1.Mock implements _i3.WorkDayRepository {
-  MockWorkDayRepository() {
+class MockRideRepository extends _i1.Mock implements _i3.RideRepository {
+  MockRideRepository() {
     _i1.throwOnMissingStub(this);
   }
 

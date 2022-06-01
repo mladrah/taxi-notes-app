@@ -4,8 +4,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>927</x>
-      <y>378</y>
+      <x>1044</x>
+      <y>558</y>
       <w>153</w>
       <h>153</h>
     </coordinates>
@@ -28,8 +28,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>927</x>
-      <y>297</y>
+      <x>1044</x>
+      <y>477</y>
       <w>72</w>
       <h>72</h>
     </coordinates>
@@ -46,8 +46,8 @@ Frau
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>594</x>
-      <y>387</y>
+      <x>711</x>
+      <y>567</y>
       <w>234</w>
       <h>126</h>
     </coordinates>
@@ -67,8 +67,8 @@ Frau
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>819</x>
-      <y>441</y>
+      <x>936</x>
+      <y>621</y>
       <w>126</w>
       <h>36</h>
     </coordinates>
@@ -79,17 +79,15 @@ m1=1..*</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>360</x>
-      <y>387</y>
+      <x>477</x>
+      <y>567</y>
       <w>216</w>
-      <h>90</h>
+      <h>63</h>
     </coordinates>
     <panel_attributes>WorkMonth
 --
 
 --
-+addWorkday (workday : Workday)
-+removeWorkday(id : Long)
 +getTotalWorkdayCount() : int
 
 </panel_attributes>
@@ -98,8 +96,8 @@ m1=1..*</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>369</x>
-      <y>216</y>
+      <x>486</x>
+      <y>396</y>
       <w>198</w>
       <h>108</h>
     </coordinates>
@@ -118,8 +116,8 @@ m1=1..*</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>459</x>
-      <y>315</y>
+      <x>576</x>
+      <y>495</y>
       <w>27</w>
       <h>90</h>
     </coordinates>
@@ -129,8 +127,8 @@ m1=1..*</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>459</x>
-      <y>315</y>
+      <x>576</x>
+      <y>495</y>
       <w>270</w>
       <h>90</h>
     </coordinates>
@@ -140,8 +138,8 @@ m1=1..*</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>459</x>
-      <y>162</y>
+      <x>576</x>
+      <y>342</y>
       <w>171</w>
       <h>144</h>
     </coordinates>
@@ -152,17 +150,16 @@ m2=1..*</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>90</x>
-      <y>387</y>
+      <x>207</x>
+      <y>567</y>
       <w>252</w>
-      <h>81</h>
+      <h>63</h>
     </coordinates>
     <panel_attributes>WorkYear
 --
 
 --
-+addWorkMonth (workMonth : WorkMonth)
-+removeWorkMonth(id : Long)
+
 
 
 </panel_attributes>
@@ -171,8 +168,8 @@ m2=1..*</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>234</x>
-      <y>315</y>
+      <x>351</x>
+      <y>495</y>
       <w>252</w>
       <h>90</h>
     </coordinates>
