@@ -39,9 +39,9 @@ class MockRideRepository extends _i1.Mock implements _i3.RideRepository {
               _FakeEither_0<_i5.Failure, List<_i6.Ride>>())) as _i4
           .Future<_i2.Either<_i5.Failure, List<_i6.Ride>>>);
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i6.Ride>> addRide(_i6.Ride? ride) =>
+  _i4.Future<_i2.Either<_i5.Failure, bool>> addRide(_i6.Ride? ride) =>
       (super.noSuchMethod(Invocation.method(#addRide, [ride]),
-              returnValue: Future<_i2.Either<_i5.Failure, _i6.Ride>>.value(
-                  _FakeEither_0<_i5.Failure, _i6.Ride>()))
-          as _i4.Future<_i2.Either<_i5.Failure, _i6.Ride>>);
+              returnValue: Future<_i2.Either<_i5.Failure, bool>>.value(
+                  _FakeEither_0<_i5.Failure, bool>()))
+          as _i4.Future<_i2.Either<_i5.Failure, bool>>);
 }

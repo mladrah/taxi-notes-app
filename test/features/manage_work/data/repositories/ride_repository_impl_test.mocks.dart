@@ -5,12 +5,12 @@
 import 'dart:async' as _i3;
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:taxi_rahmati/core/platform/network_info.dart' as _i6;
+import 'package:taxi_rahmati/core/network/network_info.dart' as _i6;
 import 'package:taxi_rahmati/features/manage_work/data/datasources/ride_local_data_source.dart'
     as _i2;
 import 'package:taxi_rahmati/features/manage_work/data/datasources/ride_remote_date_source.dart'
     as _i5;
-import 'package:taxi_rahmati/features/manage_work/domain/entities/ride.dart'
+import 'package:taxi_rahmati/features/manage_work/data/models/ride_model.dart'
     as _i4;
 
 // ignore_for_file: type=lint
@@ -33,15 +33,18 @@ class MockRideLocalDataSource extends _i1.Mock
   }
 
   @override
-  _i3.Future<List<_i4.Ride>> getAllRides() =>
-      (super.noSuchMethod(Invocation.method(#getAllRides, []),
-              returnValue: Future<List<_i4.Ride>>.value(<_i4.Ride>[]))
-          as _i3.Future<List<_i4.Ride>>);
+  _i3.Future<bool> addRide(_i4.RideModel? rideModel) =>
+      (super.noSuchMethod(Invocation.method(#addRide, [rideModel]),
+          returnValue: Future<bool>.value(false)) as _i3.Future<bool>);
   @override
-  _i3.Future<void> saveAllRides() =>
-      (super.noSuchMethod(Invocation.method(#saveAllRides, []),
-          returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i3.Future<void>);
+  _i3.Future<List<_i4.RideModel>> getAllRides() =>
+      (super.noSuchMethod(Invocation.method(#getAllRides, []),
+              returnValue: Future<List<_i4.RideModel>>.value(<_i4.RideModel>[]))
+          as _i3.Future<List<_i4.RideModel>>);
+  @override
+  _i3.Future<bool> saveAllRides(List<_i4.RideModel>? allRides) =>
+      (super.noSuchMethod(Invocation.method(#saveAllRides, [allRides]),
+          returnValue: Future<bool>.value(false)) as _i3.Future<bool>);
 }
 
 /// A class which mocks [RideRemoteDataSource].
@@ -54,15 +57,18 @@ class MockRideRemoteDataSource extends _i1.Mock
   }
 
   @override
-  _i3.Future<List<_i4.Ride>> getAllRides() =>
-      (super.noSuchMethod(Invocation.method(#getAllRides, []),
-              returnValue: Future<List<_i4.Ride>>.value(<_i4.Ride>[]))
-          as _i3.Future<List<_i4.Ride>>);
+  _i3.Future<bool> addRide(_i4.RideModel? rideModel) =>
+      (super.noSuchMethod(Invocation.method(#addRide, [rideModel]),
+          returnValue: Future<bool>.value(false)) as _i3.Future<bool>);
   @override
-  _i3.Future<void> saveAllRides() =>
-      (super.noSuchMethod(Invocation.method(#saveAllRides, []),
-          returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i3.Future<void>);
+  _i3.Future<List<_i4.RideModel>> getAllRides() =>
+      (super.noSuchMethod(Invocation.method(#getAllRides, []),
+              returnValue: Future<List<_i4.RideModel>>.value(<_i4.RideModel>[]))
+          as _i3.Future<List<_i4.RideModel>>);
+  @override
+  _i3.Future<bool> saveAllRides(List<_i4.RideModel>? allRides) =>
+      (super.noSuchMethod(Invocation.method(#saveAllRides, [allRides]),
+          returnValue: Future<bool>.value(false)) as _i3.Future<bool>);
 }
 
 /// A class which mocks [NetworkInfo].

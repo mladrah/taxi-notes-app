@@ -1,9 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:decimal/decimal.dart';
-import 'package:uuid/uuid.dart';
 
 class Ride extends Equatable {
-  final Uuid id = const Uuid();
+  final String id;
   final String name;
   final Title title;
   final String destination;
@@ -12,7 +11,8 @@ class Ride extends Equatable {
   final Decimal price;
 
   const Ride(
-      {required this.name,
+      {required this.id,
+      required this.name,
       required this.title,
       required this.destination,
       required this.start,
@@ -20,7 +20,7 @@ class Ride extends Equatable {
       required this.price});
 
   @override
-  List<Object> get props => [name, title, destination, start, end, price];
+  List<Object> get props => [id, name, title, destination, start, end, price];
 }
 
 enum Title { herr, frau }

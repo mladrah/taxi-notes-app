@@ -16,7 +16,7 @@ dependencies:
   flutter_bloc: ^8.0.1 # block for state management
   equatable: ^2.0.3 # value equality
   dartz: ^0.10.1 # functional programming
-  connectivity: ^0.4.3+7 # remote api
+  internet_connection_checker: ^0.0.1+4
   http: ^0.13.4 # "
   shared_preferences: ^2.0.15 # local cache
   decimal: ^2.2.0 # for currency

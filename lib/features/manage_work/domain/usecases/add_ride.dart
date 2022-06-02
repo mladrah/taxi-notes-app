@@ -6,13 +6,13 @@ import 'package:taxi_rahmati/features/manage_work/domain/entities/ride.dart';
 import '../../../../core/error/failures.dart';
 import '../repositories/ride_repository.dart';
 
-class AddRide implements UseCase<Ride, Params> {
+class AddRide implements UseCase<bool, Params> {
   final RideRepository workDayRepository;
 
   AddRide({required this.workDayRepository});
 
   @override
-  Future<Either<Failure, Ride>> call(Params params) async {
+  Future<Either<Failure, bool>> call(Params params) async {
     return await workDayRepository.addRide(params.ride);
   }
 }

@@ -6,6 +6,7 @@ import 'package:mockito/mockito.dart';
 import 'package:taxi_rahmati/features/manage_work/domain/entities/ride.dart';
 import 'package:taxi_rahmati/features/manage_work/domain/repositories/ride_repository.dart';
 import 'package:taxi_rahmati/features/manage_work/domain/usecases/add_ride.dart';
+import 'package:uuid/uuid.dart';
 
 import 'add_ride_test.mocks.dart';
 
@@ -20,6 +21,7 @@ void main() {
   });
 
   final ride = Ride(
+      id: const Uuid().v1(),
       name: 'tName',
       title: Title.herr,
       destination: 'tDestination',
@@ -29,11 +31,12 @@ void main() {
 
   test('should add Ride', () async {
     // mock implementation of the interface
-    when(rideRepository.addRide(ride)).thenAnswer((_) async => Right(ride));
+    when(rideRepository.addRide(ride))
+        .thenAnswer((_) async => const Right(true));
 
     final result = await usecase(Params(ride: ride));
 
-    expect(result, Right(ride));
+    expect(result, const Right(true));
 
     // Verify that the method has been called on the Repository
     verify(rideRepository.addRide(ride));

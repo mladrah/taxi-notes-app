@@ -1,4 +1,6 @@
-import 'package:taxi_rahmati/core/platform/network_info.dart';
+import 'package:taxi_rahmati/core/error/exceptions.dart';
+import 'package:taxi_rahmati/core/network/network_info.dart';
+import 'package:taxi_rahmati/features/manage_work/data/models/ride_model.dart';
 import 'package:taxi_rahmati/features/manage_work/domain/entities/ride.dart';
 import 'package:taxi_rahmati/core/error/failures.dart';
 import 'package:dartz/dartz.dart';
@@ -18,12 +20,36 @@ class RideRepositoryImpl extends RideRepository {
       required this.networkInfo});
 
   @override
-  Future<Either<Failure, Ride>> addRide(Ride ride) {
-    throw UnimplementedError();
+  Future<Either<Failure, bool>> addRide(Ride ride) async {
+    if (await networkInfo.isConnected) {
+      try {
+        return Right(await rideRemoteDataSource.addRide(ride as RideModel));
+      } on ServerException {
+        return Left(ServerFailure());
+      }
+    } else {
+      try {
+        return Right(await rideLocalDataSource.addRide(ride as RideModel));
+      } on LocalException {
+        return Left(LocalFailure());
+      }
+    }
   }
 
   @override
-  Future<Either<Failure, List<Ride>>> getAllRides() {
-    throw UnimplementedError();
+  Future<Either<Failure, List<Ride>>> getAllRides() async {
+    if (await networkInfo.isConnected) {
+      try {
+        return Right(await rideRemoteDataSource.getAllRides());
+      } on ServerException {
+        return Left(ServerFailure());
+      }
+    } else {
+      try {
+        return Right(await rideLocalDataSource.getAllRides());
+      } on LocalException {
+        return Left(LocalFailure());
+      }
+    }
   }
 }

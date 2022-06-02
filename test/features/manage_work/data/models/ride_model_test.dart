@@ -9,6 +9,7 @@ import '../../../../fixtures/fixture_reader.dart';
 
 void main() {
   final rideModel = RideModel(
+      id: '79b6b990-e1d3-11ec-aaf1-8738c050a64f',
       name: 'tName',
       title: Title.herr,
       destination: 'tDestination',
@@ -35,6 +36,7 @@ void main() {
       final result = rideModel.toJson();
 
       final expectedMap = {
+        "id": "79b6b990-e1d3-11ec-aaf1-8738c050a64f",
         "name": "tName",
         "title": "herr",
         "destination": "tDestination",
