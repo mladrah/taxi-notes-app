@@ -7,13 +7,13 @@ import '../../../../core/error/failures.dart';
 import '../repositories/ride_repository.dart';
 
 class AddRide implements UseCase<bool, Params> {
-  final RideRepository workDayRepository;
+  final RideRepository rideRepository;
 
-  AddRide({required this.workDayRepository});
+  AddRide({required this.rideRepository});
 
   @override
   Future<Either<Failure, bool>> call(Params params) async {
-    return await workDayRepository.addRide(params.ride);
+    return await rideRepository.addRide(params.ride);
   }
 }
 

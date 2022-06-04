@@ -25,7 +25,7 @@ void main() {
   });
 
   group('getAllRides', () {
-    Iterable l = json.decode(fixture('ride_list.json'))['rides'];
+    Iterable l = json.decode(fixture('all_rides.json'))['allRides'];
     List<RideModel> allRides = List<RideModel>.from(
         l.map((rideModel) => RideModel.fromJson(rideModel)));
 
@@ -33,7 +33,7 @@ void main() {
         'should return all Rides from SharedPreferences when there is atleast one inside the local repisotory',
         () async {
       when(mockSharedPreferences.getString(any))
-          .thenReturn(fixture('ride_list.json'));
+          .thenReturn(fixture('all_rides.json'));
 
       final result = await rideLocalDataSourceImpl.getAllRides();
 
@@ -65,6 +65,9 @@ void main() {
     ];
 
     test('should call SharedPereferences to save list of Rides', () {
+      when(mockSharedPreferences.setString(any, any))
+          .thenAnswer((_) async => true);
+
       rideLocalDataSourceImpl.saveAllRides(allRides);
 
       final expectedJsonString =

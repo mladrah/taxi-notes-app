@@ -1,23 +1,21 @@
 import 'package:dartz/dartz.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:taxi_rahmati/core/usecases/usecase.dart';
 import 'package:taxi_rahmati/features/manage_work/domain/entities/ride.dart';
-import 'package:taxi_rahmati/features/manage_work/domain/repositories/ride_repository.dart';
-import 'package:taxi_rahmati/features/manage_work/domain/usecases/add_ride.dart';
+import 'package:taxi_rahmati/features/manage_work/domain/usecases/get_all_rides.dart';
 import 'package:uuid/uuid.dart';
 
 import 'add_ride_test.mocks.dart';
 
-@GenerateMocks([RideRepository])
 void main() {
   late MockRideRepository rideRepository;
-  late AddRide usecase;
+  late GetAllRides usecase;
 
   setUp(() {
     rideRepository = MockRideRepository();
-    usecase = AddRide(rideRepository: rideRepository);
+    usecase = GetAllRides(rideRepository: rideRepository);
   });
 
   final ride = Ride(
@@ -29,17 +27,18 @@ void main() {
       end: DateTime.parse('2022-06-11 14:37:27.000Z'),
       price: Decimal.parse('28.3'));
 
-  test('should add Ride', () async {
+  List<Ride> allRides = [ride];
+
+  test('should get all Rides', () async {
     // mock implementation of the interface
-    when(rideRepository.addRide(ride))
-        .thenAnswer((_) async => const Right(true));
+    when(rideRepository.getAllRides()).thenAnswer((_) async => Right(allRides));
 
-    final result = await usecase(Params(ride: ride));
+    final result = await usecase(NoParams());
 
-    expect(result, const Right(true));
+    expect(result, Right(allRides));
 
     // Verify that the method has been called on the Repository
-    verify(rideRepository.addRide(ride));
+    verify(rideRepository.getAllRides());
 
     // Only the above method should be called and nothing more.
     verifyNoMoreInteractions(rideRepository);

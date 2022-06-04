@@ -7,7 +7,9 @@ import 'package:taxi_rahmati/features/manage_work/data/models/ride_model.dart';
 
 const String ALL_RIDES = 'ALL_RIDES';
 
-abstract class RideLocalDataSource extends DataSource {}
+abstract class RideLocalDataSource extends DataSource {
+  Future<bool> saveAllRides(List<RideModel> allRides);
+}
 
 class RideLocalDataSourceImpl extends RideLocalDataSource {
   final SharedPreferences sharedPreferences;
@@ -15,18 +17,18 @@ class RideLocalDataSourceImpl extends RideLocalDataSource {
   RideLocalDataSourceImpl({required this.sharedPreferences});
 
   // überhaupt hier notwendig? vlt nur als use case
-  @override
-  Future<bool> addRide(RideModel rideModel) async {
-    List<RideModel> allRides;
-    try {
-      allRides = await getAllRides();
-      allRides.add(rideModel);
-    } on LocalException {
-      allRides = [rideModel];
-    }
-    return sharedPreferences.setString(
-        ALL_RIDES, jsonEncode(allRides.map((e) => e.toJson()).toList()));
-  }
+  // @override
+  // Future<bool> addRide(RideModel rideModel) async {
+  //   List<RideModel> allRides;
+  //   try {
+  //     allRides = await getAllRides();
+  //     allRides.add(rideModel);
+  //   } on LocalException {
+  //     allRides = [rideModel];
+  //   }
+  //   return sharedPreferences.setString(
+  //       ALL_RIDES, jsonEncode(allRides.map((e) => e.toJson()).toList()));
+  // }
 
   @override
   Future<List<RideModel>> getAllRides() {
@@ -34,7 +36,7 @@ class RideLocalDataSourceImpl extends RideLocalDataSource {
 
     if (jsonString == null) throw LocalException();
 
-    Iterable l = json.decode(jsonString)['rides'];
+    Iterable l = json.decode(jsonString)['allRides'];
     List<RideModel> allRides = List<RideModel>.from(
         l.map((rideModel) => RideModel.fromJson(rideModel)));
 

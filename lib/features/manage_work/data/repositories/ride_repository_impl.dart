@@ -28,11 +28,7 @@ class RideRepositoryImpl extends RideRepository {
         return Left(ServerFailure());
       }
     } else {
-      try {
-        return Right(await rideLocalDataSource.addRide(ride as RideModel));
-      } on LocalException {
-        return Left(LocalFailure());
-      }
+      return Left(NetworkFailure());
     }
   }
 

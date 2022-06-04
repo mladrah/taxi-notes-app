@@ -11,6 +11,7 @@ import 'package:taxi_rahmati/features/manage_work/data/datasources/ride_remote_d
 import 'package:taxi_rahmati/features/manage_work/data/models/ride_model.dart';
 import 'package:taxi_rahmati/features/manage_work/data/repositories/ride_repository_impl.dart';
 import 'package:taxi_rahmati/features/manage_work/domain/entities/ride.dart';
+import 'package:uuid/uuid.dart';
 
 import 'ride_repository_impl_test.mocks.dart';
 
@@ -34,7 +35,16 @@ void main() {
   });
 
   group('getAllRides', () {
-    List<RideModel> allRides = [];
+    final ride = RideModel(
+        id: const Uuid().v1(),
+        name: 'tName',
+        title: Title.herr,
+        destination: 'tDestination',
+        start: DateTime.parse('2022-06-11 13:37:27.000Z'),
+        end: DateTime.parse('2022-06-11 14:37:27.000Z'),
+        price: Decimal.parse('28.3'));
+
+    List<RideModel> allRides = [ride];
 
     test('should check if the device is online', () {
       //arrange
@@ -170,25 +180,10 @@ void main() {
         when(mockNetworkInfo.isConnected).thenAnswer((_) async => false);
       });
 
-      test(
-          'should return add RideModel to local data when the call to local data source is successful',
-          () async {
-        when(mockRideLocalDataSource.addRide(ride))
-            .thenAnswer((_) async => true);
-
+      test('should return network failure when device is offline', () async {
         final result = await rideRepositoryImpl.addRide(ride);
 
-        expect(result, const Right(true));
-      });
-
-      test(
-          'should return local failure when adding RideModel to local data source is unsuccessful',
-          () async {
-        when(mockRideLocalDataSource.addRide(ride)).thenThrow(LocalException());
-
-        final result = await rideRepositoryImpl.addRide(ride);
-
-        expect(result, Left(LocalFailure()));
+        expect(result, Left(NetworkFailure()));
       });
     });
   });
