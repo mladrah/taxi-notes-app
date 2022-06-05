@@ -4,5 +4,5 @@ import '../entities/ride.dart';
 
 abstract class RideRepository {
   Future<Either<Failure, List<Ride>>> getAllRides();
-  Future<Either<Failure, bool>> addRide(Ride ride);
+  Future<Either<Failure, Ride>> addRide(Ride ride);
 }

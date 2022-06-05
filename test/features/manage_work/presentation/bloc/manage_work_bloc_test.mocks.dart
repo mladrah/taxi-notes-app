@@ -11,13 +11,13 @@ import 'package:taxi_rahmati/core/error/failures.dart' as _i6;
 import 'package:taxi_rahmati/core/usecases/usecase.dart' as _i9;
 import 'package:taxi_rahmati/core/util/input_converter.dart' as _i10;
 import 'package:taxi_rahmati/features/manage_work/domain/entities/ride.dart'
-    as _i8;
+    as _i7;
 import 'package:taxi_rahmati/features/manage_work/domain/repositories/ride_repository.dart'
     as _i2;
 import 'package:taxi_rahmati/features/manage_work/domain/usecases/add_ride.dart'
     as _i4;
 import 'package:taxi_rahmati/features/manage_work/domain/usecases/get_all_rides.dart'
-    as _i7;
+    as _i8;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -46,17 +46,17 @@ class MockAddRide extends _i1.Mock implements _i4.AddRide {
       (super.noSuchMethod(Invocation.getter(#rideRepository),
           returnValue: _FakeRideRepository_0()) as _i2.RideRepository);
   @override
-  _i5.Future<_i3.Either<_i6.Failure, bool>> call(_i4.Params? params) =>
+  _i5.Future<_i3.Either<_i6.Failure, _i7.Ride>> call(_i4.Params? params) =>
       (super.noSuchMethod(Invocation.method(#call, [params]),
-              returnValue: Future<_i3.Either<_i6.Failure, bool>>.value(
-                  _FakeEither_1<_i6.Failure, bool>()))
-          as _i5.Future<_i3.Either<_i6.Failure, bool>>);
+              returnValue: Future<_i3.Either<_i6.Failure, _i7.Ride>>.value(
+                  _FakeEither_1<_i6.Failure, _i7.Ride>()))
+          as _i5.Future<_i3.Either<_i6.Failure, _i7.Ride>>);
 }
 
 /// A class which mocks [GetAllRides].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockGetAllRides extends _i1.Mock implements _i7.GetAllRides {
+class MockGetAllRides extends _i1.Mock implements _i8.GetAllRides {
   MockGetAllRides() {
     _i1.throwOnMissingStub(this);
   }
@@ -66,12 +66,12 @@ class MockGetAllRides extends _i1.Mock implements _i7.GetAllRides {
       (super.noSuchMethod(Invocation.getter(#rideRepository),
           returnValue: _FakeRideRepository_0()) as _i2.RideRepository);
   @override
-  _i5.Future<_i3.Either<_i6.Failure, List<_i8.Ride>>> call(
+  _i5.Future<_i3.Either<_i6.Failure, List<_i7.Ride>>> call(
           _i9.NoParams? params) =>
       (super.noSuchMethod(Invocation.method(#call, [params]),
-          returnValue: Future<_i3.Either<_i6.Failure, List<_i8.Ride>>>.value(
-              _FakeEither_1<_i6.Failure, List<_i8.Ride>>())) as _i5
-          .Future<_i3.Either<_i6.Failure, List<_i8.Ride>>>);
+          returnValue: Future<_i3.Either<_i6.Failure, List<_i7.Ride>>>.value(
+              _FakeEither_1<_i6.Failure, List<_i7.Ride>>())) as _i5
+          .Future<_i3.Either<_i6.Failure, List<_i7.Ride>>>);
 }
 
 /// A class which mocks [InputConverter].
@@ -93,8 +93,8 @@ class MockInputConverter extends _i1.Mock implements _i10.InputConverter {
               returnValue: _FakeEither_1<_i6.Failure, DateTime>())
           as _i3.Either<_i6.Failure, DateTime>);
   @override
-  _i3.Either<_i6.Failure, _i8.Title> stringToTitleEnum(String? string) =>
+  _i3.Either<_i6.Failure, _i7.Title> stringToTitleEnum(String? string) =>
       (super.noSuchMethod(Invocation.method(#stringToTitleEnum, [string]),
-              returnValue: _FakeEither_1<_i6.Failure, _i8.Title>())
-          as _i3.Either<_i6.Failure, _i8.Title>);
+              returnValue: _FakeEither_1<_i6.Failure, _i7.Title>())
+          as _i3.Either<_i6.Failure, _i7.Title>);
 }

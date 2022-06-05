@@ -18,6 +18,13 @@ class Loaded extends ManageWorkState {
   Loaded({required this.allRides});
 }
 
+// ignore: must_be_immutable
+class Created extends ManageWorkState {
+  Ride ride;
+
+  Created({required this.ride});
+}
+
 class Error extends ManageWorkState {
   final String message;
 

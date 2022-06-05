@@ -20,7 +20,7 @@ class RideRepositoryImpl extends RideRepository {
       required this.networkInfo});
 
   @override
-  Future<Either<Failure, bool>> addRide(Ride ride) async {
+  Future<Either<Failure, Ride>> addRide(Ride ride) async {
     if (await networkInfo.isConnected) {
       try {
         return Right(await rideRemoteDataSource.addRide(ride as RideModel));

@@ -2,16 +2,18 @@
 // in taxi_rahmati/test/features/manage_work/data/repositories/ride_repository_impl_test.dart.
 // Do not manually edit this file.
 
-import 'dart:async' as _i3;
+import 'dart:async' as _i4;
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:taxi_rahmati/core/network/network_info.dart' as _i6;
+import 'package:taxi_rahmati/core/network/network_info.dart' as _i7;
 import 'package:taxi_rahmati/features/manage_work/data/datasources/ride_local_data_source.dart'
-    as _i2;
+    as _i3;
 import 'package:taxi_rahmati/features/manage_work/data/datasources/ride_remote_date_source.dart'
-    as _i5;
+    as _i6;
 import 'package:taxi_rahmati/features/manage_work/data/models/ride_model.dart'
-    as _i4;
+    as _i5;
+import 'package:taxi_rahmati/features/manage_work/domain/entities/ride.dart'
+    as _i2;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -23,56 +25,59 @@ import 'package:taxi_rahmati/features/manage_work/data/models/ride_model.dart'
 // ignore_for_file: unnecessary_parenthesis
 // ignore_for_file: camel_case_types
 
+class _FakeRide_0 extends _i1.Fake implements _i2.Ride {}
+
 /// A class which mocks [RideLocalDataSource].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockRideLocalDataSource extends _i1.Mock
-    implements _i2.RideLocalDataSource {
+    implements _i3.RideLocalDataSource {
   MockRideLocalDataSource() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Future<bool> saveAllRides(List<_i4.RideModel>? allRides) =>
+  _i4.Future<bool> saveAllRides(List<_i5.RideModel>? allRides) =>
       (super.noSuchMethod(Invocation.method(#saveAllRides, [allRides]),
-          returnValue: Future<bool>.value(false)) as _i3.Future<bool>);
+          returnValue: Future<bool>.value(false)) as _i4.Future<bool>);
   @override
-  _i3.Future<List<_i4.RideModel>> getAllRides() =>
+  _i4.Future<List<_i5.RideModel>> getAllRides() =>
       (super.noSuchMethod(Invocation.method(#getAllRides, []),
-              returnValue: Future<List<_i4.RideModel>>.value(<_i4.RideModel>[]))
-          as _i3.Future<List<_i4.RideModel>>);
+              returnValue: Future<List<_i5.RideModel>>.value(<_i5.RideModel>[]))
+          as _i4.Future<List<_i5.RideModel>>);
 }
 
 /// A class which mocks [RideRemoteDataSource].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockRideRemoteDataSource extends _i1.Mock
-    implements _i5.RideRemoteDataSource {
+    implements _i6.RideRemoteDataSource {
   MockRideRemoteDataSource() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Future<bool> addRide(_i4.RideModel? rideModel) =>
+  _i4.Future<_i2.Ride> addRide(_i5.RideModel? rideModel) =>
       (super.noSuchMethod(Invocation.method(#addRide, [rideModel]),
-          returnValue: Future<bool>.value(false)) as _i3.Future<bool>);
+              returnValue: Future<_i2.Ride>.value(_FakeRide_0()))
+          as _i4.Future<_i2.Ride>);
   @override
-  _i3.Future<List<_i4.RideModel>> getAllRides() =>
+  _i4.Future<List<_i5.RideModel>> getAllRides() =>
       (super.noSuchMethod(Invocation.method(#getAllRides, []),
-              returnValue: Future<List<_i4.RideModel>>.value(<_i4.RideModel>[]))
-          as _i3.Future<List<_i4.RideModel>>);
+              returnValue: Future<List<_i5.RideModel>>.value(<_i5.RideModel>[]))
+          as _i4.Future<List<_i5.RideModel>>);
 }
 
 /// A class which mocks [NetworkInfo].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockNetworkInfo extends _i1.Mock implements _i6.NetworkInfo {
+class MockNetworkInfo extends _i1.Mock implements _i7.NetworkInfo {
   MockNetworkInfo() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Future<bool> get isConnected =>
+  _i4.Future<bool> get isConnected =>
       (super.noSuchMethod(Invocation.getter(#isConnected),
-          returnValue: Future<bool>.value(false)) as _i3.Future<bool>);
+          returnValue: Future<bool>.value(false)) as _i4.Future<bool>);
 }

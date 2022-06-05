@@ -31,12 +31,11 @@ void main() {
 
   test('should add Ride', () async {
     // mock implementation of the interface
-    when(rideRepository.addRide(ride))
-        .thenAnswer((_) async => const Right(true));
+    when(rideRepository.addRide(ride)).thenAnswer((_) async => Right(ride));
 
     final result = await usecase(Params(ride: ride));
 
-    expect(result, const Right(true));
+    expect(result, Right(ride));
 
     // Verify that the method has been called on the Repository
     verify(rideRepository.addRide(ride));

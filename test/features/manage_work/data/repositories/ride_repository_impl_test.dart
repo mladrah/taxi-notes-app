@@ -135,7 +135,7 @@ void main() {
       //arrange
       when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
       when(mockRideRemoteDataSource.addRide(ride))
-          .thenAnswer((_) async => true);
+          .thenAnswer((_) async => ride);
       // when(mockRideLocalDataSource.addRide()).thenAnswer((_) async => ride);
 
       // act
@@ -154,12 +154,12 @@ void main() {
           'should add RideModel to remote data when the call to remote data source is succesful',
           () async {
         when(mockRideRemoteDataSource.addRide(ride))
-            .thenAnswer((_) async => true);
+            .thenAnswer((_) async => ride);
 
         final result = await rideRepositoryImpl.addRide(ride);
 
         verify(mockRideRemoteDataSource.addRide(ride));
-        expect(result, const Right(true));
+        expect(result, Right(ride));
       });
 
       test(
