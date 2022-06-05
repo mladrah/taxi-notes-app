@@ -5,6 +5,7 @@ import 'package:taxi_rahmati/core/error/exceptions.dart';
 import 'package:taxi_rahmati/features/manage_work/data/datasources/data_source.dart';
 import 'package:taxi_rahmati/features/manage_work/data/models/ride_model.dart';
 
+// ignore: constant_identifier_names
 const String ALL_RIDES = 'ALL_RIDES';
 
 abstract class RideLocalDataSource extends DataSource {

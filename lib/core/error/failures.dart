@@ -14,3 +14,5 @@ class ServerFailure extends Failure {}
 class LocalFailure extends Failure {}
 
 class NetworkFailure extends Failure {}
+
+class InvalidInputFailure extends Failure {}
