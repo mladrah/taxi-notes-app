@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:taxi_rahmati/features/manage_work/presentation/pages/main_page.dart';
+import 'package:taxi_rahmati/features/manage_work/presentation/pages/ride_form_page.dart';
+import 'app_theme_data.dart';
 import 'injection_container.dart' as di;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
-
   runApp(const MyApp());
 }
 
@@ -16,9 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Taxi Rahmati',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const MainPage());
+        theme: AppThemeData().lighTheme,
+        home: const RideFormPage());
   }
 }

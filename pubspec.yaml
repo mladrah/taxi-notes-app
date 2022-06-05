@@ -24,6 +24,7 @@ dependencies:
   plugin_platform_interface: ^2.1.2
   enum_to_string: ^2.0.1
   intl: ^0.17.0 # dateFormat
+  google_fonts: ^3.0.1
   
 dev_dependencies:
   flutter_test:
