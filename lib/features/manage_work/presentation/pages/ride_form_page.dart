@@ -32,99 +32,113 @@ class _RideFormPageState extends State<RideFormPage> {
         appBar: AppBar(
           title: const Text('Fahrt hinzufügen'),
         ),
-        body: SingleChildScrollView(child: buildBody(context)));
+        body: buildBody(context));
   }
 
-  Center buildBody(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: <Widget>[
-              Row(
-                children: [
-                  Expanded(
-                    child: RadioButton<Title>(
-                      label: 'Herr',
-                      value: Title.herr,
-                      groupValue: _title,
-                      onChanged: (value) => setState(
-                        () {
-                          _title = value!;
-                        },
+  Widget buildBody(BuildContext context) {
+    return BlocListener<ManageWorkBloc, ManageWorkState>(
+      listener: (context, state) {
+        if (state is Created) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Added')),
+          );
+        } else if (state is Error) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Error: $_price ' + state.message)),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Else: ' + state.toString())),
+          );
+        }
+      },
+      child: SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    children: [
+                      Expanded(
+                        child: RadioButton<Title>(
+                          label: 'Herr',
+                          value: Title.herr,
+                          groupValue: _title,
+                          onChanged: (value) => setState(
+                            () {
+                              _title = value!;
+                            },
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  Expanded(
-                    child: RadioButton<Title>(
-                      label: 'Frau',
-                      value: Title.frau,
-                      groupValue: _title,
-                      onChanged: (value) => setState(
-                        () {
-                          _title = value!;
-                        },
+                      Expanded(
+                        child: RadioButton<Title>(
+                          label: 'Frau',
+                          value: Title.frau,
+                          groupValue: _title,
+                          onChanged: (value) => setState(
+                            () {
+                              _title = value!;
+                            },
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  CustomTextFormField(
+                    label: 'Name',
+                    onChanged: (value) => _name = value,
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  CustomTextFormField(
+                    label: 'Ort',
+                    onChanged: (value) => _destination = value,
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  DateTimeFormField(
+                    label: 'Start',
+                    onChangedDate: (value) => _startDate = value,
+                    onChangedTime: (value) => _startTime = value,
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  DateTimeFormField(
+                    label: 'Ende',
+                    onChangedDate: (value) => _endDate = value,
+                    onChangedTime: (value) => _endTime = value,
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  CurrencyFormField(
+                    label: 'Preis (€)',
+                    onChanged: (value) => _price = value,
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  CustomElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        dispatchAdd();
+                      }
+                    },
+                    label: 'Erstellen',
+                  )
                 ],
               ),
-              const SizedBox(
-                height: 8,
-              ),
-              CustomTextFormField(
-                label: 'Name',
-                onChanged: (value) => _name = value,
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              CustomTextFormField(
-                label: 'Ort',
-                onChanged: (value) => _destination = value,
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              DateTimeFormField(
-                label: 'Start',
-                onChangedDate: (value) => _startDate = value,
-                onChangedTime: (value) => _startTime = value,
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              DateTimeFormField(
-                label: 'Ende',
-                onChangedDate: (value) => _endDate = value,
-                onChangedTime: (value) => _endTime = value,
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              CurrencyFormField(
-                label: 'Preis (€)',
-                onChanged: (value) => _price = value,
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              CustomElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    dispatchAdd();
-                    // ScaffoldMessenger.of(context).showSnackBar(
-                    //   SnackBar(
-                    //       content: Text(
-                    //           '$_title $_name $_destination sd: $_startDate st: $_startTime ed: $_endDate et: $_endTime $_price')),
-                    // );
-                  }
-                },
-                label: 'Erstellen',
-              )
-            ],
+            ),
           ),
         ),
       ),
@@ -132,17 +146,29 @@ class _RideFormPageState extends State<RideFormPage> {
   }
 
   void dispatchAdd() {
-    BlocProvider.of<ManageWorkBloc>(context).add(
-      AddRideToList(
-        title: _title,
-        name: _name,
-        destination: _destination,
-        startDate: _startDate!,
-        startTime: _startTime!,
-        endDate: _endDate!,
-        endTime: _endTime!,
-        price: _price,
-      ),
-    );
+    context.read<ManageWorkBloc>().add(
+          AddRideToList(
+            title: _title,
+            name: _name,
+            destination: _destination,
+            startDate: _startDate!,
+            startTime: _startTime!,
+            endDate: _endDate!,
+            endTime: _endTime!,
+            price: _price,
+          ),
+        );
+    // BlocProvider.of<ManageWorkBloc>(context).add(
+    //   AddRideToList(
+    //     title: _title,
+    //     name: _name,
+    //     destination: _destination,
+    //     startDate: _startDate!,
+    //     startTime: _startTime!,
+    //     endDate: _endDate!,
+    //     endTime: _endTime!,
+    //     price: _price,
+    //   ),
+    // );
   }
 }

@@ -51,7 +51,33 @@ void main() {
     });
 
     test(
-        'should return Failure when the string represents a negative decimal number',
+        'should return Decimal when the string represents a decimal number with comma, invisible char and currency symbol',
+        () async {
+      // arrange
+      const string = '31,21 €';
+
+      // act
+      final result = inputConverter.stringToDecimal(string);
+
+      // assert
+      expect(result, Right(Decimal.parse('31.21')));
+    });
+
+    test(
+        'should return Decimal when the string represents a big decimal number with dot, comma and currency symbol',
+        () async {
+      // arrange
+      const string = '9.128,30 €';
+
+      // act
+      final result = inputConverter.stringToDecimal(string);
+
+      // assert
+      expect(result, Right(Decimal.parse('9128.30')));
+    });
+
+    test(
+        'should return positive decimal number when the string represents a negative decimal number',
         () async {
       // arrange
       const string = '-28.30';
@@ -60,20 +86,7 @@ void main() {
       final result = inputConverter.stringToDecimal(string);
 
       // assert
-      expect(result, Left(InvalidInputFailure()));
-    });
-
-    test(
-        'should return Failure when the string does not represent a decimal number',
-        () async {
-      // arrange
-      const string = 'alphanumeric123';
-
-      // act
-      final result = inputConverter.stringToDecimal(string);
-
-      // assert
-      expect(result, Left(InvalidInputFailure()));
+      expect(result, Right(Decimal.parse('28.30')));
     });
   });
 

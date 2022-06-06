@@ -23,9 +23,35 @@ void main() {
     rideLocalDataSourceImpl =
         RideLocalDataSourceImpl(sharedPreferences: mockSharedPreferences);
   });
+  group('initialize', () {
+    test(
+        'should initialize empty list when shared preferences does not have a list',
+        () async {
+      when(mockSharedPreferences.getString(INITIALIZED)).thenReturn(null);
+      when(mockSharedPreferences.setString(any, any))
+          .thenAnswer((_) async => true);
+
+      await rideLocalDataSourceImpl.initialize();
+
+      verify(mockSharedPreferences.setString(ALL_RIDES, any));
+      verify(mockSharedPreferences.setString(INITIALIZED, 'initialized'));
+    });
+
+    test(
+        'should not initialize when shared preferences is already initialized and does contain a list',
+        () async {
+      when(mockSharedPreferences.getString(INITIALIZED))
+          .thenReturn('initialized');
+
+      await rideLocalDataSourceImpl.initialize();
+
+      verifyNever(mockSharedPreferences.setString(ALL_RIDES, any));
+      verifyNever(mockSharedPreferences.setString(INITIALIZED, 'initialized'));
+    });
+  });
 
   group('getAllRides', () {
-    Iterable l = json.decode(fixture('all_rides.json'))['allRides'];
+    Iterable l = json.decode(fixture('all_rides.json'));
     List<RideModel> allRides = List<RideModel>.from(
         l.map((rideModel) => RideModel.fromJson(rideModel)));
 

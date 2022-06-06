@@ -1,15 +1,13 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Title;
+
+import '../../domain/entities/ride.dart';
 
 class RideTile extends StatelessWidget {
-  // final Title title;
-  // final String name;
-  // final String destination;
-  // final DateTime start;
-  // final DateTime end;
-  // final Decimal price;
+  final Ride ride;
 
   const RideTile({
     Key? key,
+    required this.ride,
   }) : super(key: key);
 
   @override
@@ -23,7 +21,7 @@ class RideTile extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: Theme.of(context).primaryColor.withOpacity(0.25),
-            spreadRadius: 3,
+            spreadRadius: 1,
             blurRadius: 7,
             offset: const Offset(0, 3), // changes position of shadow
           ),
@@ -31,15 +29,15 @@ class RideTile extends StatelessWidget {
       ),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         Text(
-          '01:45 - 02:15',
-          style: TextStyle(
+          '${ride.start.hour}:${ride.start.minute} - ${ride.end.hour}:${ride.end.minute}',
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
-        Text('Fr. ' + 'Name'),
-        Text('Ort'),
+        Text((ride.title == Title.herr ? 'Hr. ' : 'Fr. ') + ride.name),
+        Text(ride.destination),
         Text(
-          '30€',
+          '${ride.price.toString()} €',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Theme.of(context).primaryColor,

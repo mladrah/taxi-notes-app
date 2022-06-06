@@ -32,4 +32,4 @@ class AddRideToList extends ManageWorkEvent {
       [title, name, destination, startDate, startTime, endDate, endTime, price];
 }
 
-class ListAllRides extends ManageWorkEvent {}
+class LoadAllRides extends ManageWorkEvent {}
