@@ -3,13 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class DateTimeFormField extends StatelessWidget {
+  final String label;
+  final void Function(DateTime?) onChangedDate;
+  final void Function(DateTime?) onChangedTime;
   final _dateFormat = DateFormat("dd.MM.yyyy");
   final _timeFormat = DateFormat("HH:mm");
-  final String label;
 
   DateTimeFormField({
     Key? key,
     required this.label,
+    required this.onChangedDate,
+    required this.onChangedTime,
   }) : super(key: key);
 
   @override
@@ -27,6 +31,10 @@ class DateTimeFormField extends StatelessWidget {
           children: [
             Expanded(
               child: DateTimeField(
+                onChanged: onChangedDate,
+                validator: (value) {
+                  return (value == null) ? '' : null;
+                },
                 format: _dateFormat,
                 initialValue: DateTime.now(),
                 onShowPicker: (context, currentValue) {
@@ -43,6 +51,10 @@ class DateTimeFormField extends StatelessWidget {
             ),
             Expanded(
               child: DateTimeField(
+                onChanged: onChangedTime,
+                validator: (value) {
+                  return (value == null) ? '' : null;
+                },
                 format: _timeFormat,
                 initialValue: DateTime.now(),
                 onShowPicker: (context, currentValue) async {

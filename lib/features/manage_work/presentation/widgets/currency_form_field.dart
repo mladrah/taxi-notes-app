@@ -4,22 +4,25 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class CurrencyFormField extends StatelessWidget {
   String label;
-
-  CurrencyFormField({Key? key, required this.label}) : super(key: key);
+  final void Function(String) onChanged;
+  CurrencyFormField({
+    Key? key,
+    required this.label,
+    required this.onChanged,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // Text(
-        //   label,
-        //   style: const TextStyle(fontWeight: FontWeight.bold),
-        // ),
-        // const SizedBox(
-        //   height: 8,
-        // ),
         TextFormField(
-          decoration: InputDecoration(hintText: label),
+          onChanged: onChanged,
+          validator: (value) {
+            return (value == null || value.isEmpty) ? '' : null;
+          },
+          decoration: InputDecoration(
+            hintText: label,
+          ),
           inputFormatters: [
             CurrencyTextInputFormatter(locale: 'eu', symbol: '€')
           ],

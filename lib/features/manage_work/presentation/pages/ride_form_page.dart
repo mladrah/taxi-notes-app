@@ -16,6 +16,13 @@ class RideFormPage extends StatefulWidget {
 class _RideFormPageState extends State<RideFormPage> {
   final _formKey = GlobalKey<FormState>();
   Title _title = Title.herr;
+  late String _name;
+  late String _destination;
+  late String _price;
+  DateTime? _startDate = DateTime.now();
+  DateTime? _startTime = DateTime.now();
+  DateTime? _endDate = DateTime.now();
+  DateTime? _endTime = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -65,29 +72,55 @@ class _RideFormPageState extends State<RideFormPage> {
               const SizedBox(
                 height: 8,
               ),
-              const CustomTextFormField(label: 'Name'),
+              CustomTextFormField(
+                label: 'Name',
+                onChanged: (value) => _name = value,
+              ),
               const SizedBox(
                 height: 16,
               ),
-              const CustomTextFormField(label: 'Ort'),
+              CustomTextFormField(
+                label: 'Ort',
+                onChanged: (value) => _destination = value,
+              ),
               const SizedBox(
                 height: 16,
               ),
-              DateTimeFormField(label: 'Start'),
+              DateTimeFormField(
+                label: 'Start',
+                onChangedDate: (value) => _startDate = value,
+                onChangedTime: (value) => _startTime = value,
+              ),
               const SizedBox(
                 height: 16,
               ),
-              DateTimeFormField(label: 'Ende'),
+              DateTimeFormField(
+                label: 'Ende',
+                onChangedDate: (value) => _endDate = value,
+                onChangedTime: (value) => _endTime = value,
+              ),
               const SizedBox(
                 height: 16,
               ),
               CurrencyFormField(
                 label: 'Preis (€)',
+                onChanged: (value) => _price = value,
               ),
               const SizedBox(
                 height: 16,
               ),
-              const CustomElevatedButton(
+              CustomElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    _price = _price.replaceAll('.', '');
+                    _price = _price.replaceAll(',', '.');
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                          content: Text(
+                              '$_title $_name $_destination sd: $_startDate st: $_startTime ed: $_endDate et: $_endTime $_price')),
+                    );
+                  }
+                },
                 label: 'Erstellen',
               )
             ],

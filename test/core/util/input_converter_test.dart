@@ -26,6 +26,32 @@ void main() {
     });
 
     test(
+        'should return Decimal when the string represents a decimal number with comma',
+        () async {
+      // arrange
+      const string = '28,30';
+
+      // act
+      final result = inputConverter.stringToDecimal(string);
+
+      // assert
+      expect(result, Right(Decimal.parse('28.30')));
+    });
+
+    test(
+        'should return Decimal when the string represents a big decimal number with dot and comma',
+        () async {
+      // arrange
+      const string = '9.128,30';
+
+      // act
+      final result = inputConverter.stringToDecimal(string);
+
+      // assert
+      expect(result, Right(Decimal.parse('9128.30')));
+    });
+
+    test(
         'should return Failure when the string represents a negative decimal number',
         () async {
       // arrange
