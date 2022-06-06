@@ -114,6 +114,7 @@ class _RideFormPageState extends State<RideFormPage> {
               CustomElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
+                    dispatchAdd();
                     // ScaffoldMessenger.of(context).showSnackBar(
                     //   SnackBar(
                     //       content: Text(
