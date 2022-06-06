@@ -3,8 +3,8 @@ import 'package:decimal/decimal.dart';
 
 class Ride extends Equatable {
   final String id;
-  final String name;
   final Title title;
+  final String name;
   final String destination;
   final DateTime start;
   final DateTime end;
@@ -12,8 +12,8 @@ class Ride extends Equatable {
 
   const Ride(
       {required this.id,
-      required this.name,
       required this.title,
+      required this.name,
       required this.destination,
       required this.start,
       required this.end,

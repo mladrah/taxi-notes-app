@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:intl/intl.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:taxi_rahmati/core/error/failures.dart';
@@ -12,7 +11,6 @@ import 'package:taxi_rahmati/features/manage_work/domain/usecases/add_ride.dart'
 import 'package:taxi_rahmati/features/manage_work/domain/usecases/get_all_rides.dart';
 import 'package:taxi_rahmati/features/manage_work/presentation/bloc/manage_work_bloc.dart';
 import 'package:uuid/uuid.dart';
-
 import 'manage_work_bloc_test.mocks.dart';
 
 @GenerateMocks([AddRide, GetAllRides, InputConverter])
@@ -39,44 +37,53 @@ void main() {
 
   group('AddRideToList', () {
     const String tName = 'Lorem';
-    const String tTitle = 'herr';
+    const Title tTitle = Title.herr;
     const String tDestination = 'Ipsum';
-    const String tStart = '2022-06-01 22:30:00';
-    const String tEnd = '2022-06-01 23:30:00';
-    const String tPrice = '29.30';
+    DateTime tStartDate = DateTime.now();
+    DateTime tStartTime = DateTime.now();
+    DateTime tEndDate = DateTime.now();
+    DateTime tEndTime = DateTime.now();
+    const String tPrice = '29,30';
 
-    const Title tTitleParsed = Title.herr;
-    final DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
-    final DateTime tStartParsed = dateFormat.parse(tStart);
-    final DateTime tEndParsed = dateFormat.parse(tEnd);
-    final Decimal tPriceParsed = Decimal.parse(tPrice);
+    DateTime tStartParsed = DateTime(
+      tStartDate.year,
+      tStartDate.month,
+      tStartDate.day,
+      tStartTime.hour,
+      tStartTime.month,
+      tStartTime.day,
+    );
+    DateTime tEndParsed = DateTime(
+      tEndDate.year,
+      tEndDate.month,
+      tEndDate.day,
+      tEndTime.hour,
+      tEndTime.month,
+      tEndTime.day,
+    );
+    final Decimal tPriceParsed = Decimal.parse('29.30');
 
     Ride ride = Ride(
-        id: const Uuid().v1(),
-        name: tName,
-        title: tTitleParsed,
-        destination: tDestination,
-        start: tStartParsed,
-        end: tEndParsed,
-        price: tPriceParsed);
+      id: const Uuid().v1(),
+      name: tName,
+      title: tTitle,
+      destination: tDestination,
+      start: tStartParsed,
+      end: tEndParsed,
+      price: tPriceParsed,
+    );
 
     setUpInputConverterSuccess() {
-      when(mockInputConverter.stringToTitleEnum(tTitle))
-          .thenReturn(const Right(tTitleParsed));
-      when(mockInputConverter.stringToDateTime(tStart))
-          .thenReturn(Right(tStartParsed));
-      when(mockInputConverter.stringToDateTime(tEnd))
-          .thenReturn(Right(tEndParsed));
-      when(mockInputConverter.stringToDecimal(tPrice))
+      when(mockInputConverter.stringToDecimal(any))
           .thenReturn(Right(tPriceParsed));
+      when(mockInputConverter.dateTimesToDateTime(any, any))
+          .thenReturn(Right(tStartParsed));
     }
 
     setUpInputConverterFailure() {
-      when(mockInputConverter.stringToTitleEnum(any))
-          .thenReturn(Left(InvalidInputFailure()));
-      when(mockInputConverter.stringToDateTime(any))
-          .thenReturn(Left(InvalidInputFailure()));
       when(mockInputConverter.stringToDecimal(any))
+          .thenReturn(Left(InvalidInputFailure()));
+      when(mockInputConverter.dateTimesToDateTime(any, any))
           .thenReturn(Left(InvalidInputFailure()));
     }
 
@@ -87,15 +94,25 @@ void main() {
       when(mockAddRide(any)).thenAnswer((_) async => Right(ride));
 
       // act
-      bloc.add(const AddRideToList(
-          tName, tTitle, tDestination, tStart, tEnd, tPrice));
-      await untilCalled(mockInputConverter.stringToTitleEnum(any));
-      await untilCalled(mockInputConverter.stringToDateTime(any));
+      bloc.add(
+        AddRideToList(
+          title: tTitle,
+          name: tName,
+          destination: tDestination,
+          startDate: tStartDate,
+          startTime: tStartTime,
+          endDate: tEndDate,
+          endTime: tEndTime,
+          price: tPrice,
+        ),
+      );
+
+      await untilCalled(mockInputConverter.dateTimesToDateTime(any, any));
+      await untilCalled(mockInputConverter.dateTimesToDateTime(any, any));
       await untilCalled(mockInputConverter.stringToDecimal(any));
 
       // assert
-      verify(mockInputConverter.stringToTitleEnum(tTitle));
-      verify(mockInputConverter.stringToDateTime(any));
+      verify(mockInputConverter.dateTimesToDateTime(tStartDate, tStartTime));
       verify(mockInputConverter.stringToDecimal(tPrice));
     });
 
@@ -108,16 +125,36 @@ void main() {
           emits(const Error(message: INVALID_INPUT_MESSAGE)));
 
       // act
-      bloc.add(const AddRideToList(
-          tName, tTitle, tDestination, tStart, tEnd, tPrice));
+      bloc.add(
+        AddRideToList(
+          title: tTitle,
+          name: tName,
+          destination: tDestination,
+          startDate: tStartDate,
+          startTime: tStartTime,
+          endDate: tEndDate,
+          endTime: tEndTime,
+          price: tPrice,
+        ),
+      );
     });
 
     test('should return true when use case is called', () async {
       setUpInputConverterSuccess();
       when(mockAddRide(any)).thenAnswer((_) async => Right(ride));
 
-      bloc.add(const AddRideToList(
-          tName, tTitle, tDestination, tStart, tEnd, tPrice));
+      bloc.add(
+        AddRideToList(
+          title: tTitle,
+          name: tName,
+          destination: tDestination,
+          startDate: tStartDate,
+          startTime: tStartTime,
+          endDate: tEndDate,
+          endTime: tEndTime,
+          price: tPrice,
+        ),
+      );
       await untilCalled(mockAddRide(any));
 
       verify(mockAddRide(any));
@@ -138,8 +175,18 @@ void main() {
         expectLater(bloc.stream.asBroadcastStream(), emitsInOrder(expected));
 
         // act
-        bloc.add(const AddRideToList(
-            tName, tTitle, tDestination, tStart, tEnd, tPrice));
+        bloc.add(
+          AddRideToList(
+            title: tTitle,
+            name: tName,
+            destination: tDestination,
+            startDate: tStartDate,
+            startTime: tStartTime,
+            endDate: tEndDate,
+            endTime: tEndTime,
+            price: tPrice,
+          ),
+        );
       },
     );
 
@@ -157,9 +204,18 @@ void main() {
         ];
         expectLater(bloc.stream.asBroadcastStream(), emitsInOrder(expected));
         // act
-
-        bloc.add(const AddRideToList(
-            tName, tTitle, tDestination, tStart, tEnd, tPrice));
+        bloc.add(
+          AddRideToList(
+            title: tTitle,
+            name: tName,
+            destination: tDestination,
+            startDate: tStartDate,
+            startTime: tStartTime,
+            endDate: tEndDate,
+            endTime: tEndTime,
+            price: tPrice,
+          ),
+        );
       },
     );
 
@@ -178,8 +234,18 @@ void main() {
         expectLater(bloc.stream.asBroadcastStream(), emitsInOrder(expected));
         // act
 
-        bloc.add(const AddRideToList(
-            tName, tTitle, tDestination, tStart, tEnd, tPrice));
+        bloc.add(
+          AddRideToList(
+            title: tTitle,
+            name: tName,
+            destination: tDestination,
+            startDate: tStartDate,
+            startTime: tStartTime,
+            endDate: tEndDate,
+            endTime: tEndTime,
+            price: tPrice,
+          ),
+        );
       },
     );
   });

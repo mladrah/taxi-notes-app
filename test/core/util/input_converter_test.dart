@@ -3,7 +3,6 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:taxi_rahmati/core/error/failures.dart';
 import 'package:taxi_rahmati/core/util/input_converter.dart';
-import 'package:taxi_rahmati/features/manage_work/domain/entities/ride.dart';
 
 void main() {
   late InputConverter inputConverter;
@@ -100,22 +99,19 @@ void main() {
     });
   });
 
-  group('stringToTitleEnum', () {
-    test('should return Title when the string represents enum value', () async {
-      const string = 'herr';
+  group('dateTimesToDateTime', () {
+    final date = DateTime.now();
+    final time = DateTime.now();
 
-      final result = inputConverter.stringToTitleEnum(string);
-
-      expect(result, const Right(Title.herr));
-    });
-
-    test('should return Failure when the string does not represent enum value',
+    test(
+        'should combine DateTime when date and time is passed as two DateTime objects',
         () async {
-      const string = 'mr';
+      final result = inputConverter.dateTimesToDateTime(date, time);
 
-      final result = inputConverter.stringToTitleEnum(string);
-
-      expect(result, Left(InvalidInputFailure()));
+      expect(
+          result,
+          Right(DateTime(date.year, date.month, date.day, time.hour,
+              time.minute, time.second)));
     });
   });
 }

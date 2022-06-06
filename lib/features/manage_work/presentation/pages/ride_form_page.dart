@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart' hide Title;
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:taxi_rahmati/features/manage_work/presentation/bloc/manage_work_bloc.dart';
 import '../../domain/entities/ride.dart';
 import '../widgets/currency_form_field.dart';
 import '../widgets/custom_elevated_button.dart';
@@ -112,13 +114,11 @@ class _RideFormPageState extends State<RideFormPage> {
               CustomElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    _price = _price.replaceAll('.', '');
-                    _price = _price.replaceAll(',', '.');
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                          content: Text(
-                              '$_title $_name $_destination sd: $_startDate st: $_startTime ed: $_endDate et: $_endTime $_price')),
-                    );
+                    // ScaffoldMessenger.of(context).showSnackBar(
+                    //   SnackBar(
+                    //       content: Text(
+                    //           '$_title $_name $_destination sd: $_startDate st: $_startTime ed: $_endDate et: $_endTime $_price')),
+                    // );
                   }
                 },
                 label: 'Erstellen',
@@ -126,6 +126,21 @@ class _RideFormPageState extends State<RideFormPage> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  void dispatchAdd() {
+    BlocProvider.of<ManageWorkBloc>(context).add(
+      AddRideToList(
+        title: _title,
+        name: _name,
+        destination: _destination,
+        startDate: _startDate!,
+        startTime: _startTime!,
+        endDate: _endDate!,
+        endTime: _endTime!,
+        price: _price,
       ),
     );
   }

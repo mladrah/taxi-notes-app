@@ -35,19 +35,15 @@ class ManageWorkBloc extends Bloc<ManageWorkEvent, ManageWorkState> {
 
   void _onAddRideToList(AddRideToList event, Emitter emit) async {
     bool isFailed = false;
-    late final Title titleParsed;
     late final DateTime startParsed;
     late final DateTime endParsed;
     late final Decimal priceParsed;
 
     inputConverter
-        .stringToTitleEnum(event.title)
-        .fold((failure) => isFailed = true, (title) => titleParsed = title);
-    inputConverter
-        .stringToDateTime(event.start)
+        .dateTimesToDateTime(event.startDate, event.startTime)
         .fold((failure) => isFailed = true, (start) => startParsed = start);
     inputConverter
-        .stringToDateTime(event.end)
+        .dateTimesToDateTime(event.endDate, event.endTime)
         .fold((failure) => isFailed = true, (end) => endParsed = end);
     inputConverter
         .stringToDecimal(event.price)
@@ -61,8 +57,8 @@ class ManageWorkBloc extends Bloc<ManageWorkEvent, ManageWorkState> {
       final result = await addRideUseCase(Params(
           ride: Ride(
               id: const Uuid().v1(),
+              title: event.title,
               name: event.name,
-              title: titleParsed,
               destination: event.destination,
               start: startParsed,
               end: endParsed,

@@ -1,9 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:decimal/decimal.dart';
-import 'package:enum_to_string/enum_to_string.dart';
 import 'package:intl/intl.dart';
-
-import '../../features/manage_work/domain/entities/ride.dart';
 import '../error/failures.dart';
 
 class InputConverter {
@@ -36,9 +33,8 @@ class InputConverter {
     }
   }
 
-  Either<Failure, Title> stringToTitleEnum(String string) {
-    Title? title = EnumToString.fromString(Title.values, string);
-
-    return title == null ? Left(InvalidInputFailure()) : Right(title);
+  Either<Failure, DateTime> dateTimesToDateTime(DateTime date, DateTime time) {
+    return Right(DateTime(
+        date.year, date.month, date.day, time.hour, time.minute, time.second));
   }
 }

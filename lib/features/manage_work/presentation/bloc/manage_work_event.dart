@@ -8,18 +8,28 @@ abstract class ManageWorkEvent extends Equatable {
 }
 
 class AddRideToList extends ManageWorkEvent {
+  final Title title;
   final String name;
-  final String title;
   final String destination;
-  final String start;
-  final String end;
+  final DateTime startDate;
+  final DateTime startTime;
+  final DateTime endDate;
+  final DateTime endTime;
   final String price;
 
-  const AddRideToList(this.name, this.title, this.destination, this.start,
-      this.end, this.price);
+  const AddRideToList(
+      {required this.title,
+      required this.name,
+      required this.destination,
+      required this.startDate,
+      required this.startTime,
+      required this.endDate,
+      required this.endTime,
+      required this.price});
 
   @override
-  List<Object> get props => [name, title, destination, start, end, price];
+  List<Object> get props =>
+      [title, name, destination, startDate, startTime, endDate, endTime, price];
 }
 
 class ListAllRides extends ManageWorkEvent {}

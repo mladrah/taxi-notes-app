@@ -93,8 +93,9 @@ class MockInputConverter extends _i1.Mock implements _i10.InputConverter {
               returnValue: _FakeEither_1<_i6.Failure, DateTime>())
           as _i3.Either<_i6.Failure, DateTime>);
   @override
-  _i3.Either<_i6.Failure, _i7.Title> stringToTitleEnum(String? string) =>
-      (super.noSuchMethod(Invocation.method(#stringToTitleEnum, [string]),
-              returnValue: _FakeEither_1<_i6.Failure, _i7.Title>())
-          as _i3.Either<_i6.Failure, _i7.Title>);
+  _i3.Either<_i6.Failure, DateTime> dateTimesToDateTime(
+          DateTime? date, DateTime? time) =>
+      (super.noSuchMethod(Invocation.method(#dateTimesToDateTime, [date, time]),
+              returnValue: _FakeEither_1<_i6.Failure, DateTime>())
+          as _i3.Either<_i6.Failure, DateTime>);
 }

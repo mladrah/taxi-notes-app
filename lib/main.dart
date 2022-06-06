@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:taxi_rahmati/features/manage_work/presentation/pages/main_page.dart';
-import 'package:taxi_rahmati/features/manage_work/presentation/pages/ride_form_page.dart';
 import 'app_theme_data.dart';
 import 'injection_container.dart' as di;
 
@@ -18,6 +17,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'Taxi Rahmati',
         theme: AppThemeData().lighTheme,
-        home: const RideFormPage());
+        home: const MainPage());
   }
 }
