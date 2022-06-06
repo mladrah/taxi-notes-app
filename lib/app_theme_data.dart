@@ -7,7 +7,7 @@ class AppThemeData {
   final highlightTextColor = const Color(0xFF003566);
   final greyColor = const Color(0xFFC0C0C0);
 
-  Map<int, Color> primarySwatchColor = {
+  Map<int, Color> primaryColorMap = {
     50: const Color.fromRGBO(252, 163, 17, .1),
     100: const Color.fromRGBO(252, 163, 17, .2),
     200: const Color.fromRGBO(252, 163, 17, .3),
@@ -22,20 +22,39 @@ class AppThemeData {
 
   ThemeData get lighTheme {
     return ThemeData(
-        textTheme: GoogleFonts.kodchasanTextTheme(),
-        primarySwatch: MaterialColor(0xFFFCA311, primarySwatchColor),
-        primaryColor: primaryColor,
-        hintColor: greyColor,
-        focusColor: highlightTextColor,
-        appBarTheme: AppBarTheme(
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          foregroundColor: textColor,
-          titleTextStyle: GoogleFonts.kodchasan(
-            fontSize: 20,
+      textTheme: GoogleFonts.kodchasanTextTheme().apply(
+        bodyColor: textColor,
+        displayColor: textColor,
+      ),
+      primarySwatch: MaterialColor(0xFFFCA311, primaryColorMap),
+      primaryColor: primaryColor,
+      hintColor: greyColor,
+      focusColor: highlightTextColor,
+      appBarTheme: AppBarTheme(
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        foregroundColor: textColor,
+        titleTextStyle: GoogleFonts.kodchasan(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: textColor,
+        ),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          textStyle: GoogleFonts.kodchasan(
             fontWeight: FontWeight.bold,
-            color: textColor,
+            fontSize: 20,
           ),
-        ));
+        ),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+      ),
+    );
   }
 }

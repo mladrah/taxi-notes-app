@@ -1,25 +1,29 @@
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  final String hintText;
+  final String label;
+  final double? width;
 
-  const CustomTextFormField({
-    Key? key,
-    required this.hintText,
-  }) : super(key: key);
+  const CustomTextFormField({Key? key, required this.label, this.width})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
-          'Name',
-          style: TextStyle(),
+        // Text(
+        //   label,
+        //   style: const TextStyle(fontWeight: FontWeight.bold),
+        // ),
+        // const SizedBox(
+        //   height: 8,
+        // ),
+        SizedBox(
+          width: width ?? double.infinity,
+          child: TextFormField(
+            decoration: InputDecoration(hintText: label),
+          ),
         ),
-        TextFormField(
-            decoration: InputDecoration(
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16)))),
       ],
     );
   }

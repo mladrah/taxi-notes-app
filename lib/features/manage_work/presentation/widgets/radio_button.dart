@@ -17,7 +17,7 @@ class RadioButton<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(label, style: const TextStyle()),
+      title: Text(label, style: const TextStyle(fontWeight: FontWeight.bold)),
       leading: Radio<T>(
         value: value,
         groupValue: groupValue,
