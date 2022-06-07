@@ -1,21 +1,19 @@
-{
-    "allRides": [{
-            "id": "79b6b990-e1d3-11ec-aaf1-8738c050a64f",
-            "name": "tName1",
-            "title": "herr",
-            "destination": "tDestination1",
-            "start": "2022-06-11 13:37:27.000Z",
-            "end": "2022-06-11 14:37:27.000Z",
-            "price": "28.3"
-        },
-        {
-            "id": "23b6b990-e1d3-11ec-aaf1-8738c050a64f",
-            "name": "tName2",
-            "title": "herr",
-            "destination": "tDestination2",
-            "start": "2022-06-11 13:37:27.000Z",
-            "end": "2022-06-11 14:37:27.000Z",
-            "price": "12.2"
-        }
-    ]
-}
+[{
+        "id": "79b6b990-e1d3-11ec-aaf1-8738c050a64f",
+        "name": "tName1",
+        "title": "herr",
+        "destination": "tDestination1",
+        "start": "2022-06-11 13:37:27.000Z",
+        "end": "2022-06-11 14:37:27.000Z",
+        "price": "28.3"
+    },
+    {
+        "id": "23b6b990-e1d3-11ec-aaf1-8738c050a64f",
+        "name": "tName2",
+        "title": "herr",
+        "destination": "tDestination2",
+        "start": "2022-06-11 13:37:27.000Z",
+        "end": "2022-06-11 14:37:27.000Z",
+        "price": "12.2"
+    }
+]

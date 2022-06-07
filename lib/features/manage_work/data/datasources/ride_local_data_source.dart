@@ -1,15 +1,19 @@
+// ignore_for_file: constant_identifier_names
+
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taxi_rahmati/core/error/exceptions.dart';
 import 'package:taxi_rahmati/features/manage_work/data/datasources/data_source.dart';
 import 'package:taxi_rahmati/features/manage_work/data/models/ride_model.dart';
+import 'package:taxi_rahmati/features/manage_work/domain/entities/ride.dart';
 
-// ignore: constant_identifier_names
 const String ALL_RIDES = 'ALL_RIDES';
+const String INITIALIZED = 'INITIALIZED';
 
 abstract class RideLocalDataSource extends DataSource {
   Future<bool> saveAllRides(List<RideModel> allRides);
+  Future<void> initialize();
 }
 
 class RideLocalDataSourceImpl extends RideLocalDataSource {
@@ -17,27 +21,35 @@ class RideLocalDataSourceImpl extends RideLocalDataSource {
 
   RideLocalDataSourceImpl({required this.sharedPreferences});
 
-  // überhaupt hier notwendig? vlt nur als use case
-  // @override
-  // Future<bool> addRide(RideModel rideModel) async {
-  //   List<RideModel> allRides;
-  //   try {
-  //     allRides = await getAllRides();
-  //     allRides.add(rideModel);
-  //   } on LocalException {
-  //     allRides = [rideModel];
-  //   }
-  //   return sharedPreferences.setString(
-  //       ALL_RIDES, jsonEncode(allRides.map((e) => e.toJson()).toList()));
-  // }
+  @override
+  Future<RideModel> addRide(RideModel rideModel) async {
+    List<RideModel> allRides;
+    allRides = await getAllRides();
+    allRides.add(rideModel);
+    saveAllRides(allRides);
+
+    return rideModel;
+  }
+
+  @override
+  Future<void> initialize() async {
+    final isInitialized = sharedPreferences.getString(INITIALIZED);
+
+    if (isInitialized == null) {
+      sharedPreferences.setString(
+          ALL_RIDES, _getJsonStringFromRideList(<RideModel>[]));
+
+      sharedPreferences.setString(INITIALIZED, 'initialized');
+    }
+  }
 
   @override
   Future<List<RideModel>> getAllRides() {
-    final jsonString = sharedPreferences.getString(ALL_RIDES);
+    String? jsonString = sharedPreferences.getString(ALL_RIDES);
 
     if (jsonString == null) throw LocalException();
 
-    Iterable l = json.decode(jsonString)['allRides'];
+    Iterable l = json.decode(jsonString);
     List<RideModel> allRides = List<RideModel>.from(
         l.map((rideModel) => RideModel.fromJson(rideModel)));
 
@@ -47,6 +59,10 @@ class RideLocalDataSourceImpl extends RideLocalDataSource {
   @override
   Future<bool> saveAllRides(List<RideModel> allRides) {
     return sharedPreferences.setString(
-        ALL_RIDES, jsonEncode(allRides.map((e) => e.toJson()).toList()));
+        ALL_RIDES, _getJsonStringFromRideList(allRides));
+  }
+
+  String _getJsonStringFromRideList(List<RideModel> allRides) {
+    return jsonEncode(allRides.map((e) => e.toJson()).toList());
   }
 }

@@ -61,33 +61,33 @@ void main() {
       verify(mockNetworkInfo.isConnected);
     });
 
-    group('device is online', () {
-      setUp(() {
-        when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
-      });
+    // group('device is online', () {
+    //   setUp(() {
+    //     when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
+    //   });
 
-      test(
-          'should return remote data when the call to remote data source is successful',
-          () async {
-        when(mockRideRemoteDataSource.getAllRides())
-            .thenAnswer((_) async => allRides);
+    //   test(
+    //       'should return remote data when the call to remote data source is successful',
+    //       () async {
+    //     when(mockRideRemoteDataSource.getAllRides())
+    //         .thenAnswer((_) async => allRides);
 
-        final result = await rideRepositoryImpl.getAllRides();
+    //     final result = await rideRepositoryImpl.getAllRides();
 
-        expect(result, Right(allRides));
-      });
+    //     expect(result, Right(allRides));
+    //   });
 
-      test(
-          'should return server failure when the call to remote data source is unsuccessful',
-          () async {
-        when(mockRideRemoteDataSource.getAllRides())
-            .thenThrow(ServerException());
+    //   test(
+    //       'should return server failure when the call to remote data source is unsuccessful',
+    //       () async {
+    //     when(mockRideRemoteDataSource.getAllRides())
+    //         .thenThrow(ServerException());
 
-        final result = await rideRepositoryImpl.getAllRides();
+    //     final result = await rideRepositoryImpl.getAllRides();
 
-        expect(result, Left(ServerFailure()));
-      });
-    });
+    //     expect(result, Left(ServerFailure()));
+    //   });
+    // });
 
     group('device is offline', () {
       setUp(() {

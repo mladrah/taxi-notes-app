@@ -17,7 +17,8 @@ part 'manage_work_state.dart';
 
 const String SERVER_FAILURE_MESSAGE = 'Server Failure';
 const String LOCAL_FAILURE_MESSAGE = 'Local Failure';
-const String INVALID_INPUT_MESSAGE = 'Invalid Input';
+const String INVALID_INPUT_DATE_MESSAGE = 'Invalid Date Input';
+const String INVALID_INPUT_PRICE_MESSAGE = 'Invalid Price Input';
 
 class ManageWorkBloc extends Bloc<ManageWorkEvent, ManageWorkState> {
   final AddRide addRideUseCase;
@@ -30,27 +31,35 @@ class ManageWorkBloc extends Bloc<ManageWorkEvent, ManageWorkState> {
       required this.inputConverter})
       : super(Empty()) {
     on<AddRideToList>(_onAddRideToList);
-    on<ListAllRides>(_onListAllRides);
+    on<LoadAllRides>(_onLoadAllRides);
   }
 
   void _onAddRideToList(AddRideToList event, Emitter emit) async {
     bool isFailed = false;
+    List<String> errorMessages = [];
     late final DateTime startParsed;
     late final DateTime endParsed;
     late final Decimal priceParsed;
 
-    inputConverter
-        .dateAndTimeToDateTime(event.startDate, event.startTime)
-        .fold((failure) => isFailed = true, (start) => startParsed = start);
-    inputConverter
-        .dateAndTimeToDateTime(event.endDate, event.endTime)
-        .fold((failure) => isFailed = true, (end) => endParsed = end);
-    inputConverter
-        .stringToDecimal(event.price)
-        .fold((failure) => isFailed = true, (price) => priceParsed = price);
+    inputConverter.dateAndTimeToDateTime(event.startDate, event.startTime).fold(
+        (failure) {
+      isFailed = true;
+      errorMessages.add(INVALID_INPUT_DATE_MESSAGE);
+    }, (start) => startParsed = start);
+
+    inputConverter.dateAndTimeToDateTime(event.endDate, event.endTime).fold(
+        (failure) {
+      isFailed = true;
+      errorMessages.add(INVALID_INPUT_DATE_MESSAGE);
+    }, (end) => endParsed = end);
+
+    inputConverter.stringToDecimal(event.price).fold((failure) {
+      isFailed = true;
+      errorMessages.add(INVALID_INPUT_PRICE_MESSAGE);
+    }, (price) => priceParsed = price);
 
     if (isFailed) {
-      emit(const Error(message: INVALID_INPUT_MESSAGE));
+      emit(Error(message: errorMessages.join(' | ')));
     } else {
       emit(Loading());
 
@@ -70,12 +79,16 @@ class ManageWorkBloc extends Bloc<ManageWorkEvent, ManageWorkState> {
     }
   }
 
-  void _onListAllRides(ListAllRides event, Emitter emit) async {
+  void _onLoadAllRides(LoadAllRides event, Emitter emit) async {
     emit(Loading());
+
     final result = await getAllRidesUseCase(NoParams());
+
     result.fold(
         (failure) => emit(Error(message: _mapFailureToMessage(failure))),
-        (allRides) => emit(Loaded(allRides: allRides)));
+        (allRides) => allRides.isEmpty
+            ? emit(Empty())
+            : emit(Loaded(allRides: allRides)));
   }
 
   String _mapFailureToMessage(Failure failure) {

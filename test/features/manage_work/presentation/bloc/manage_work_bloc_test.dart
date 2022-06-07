@@ -43,7 +43,7 @@ void main() {
     DateTime tStartTime = DateTime.now();
     DateTime tEndDate = DateTime.now();
     DateTime tEndTime = DateTime.now();
-    const String tPrice = '29,30';
+    const String tPrice = '29,30 €';
 
     DateTime tStartParsed = DateTime(
       tStartDate.year,
@@ -121,8 +121,14 @@ void main() {
       setUpInputConverterFailure();
 
       // assert later
-      expectLater(bloc.stream.asBroadcastStream(),
-          emits(const Error(message: INVALID_INPUT_MESSAGE)));
+      expectLater(
+          bloc.stream.asBroadcastStream(),
+          emits(Error(
+              message: [
+            INVALID_INPUT_DATE_MESSAGE,
+            INVALID_INPUT_DATE_MESSAGE,
+            INVALID_INPUT_PRICE_MESSAGE
+          ].join(' | '))));
 
       // act
       bloc.add(
@@ -268,7 +274,7 @@ void main() {
         when(mockGetAllRides(any)).thenAnswer((_) async => Right(allRides));
 
         // act
-        bloc.add(ListAllRides());
+        bloc.add(LoadAllRides());
         await untilCalled(mockGetAllRides(any));
 
         // assert
@@ -291,7 +297,7 @@ void main() {
         expectLater(bloc.stream.asBroadcastStream(), emitsInOrder(expected));
 
         // act
-        bloc.add(ListAllRides());
+        bloc.add(LoadAllRides());
       },
     );
 
@@ -310,7 +316,7 @@ void main() {
         expectLater(bloc.stream.asBroadcastStream(), emitsInOrder(expected));
 
         // act
-        bloc.add(ListAllRides());
+        bloc.add(LoadAllRides());
       },
     );
     test(
@@ -328,7 +334,7 @@ void main() {
         expectLater(bloc.stream.asBroadcastStream(), emitsInOrder(expected));
 
         // act
-        bloc.add(ListAllRides());
+        bloc.add(LoadAllRides());
       },
     );
   });

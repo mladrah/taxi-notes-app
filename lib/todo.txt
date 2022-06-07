@@ -1,0 +1,6 @@
+-bloc tutorial vids
+-add ride dispatch -> ride details page
+-list all rides
+-navigation => list -> add | list -> details
+-edit rides
+-delete rides

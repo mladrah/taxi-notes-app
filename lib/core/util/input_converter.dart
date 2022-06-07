@@ -6,6 +6,8 @@ import '../error/failures.dart';
 class InputConverter {
   Either<Failure, Decimal> stringToDecimal(String string) {
     try {
+      string = string.replaceAll(RegExp(r'[^0-9,.]+'), '');
+
       if (string.contains(',') && string.contains('.')) {
         string = string.replaceAll('.', '');
         string = string.replaceAll(',', '.');
@@ -14,8 +16,6 @@ class InputConverter {
       }
 
       final Decimal decimal = Decimal.parse(string);
-
-      if (decimal.signum < 0) throw const FormatException();
 
       return Right(decimal);
     } on FormatException {
