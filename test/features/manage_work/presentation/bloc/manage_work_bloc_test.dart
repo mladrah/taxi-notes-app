@@ -76,14 +76,14 @@ void main() {
     setUpInputConverterSuccess() {
       when(mockInputConverter.stringToDecimal(any))
           .thenReturn(Right(tPriceParsed));
-      when(mockInputConverter.dateTimesToDateTime(any, any))
+      when(mockInputConverter.dateAndTimeToDateTime(any, any))
           .thenReturn(Right(tStartParsed));
     }
 
     setUpInputConverterFailure() {
       when(mockInputConverter.stringToDecimal(any))
           .thenReturn(Left(InvalidInputFailure()));
-      when(mockInputConverter.dateTimesToDateTime(any, any))
+      when(mockInputConverter.dateAndTimeToDateTime(any, any))
           .thenReturn(Left(InvalidInputFailure()));
     }
 
@@ -107,12 +107,12 @@ void main() {
         ),
       );
 
-      await untilCalled(mockInputConverter.dateTimesToDateTime(any, any));
-      await untilCalled(mockInputConverter.dateTimesToDateTime(any, any));
+      await untilCalled(mockInputConverter.dateAndTimeToDateTime(any, any));
+      await untilCalled(mockInputConverter.dateAndTimeToDateTime(any, any));
       await untilCalled(mockInputConverter.stringToDecimal(any));
 
       // assert
-      verify(mockInputConverter.dateTimesToDateTime(tStartDate, tStartTime));
+      verify(mockInputConverter.dateAndTimeToDateTime(tStartDate, tStartTime));
       verify(mockInputConverter.stringToDecimal(tPrice));
     });
 

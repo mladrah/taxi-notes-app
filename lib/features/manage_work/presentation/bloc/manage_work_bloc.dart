@@ -40,10 +40,10 @@ class ManageWorkBloc extends Bloc<ManageWorkEvent, ManageWorkState> {
     late final Decimal priceParsed;
 
     inputConverter
-        .dateTimesToDateTime(event.startDate, event.startTime)
+        .dateAndTimeToDateTime(event.startDate, event.startTime)
         .fold((failure) => isFailed = true, (start) => startParsed = start);
     inputConverter
-        .dateTimesToDateTime(event.endDate, event.endTime)
+        .dateAndTimeToDateTime(event.endDate, event.endTime)
         .fold((failure) => isFailed = true, (end) => endParsed = end);
     inputConverter
         .stringToDecimal(event.price)

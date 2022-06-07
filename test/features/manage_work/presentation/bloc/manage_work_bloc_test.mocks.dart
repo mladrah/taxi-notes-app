@@ -93,7 +93,7 @@ class MockInputConverter extends _i1.Mock implements _i10.InputConverter {
               returnValue: _FakeEither_1<_i6.Failure, DateTime>())
           as _i3.Either<_i6.Failure, DateTime>);
   @override
-  _i3.Either<_i6.Failure, DateTime> dateTimesToDateTime(
+  _i3.Either<_i6.Failure, DateTime> dateAndTimeToDateTime(
           DateTime? date, DateTime? time) =>
       (super.noSuchMethod(Invocation.method(#dateTimesToDateTime, [date, time]),
               returnValue: _FakeEither_1<_i6.Failure, DateTime>())

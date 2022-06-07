@@ -33,7 +33,8 @@ class InputConverter {
     }
   }
 
-  Either<Failure, DateTime> dateTimesToDateTime(DateTime date, DateTime time) {
+  Either<Failure, DateTime> dateAndTimeToDateTime(
+      DateTime date, DateTime time) {
     return Right(DateTime(
         date.year, date.month, date.day, time.hour, time.minute, time.second));
   }

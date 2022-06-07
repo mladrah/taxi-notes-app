@@ -106,7 +106,7 @@ void main() {
     test(
         'should combine DateTime when date and time is passed as two DateTime objects',
         () async {
-      final result = inputConverter.dateTimesToDateTime(date, time);
+      final result = inputConverter.dateAndTimeToDateTime(date, time);
 
       expect(
           result,
