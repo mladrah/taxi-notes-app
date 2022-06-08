@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart' hide Title;
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:taxi_rahmati/features/manage_work/presentation/widgets/custom_elevated_button.dart';
+import 'package:taxi_rahmati/features/manage_work/presentation/widgets/ride_details_field.dart';
 
 import '../../domain/entities/ride.dart';
 import '../bloc/manage_work_bloc.dart';
@@ -65,24 +67,22 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
             Row(
               children: [
                 Expanded(
-                  child: _RideField(
+                  child: RideDetailsField(
                     label: 'Anrede',
                     value: widget.ride.title == Title.herr ? 'Herr' : 'Frau',
                     borderRight: true,
                   ),
                 ),
                 Expanded(
-                    flex: 4,
-                    child: _RideField(
-                      label: 'Name',
-                      value: widget.ride.name,
-                    )),
-                const SizedBox(
-                  height: 16,
+                  flex: 3,
+                  child: RideDetailsField(
+                    label: 'Name',
+                    value: widget.ride.name,
+                  ),
                 ),
               ],
             ),
-            _RideField(
+            RideDetailsField(
               label: 'Ort',
               value: widget.ride.destination,
               borderTop: false,
@@ -92,7 +92,7 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
             Row(
               children: [
                 Expanded(
-                  child: _RideField(
+                  child: RideDetailsField(
                     label: 'Datum (Start)',
                     value: _dateFormatter.format(widget.ride.start),
                     borderTop: false,
@@ -100,7 +100,7 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
                   ),
                 ),
                 Expanded(
-                  child: _RideField(
+                  child: RideDetailsField(
                     label: 'Zeit (Start)',
                     value: _timeFormatter.format(widget.ride.start),
                     borderTop: false,
@@ -111,7 +111,7 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
             Row(
               children: [
                 Expanded(
-                  child: _RideField(
+                  child: RideDetailsField(
                     label: 'Datum (Ende)',
                     value: _dateFormatter.format(widget.ride.end),
                     borderTop: false,
@@ -119,7 +119,7 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
                   ),
                 ),
                 Expanded(
-                  child: _RideField(
+                  child: RideDetailsField(
                     label: 'Zeit (Ende)',
                     value: _timeFormatter.format(widget.ride.end),
                     borderTop: false,
@@ -127,12 +127,12 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
                 ),
               ],
             ),
-            _RideField(
+            RideDetailsField(
                 label: 'Preis',
                 value: '${widget.ride.price.toString().replaceAll('.', ',')} €',
                 borderTop: false),
             Padding(
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+              padding: EdgeInsets.fromLTRB(48.h, 32.h, 48.h, 32.h),
               child: CustomElevatedButton(
                   label: 'Ändern',
                   onPressed: () {
@@ -160,79 +160,5 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
         widget.ride = result as Ride;
       });
     }
-  }
-}
-
-class _RideField extends StatelessWidget {
-  final String? label;
-  final String value;
-  final bool borderLeft;
-  final bool borderTop;
-  final bool borderRight;
-  final bool borderBot;
-  final double _borderWith = 1.5;
-
-  const _RideField(
-      {Key? key,
-      this.label,
-      required this.value,
-      this.borderLeft = false,
-      this.borderTop = true,
-      this.borderRight = false,
-      this.borderBot = true})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(16, 16, 8, 16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border(
-          left: BorderSide(
-              width: _borderWith,
-              color: borderLeft
-                  ? Theme.of(context).primaryColor
-                  : Colors.transparent),
-          top: BorderSide(
-              width: _borderWith,
-              color: borderTop
-                  ? Theme.of(context).primaryColor
-                  : Colors.transparent),
-          right: BorderSide(
-              width: _borderWith,
-              color: borderRight
-                  ? Theme.of(context).primaryColor
-                  : Colors.transparent),
-          bottom: BorderSide(
-              width: _borderWith,
-              color: borderBot
-                  ? Theme.of(context).primaryColor
-                  : Colors.transparent),
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label!,
-            textAlign: TextAlign.left,
-            style: const TextStyle(),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          Text(
-            value,
-            textAlign: TextAlign.left,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }

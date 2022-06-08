@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' hide Title;
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:taxi_rahmati/features/manage_work/presentation/bloc/manage_work_bloc.dart';
 import '../../domain/entities/ride.dart';
 import '../widgets/currency_form_field.dart';
@@ -59,7 +60,7 @@ class _RideFormPageState extends State<RideFormPage> {
       child: SingleChildScrollView(
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(48.h),
             child: Form(
               key: _formKey,
               child: Column(
@@ -92,24 +93,21 @@ class _RideFormPageState extends State<RideFormPage> {
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 8,
-                  ),
                   CustomTextFormField(
                     label: 'Name',
                     onChanged: (value) => _name = value,
                     initialValue: _name,
                   ),
-                  const SizedBox(
-                    height: 16,
+                  SizedBox(
+                    height: 32.h,
                   ),
                   CustomTextFormField(
                     label: 'Ort',
                     onChanged: (value) => _destination = value,
                     initialValue: _destination,
                   ),
-                  const SizedBox(
-                    height: 16,
+                  SizedBox(
+                    height: 32.h,
                   ),
                   DateTimeFormField(
                     label: 'Start',
@@ -118,8 +116,8 @@ class _RideFormPageState extends State<RideFormPage> {
                     initialValueDate: _startDate,
                     initialValueTime: _startTime,
                   ),
-                  const SizedBox(
-                    height: 16,
+                  SizedBox(
+                    height: 32.h,
                   ),
                   DateTimeFormField(
                     label: 'Ende',
@@ -128,16 +126,16 @@ class _RideFormPageState extends State<RideFormPage> {
                     initialValueDate: _endDate,
                     initialValueTime: _endTime,
                   ),
-                  const SizedBox(
-                    height: 16,
+                  SizedBox(
+                    height: 32.h,
                   ),
                   CurrencyFormField(
                     label: 'Preis (€)',
                     onChanged: (value) => _price = value,
                     initialValue: _price,
                   ),
-                  const SizedBox(
-                    height: 16,
+                  SizedBox(
+                    height: 32.h,
                   ),
                   BlocBuilder<ManageWorkBloc, ManageWorkState>(
                     builder: (context, state) {
@@ -169,9 +167,6 @@ class _RideFormPageState extends State<RideFormPage> {
   }
 
   void _dispatchEvent() {
-    // ScaffoldMessenger.of(context).showSnackBar(
-    //   SnackBar(content: Text('$_title $_name $_price')),
-    // );
     if (widget.ride == null) {
       context.read<ManageWorkBloc>().add(
             AddRideToRepository(

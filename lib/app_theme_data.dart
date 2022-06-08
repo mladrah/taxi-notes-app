@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppThemeData {
@@ -35,7 +36,6 @@ class AppThemeData {
         backgroundColor: Colors.white,
         foregroundColor: textColor,
         titleTextStyle: GoogleFonts.kodchasan(
-          fontSize: 20,
           fontWeight: FontWeight.bold,
           color: textColor,
         ),
@@ -46,7 +46,7 @@ class AppThemeData {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           textStyle: GoogleFonts.kodchasan(
             fontWeight: FontWeight.bold,
-            fontSize: 20,
+            fontSize: 88.sp,
           ),
         ),
       ),
