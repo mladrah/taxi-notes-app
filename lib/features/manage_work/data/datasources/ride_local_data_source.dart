@@ -6,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taxi_rahmati/core/error/exceptions.dart';
 import 'package:taxi_rahmati/features/manage_work/data/datasources/data_source.dart';
 import 'package:taxi_rahmati/features/manage_work/data/models/ride_model.dart';
-import 'package:taxi_rahmati/features/manage_work/domain/entities/ride.dart';
 
 const String ALL_RIDES = 'ALL_RIDES';
 const String INITIALIZED = 'INITIALIZED';
