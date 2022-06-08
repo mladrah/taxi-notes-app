@@ -35,24 +35,38 @@ class MockRideLocalDataSource extends _i1.Mock
   }
 
   @override
-  _i4.Future<bool> saveAllRides(List<_i2.RideModel>? allRides) =>
-      (super.noSuchMethod(Invocation.method(#saveAllRides, [allRides]),
-          returnValue: Future<bool>.value(false)) as _i4.Future<bool>);
+  _i4.Future<void> clear() => (super.noSuchMethod(Invocation.method(#clear, []),
+      returnValue: Future<void>.value(),
+      returnValueForMissingStub: Future<void>.value()) as _i4.Future<void>);
   @override
   _i4.Future<void> initialize() =>
       (super.noSuchMethod(Invocation.method(#initialize, []),
           returnValue: Future<void>.value(),
           returnValueForMissingStub: Future<void>.value()) as _i4.Future<void>);
   @override
-  _i4.Future<List<_i2.RideModel>> getAllRides() =>
-      (super.noSuchMethod(Invocation.method(#getAllRides, []),
-              returnValue: Future<List<_i2.RideModel>>.value(<_i2.RideModel>[]))
-          as _i4.Future<List<_i2.RideModel>>);
+  _i4.Future<bool> saveRides(List<_i2.RideModel>? allRides) =>
+      (super.noSuchMethod(Invocation.method(#saveRides, [allRides]),
+          returnValue: Future<bool>.value(false)) as _i4.Future<bool>);
   @override
   _i4.Future<_i2.RideModel> addRide(_i2.RideModel? rideModel) =>
       (super.noSuchMethod(Invocation.method(#addRide, [rideModel]),
               returnValue: Future<_i2.RideModel>.value(_FakeRideModel_0()))
           as _i4.Future<_i2.RideModel>);
+  @override
+  _i4.Future<_i2.RideModel> deleteRide(_i2.RideModel? rideModel) =>
+      (super.noSuchMethod(Invocation.method(#deleteRide, [rideModel]),
+              returnValue: Future<_i2.RideModel>.value(_FakeRideModel_0()))
+          as _i4.Future<_i2.RideModel>);
+  @override
+  _i4.Future<_i2.RideModel> updateRide(_i2.RideModel? rideModel) =>
+      (super.noSuchMethod(Invocation.method(#updateRide, [rideModel]),
+              returnValue: Future<_i2.RideModel>.value(_FakeRideModel_0()))
+          as _i4.Future<_i2.RideModel>);
+  @override
+  _i4.Future<List<_i2.RideModel>> getRides() =>
+      (super.noSuchMethod(Invocation.method(#getRides, []),
+              returnValue: Future<List<_i2.RideModel>>.value(<_i2.RideModel>[]))
+          as _i4.Future<List<_i2.RideModel>>);
 }
 
 /// A class which mocks [RideRemoteDataSource].
@@ -65,15 +79,25 @@ class MockRideRemoteDataSource extends _i1.Mock
   }
 
   @override
-  _i4.Future<List<_i2.RideModel>> getAllRides() =>
-      (super.noSuchMethod(Invocation.method(#getAllRides, []),
-              returnValue: Future<List<_i2.RideModel>>.value(<_i2.RideModel>[]))
-          as _i4.Future<List<_i2.RideModel>>);
-  @override
   _i4.Future<_i2.RideModel> addRide(_i2.RideModel? rideModel) =>
       (super.noSuchMethod(Invocation.method(#addRide, [rideModel]),
               returnValue: Future<_i2.RideModel>.value(_FakeRideModel_0()))
           as _i4.Future<_i2.RideModel>);
+  @override
+  _i4.Future<_i2.RideModel> deleteRide(_i2.RideModel? rideModel) =>
+      (super.noSuchMethod(Invocation.method(#deleteRide, [rideModel]),
+              returnValue: Future<_i2.RideModel>.value(_FakeRideModel_0()))
+          as _i4.Future<_i2.RideModel>);
+  @override
+  _i4.Future<_i2.RideModel> updateRide(_i2.RideModel? rideModel) =>
+      (super.noSuchMethod(Invocation.method(#updateRide, [rideModel]),
+              returnValue: Future<_i2.RideModel>.value(_FakeRideModel_0()))
+          as _i4.Future<_i2.RideModel>);
+  @override
+  _i4.Future<List<_i2.RideModel>> getRides() =>
+      (super.noSuchMethod(Invocation.method(#getRides, []),
+              returnValue: Future<List<_i2.RideModel>>.value(<_i2.RideModel>[]))
+          as _i4.Future<List<_i2.RideModel>>);
 }
 
 /// A class which mocks [NetworkInfo].

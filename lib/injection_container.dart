@@ -6,7 +6,9 @@ import 'package:taxi_rahmati/features/manage_work/data/datasources/ride_remote_d
 import 'package:taxi_rahmati/features/manage_work/data/repositories/ride_repository_impl.dart';
 import 'package:taxi_rahmati/features/manage_work/domain/repositories/ride_repository.dart';
 import 'package:taxi_rahmati/features/manage_work/domain/usecases/add_ride.dart';
-import 'package:taxi_rahmati/features/manage_work/domain/usecases/get_all_rides.dart';
+import 'package:taxi_rahmati/features/manage_work/domain/usecases/delete_ride.dart';
+import 'package:taxi_rahmati/features/manage_work/domain/usecases/get_rides.dart';
+import 'package:taxi_rahmati/features/manage_work/domain/usecases/update_ride.dart';
 import 'package:taxi_rahmati/features/manage_work/presentation/bloc/manage_work_bloc.dart';
 
 import 'core/network/network_info.dart';
@@ -19,6 +21,8 @@ Future<void> init() async {
   sl.registerFactory(
     () => ManageWorkBloc(
       addRideUseCase: sl(),
+      deleteRideUseCase: sl(),
+      updateRideUseCase: sl(),
       getAllRidesUseCase: sl(),
       inputConverter: sl(),
     ),
@@ -26,7 +30,9 @@ Future<void> init() async {
 
   // Use cases
   sl.registerLazySingleton(() => AddRide(rideRepository: sl()));
-  sl.registerLazySingleton(() => GetAllRides(rideRepository: sl()));
+  sl.registerLazySingleton(() => GetRides(rideRepository: sl()));
+  sl.registerLazySingleton(() => DeleteRide(rideRepository: sl()));
+  sl.registerLazySingleton(() => UpdateRide(rideRepository: sl()));
 
   // Repository
   sl.registerLazySingleton<RideRepository>(

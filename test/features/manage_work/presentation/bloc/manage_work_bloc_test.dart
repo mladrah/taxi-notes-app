@@ -8,34 +8,41 @@ import 'package:taxi_rahmati/core/usecases/usecase.dart';
 import 'package:taxi_rahmati/core/util/input_converter.dart';
 import 'package:taxi_rahmati/features/manage_work/domain/entities/ride.dart';
 import 'package:taxi_rahmati/features/manage_work/domain/usecases/add_ride.dart';
-import 'package:taxi_rahmati/features/manage_work/domain/usecases/get_all_rides.dart';
+import 'package:taxi_rahmati/features/manage_work/domain/usecases/delete_ride.dart';
+import 'package:taxi_rahmati/features/manage_work/domain/usecases/get_rides.dart';
+import 'package:taxi_rahmati/features/manage_work/domain/usecases/update_ride.dart';
 import 'package:taxi_rahmati/features/manage_work/presentation/bloc/manage_work_bloc.dart';
 import 'package:uuid/uuid.dart';
 import 'manage_work_bloc_test.mocks.dart';
 
-@GenerateMocks([AddRide, GetAllRides, InputConverter])
+@GenerateMocks([AddRide, GetRides, DeleteRide, UpdateRide, InputConverter])
 void main() {
   late ManageWorkBloc bloc;
   late MockAddRide mockAddRide;
-  late MockGetAllRides mockGetAllRides;
+  late MockDeleteRide mockDeleteRide;
+  late MockUpdateRide mockUpdateRide;
+  late MockGetRides mockGetAllRides;
   late MockInputConverter mockInputConverter;
-
   setUp(() {
     mockAddRide = MockAddRide();
-    mockGetAllRides = MockGetAllRides();
+    mockDeleteRide = MockDeleteRide();
+    mockUpdateRide = MockUpdateRide();
+    mockGetAllRides = MockGetRides();
     mockInputConverter = MockInputConverter();
 
     bloc = ManageWorkBloc(
         addRideUseCase: mockAddRide,
+        deleteRideUseCase: mockDeleteRide,
+        updateRideUseCase: mockUpdateRide,
         getAllRidesUseCase: mockGetAllRides,
         inputConverter: mockInputConverter);
   });
 
   test('inititalState should be Empty', () {
-    expect(bloc.state, Empty());
+    expect(bloc.state, Loading());
   });
 
-  group('AddRideToList', () {
+  group('AddRideToRepository', () {
     const String tName = 'Lorem';
     const Title tTitle = Title.herr;
     const String tDestination = 'Ipsum';
@@ -73,6 +80,8 @@ void main() {
       price: tPriceParsed,
     );
 
+    List<Ride> allRides = [ride];
+
     setUpInputConverterSuccess() {
       when(mockInputConverter.stringToDecimal(any))
           .thenReturn(Right(tPriceParsed));
@@ -95,7 +104,7 @@ void main() {
 
       // act
       bloc.add(
-        AddRideToList(
+        AddRideToRepository(
           title: tTitle,
           name: tName,
           destination: tDestination,
@@ -132,7 +141,7 @@ void main() {
 
       // act
       bloc.add(
-        AddRideToList(
+        AddRideToRepository(
           title: tTitle,
           name: tName,
           destination: tDestination,
@@ -150,7 +159,7 @@ void main() {
       when(mockAddRide(any)).thenAnswer((_) async => Right(ride));
 
       bloc.add(
-        AddRideToList(
+        AddRideToRepository(
           title: tTitle,
           name: tName,
           destination: tDestination,
@@ -176,13 +185,13 @@ void main() {
         // assert later
         final expected = [
           Loading(),
-          Created(ride: ride),
+          Created(),
         ];
         expectLater(bloc.stream.asBroadcastStream(), emitsInOrder(expected));
 
         // act
         bloc.add(
-          AddRideToList(
+          AddRideToRepository(
             title: tTitle,
             name: tName,
             destination: tDestination,
@@ -211,7 +220,7 @@ void main() {
         expectLater(bloc.stream.asBroadcastStream(), emitsInOrder(expected));
         // act
         bloc.add(
-          AddRideToList(
+          AddRideToRepository(
             title: tTitle,
             name: tName,
             destination: tDestination,
@@ -241,7 +250,7 @@ void main() {
         // act
 
         bloc.add(
-          AddRideToList(
+          AddRideToRepository(
             title: tTitle,
             name: tName,
             destination: tDestination,
@@ -256,7 +265,7 @@ void main() {
     );
   });
 
-  group('ListAllRides', () {
+  group('LoadRidesFromRepository', () {
     final ride = Ride(
         id: const Uuid().v1(),
         name: 'tName',
@@ -274,7 +283,7 @@ void main() {
         when(mockGetAllRides(any)).thenAnswer((_) async => Right(allRides));
 
         // act
-        bloc.add(LoadAllRides());
+        bloc.add(LoadRidesFromRepository());
         await untilCalled(mockGetAllRides(any));
 
         // assert
@@ -291,13 +300,13 @@ void main() {
 
         final expected = [
           Loading(),
-          Loaded(allRides: allRides),
+          Loaded(rides: allRides),
         ];
 
         expectLater(bloc.stream.asBroadcastStream(), emitsInOrder(expected));
 
         // act
-        bloc.add(LoadAllRides());
+        bloc.add(LoadRidesFromRepository());
       },
     );
 
@@ -316,7 +325,7 @@ void main() {
         expectLater(bloc.stream.asBroadcastStream(), emitsInOrder(expected));
 
         // act
-        bloc.add(LoadAllRides());
+        bloc.add(LoadRidesFromRepository());
       },
     );
     test(
@@ -334,7 +343,7 @@ void main() {
         expectLater(bloc.stream.asBroadcastStream(), emitsInOrder(expected));
 
         // act
-        bloc.add(LoadAllRides());
+        bloc.add(LoadRidesFromRepository());
       },
     );
   });

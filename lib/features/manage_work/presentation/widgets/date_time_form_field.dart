@@ -4,17 +4,22 @@ import 'package:intl/intl.dart';
 
 class DateTimeFormField extends StatelessWidget {
   final String label;
+  final DateTime? initialValueDate;
+  final DateTime? initialValueTime;
+
   final void Function(DateTime?) onChangedDate;
   final void Function(DateTime?) onChangedTime;
   final _dateFormat = DateFormat("dd.MM.yyyy");
   final _timeFormat = DateFormat("HH:mm");
 
-  DateTimeFormField({
-    Key? key,
-    required this.label,
-    required this.onChangedDate,
-    required this.onChangedTime,
-  }) : super(key: key);
+  DateTimeFormField(
+      {Key? key,
+      required this.label,
+      required this.onChangedDate,
+      required this.onChangedTime,
+      this.initialValueDate,
+      this.initialValueTime})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +41,7 @@ class DateTimeFormField extends StatelessWidget {
                   return (value == null) ? '' : null;
                 },
                 format: _dateFormat,
-                initialValue: DateTime.now(),
+                initialValue: initialValueDate ?? DateTime.now(),
                 onShowPicker: (context, currentValue) {
                   return showDatePicker(
                       context: context,
@@ -56,7 +61,7 @@ class DateTimeFormField extends StatelessWidget {
                   return (value == null) ? '' : null;
                 },
                 format: _timeFormat,
-                initialValue: DateTime.now(),
+                initialValue: initialValueTime ?? DateTime.now(),
                 onShowPicker: (context, currentValue) async {
                   final time = await showTimePicker(
                     builder: (context, childWidget) {

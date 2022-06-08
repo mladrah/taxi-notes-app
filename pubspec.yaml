@@ -27,6 +27,7 @@ dependencies:
   google_fonts: ^3.0.1
   datetime_picker_formfield: ^2.0.0
   currency_text_input_formatter: ^2.1.5
+  printing: ^5.9.1
   
 dev_dependencies:
   flutter_test:

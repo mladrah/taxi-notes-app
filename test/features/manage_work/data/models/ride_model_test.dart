@@ -9,13 +9,13 @@ import '../../../../fixtures/fixture_reader.dart';
 
 void main() {
   final rideModel = RideModel(
-      id: '79b6b990-e1d3-11ec-aaf1-8738c050a64f',
+      id: '65b6b990-e1d3-11ec-aaf1-8738c050a64f',
       name: 'tName',
       title: Title.herr,
       destination: 'tDestination',
       start: DateTime.parse('2022-06-11 13:37:27.000Z'),
       end: DateTime.parse('2022-06-11 14:37:27.000Z'),
-      price: Decimal.parse('28.3'));
+      price: Decimal.parse('24.3'));
 
   test('should be a subclass of Ride entity', () async {
     expect(rideModel, isA<Ride>());
@@ -36,13 +36,13 @@ void main() {
       final result = rideModel.toJson();
 
       final expectedMap = {
-        "id": "79b6b990-e1d3-11ec-aaf1-8738c050a64f",
+        "id": "65b6b990-e1d3-11ec-aaf1-8738c050a64f",
         "name": "tName",
         "title": "herr",
         "destination": "tDestination",
         "start": "2022-06-11 13:37:27.000Z",
         "end": "2022-06-11 14:37:27.000Z",
-        "price": "28.3"
+        "price": "24.3"
       };
       expect(result, expectedMap);
     });

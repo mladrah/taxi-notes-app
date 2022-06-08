@@ -5,6 +5,7 @@ import 'package:taxi_rahmati/features/manage_work/presentation/pages/ride_detail
 import 'package:taxi_rahmati/features/manage_work/presentation/pages/ride_form_page.dart';
 
 import '../../features/manage_work/domain/entities/ride.dart';
+import '../../features/manage_work/presentation/pages/rides_print_preview_page.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -17,13 +18,14 @@ class RouteGenerator {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(
-          builder: (_) => const MainPage(),
+          builder: (_) => MainPage(),
           settings: const RouteSettings(name: '/'),
         );
 
       case '/rideForm':
+        Ride? ride = args?['ride'] as Ride?;
         return MaterialPageRoute(
-          builder: (_) => const RideFormPage(),
+          builder: (_) => RideFormPage(ride: ride),
           settings: const RouteSettings(name: '/rideForm'),
         );
 
@@ -34,6 +36,13 @@ class RouteGenerator {
                   ride: ride,
                 ),
             settings: const RouteSettings(name: '/rideDetails'));
+      case '/ridesPrintPreview':
+        final rides = args!['rides'] as List<Ride>;
+        return MaterialPageRoute(
+            builder: (_) => RidesPrintPreviewPage(
+                  rides: rides,
+                ),
+            settings: const RouteSettings(name: '/ridesPrintPreview'));
 
       default:
         return _errorRoute(settings.name);

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final String label;
+  final String initialValue;
   final double? width;
   final void Function(String) onChanged;
 
@@ -9,6 +10,7 @@ class CustomTextFormField extends StatelessWidget {
     Key? key,
     required this.label,
     required this.onChanged,
+    this.initialValue = '',
     this.width,
   }) : super(key: key);
 
@@ -20,6 +22,7 @@ class CustomTextFormField extends StatelessWidget {
           width: width ?? double.infinity,
           child: TextFormField(
             onChanged: onChanged,
+            initialValue: initialValue,
             validator: (value) {
               return (value == null || value.isEmpty) ? '' : null;
             },

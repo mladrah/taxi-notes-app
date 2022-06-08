@@ -23,6 +23,18 @@ void main() {
     rideLocalDataSourceImpl =
         RideLocalDataSourceImpl(sharedPreferences: mockSharedPreferences);
   });
+
+  final rideModel = RideModel(
+      id: '65b6b990-e1d3-11ec-aaf1-8738c050a64f',
+      name: 'tName',
+      title: Title.herr,
+      destination: 'tDestination',
+      start: DateTime.parse('2022-06-11 13:37:27.000Z'),
+      end: DateTime.parse('2022-06-11 14:37:27.000Z'),
+      price: Decimal.parse('24.3'));
+
+  final rideModels = [rideModel];
+
   group('initialize', () {
     test(
         'should initialize empty list when shared preferences does not have a list',
@@ -50,58 +62,65 @@ void main() {
     });
   });
 
-  group('getAllRides', () {
+  group('getRides', () {
     Iterable l = json.decode(fixture('all_rides.json'));
     List<RideModel> allRides = List<RideModel>.from(
         l.map((rideModel) => RideModel.fromJson(rideModel)));
 
     test(
-        'should return all Rides from SharedPreferences when there is atleast one inside the local repisotory',
+        'should return all Rides from SharedPreferences when data exists inside the local repository',
         () async {
       when(mockSharedPreferences.getString(any))
           .thenReturn(fixture('all_rides.json'));
 
-      final result = await rideLocalDataSourceImpl.getAllRides();
+      final result = await rideLocalDataSourceImpl.getRides();
 
       verify(mockSharedPreferences.getString(ALL_RIDES));
       expect(result, allRides);
     });
 
     test(
-        'should throw LocalException when there is no Rides inside the local repisotory',
+        'should throw LocalException when there is no data inside the local repisotory',
         () async {
       when(mockSharedPreferences.getString(any)).thenReturn(null);
 
-      final call = rideLocalDataSourceImpl.getAllRides;
+      final call = rideLocalDataSourceImpl.getRides;
 
       expect(() => call(), throwsA(isA<LocalException>()));
     });
   });
 
-  group('saveAllRides', () {
-    List<RideModel> allRides = [
-      RideModel(
-          id: '65b6b990-e1d3-11ec-aaf1-8738c050a64f',
-          name: 'tName',
-          title: Title.herr,
-          destination: 'tDestination',
-          start: DateTime.parse('2022-06-11 13:37:27.000Z'),
-          end: DateTime.parse('2022-06-11 14:37:27.000Z'),
-          price: Decimal.parse('24.3'))
-    ];
-
+  group('saveRides', () {
     test('should call SharedPereferences to save list of Rides', () {
       when(mockSharedPreferences.setString(any, any))
           .thenAnswer((_) async => true);
 
-      rideLocalDataSourceImpl.saveAllRides(allRides);
+      rideLocalDataSourceImpl.saveRides(rideModels);
 
       final expectedJsonString =
-          jsonEncode(allRides.map((e) => e.toJson()).toList());
+          jsonEncode(rideModels.map((e) => e.toJson()).toList());
       verify(mockSharedPreferences.setString(
         ALL_RIDES,
         expectedJsonString,
       ));
     });
   });
+
+  // group('addRide', () {});
+
+  // group('deleteRide', () {
+  //   test('should delete Ride inside SharedPreferences', () async {
+  //     when(rideLocalDataSourceImpl.getRides())
+  //         .thenAnswer((_) async => rideModels);
+  //     when(rideLocalDataSourceImpl.saveRides(<RideModel>[]))
+  //         .thenAnswer((_) async => true);
+
+  //     rideLocalDataSourceImpl.deleteRide(rideModel);
+
+  //     final expectedJsonString =
+  //         jsonEncode(rideModels.map((e) => e.toJson()).toList());
+
+  //     verify(rideLocalDataSourceImpl.saveRides(<RideModel>[]));
+  //   });
+  // });
 }
