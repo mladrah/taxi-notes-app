@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class CurrencyFormField extends StatelessWidget {
-  String label;
+  final String label;
   final void Function(String) onChanged;
-  CurrencyFormField({
+  final String initialValue;
+
+  const CurrencyFormField({
     Key? key,
     required this.label,
     required this.onChanged,
+    this.initialValue = '',
   }) : super(key: key);
 
   @override
@@ -17,6 +20,7 @@ class CurrencyFormField extends StatelessWidget {
       children: [
         TextFormField(
           onChanged: onChanged,
+          initialValue: initialValue.isEmpty ? '' : '$initialValue €',
           validator: (value) {
             return (value == null || value.isEmpty) ? '' : null;
           },

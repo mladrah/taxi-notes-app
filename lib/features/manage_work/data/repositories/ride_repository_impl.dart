@@ -24,53 +24,54 @@ class RideRepositoryImpl extends RideRepository {
     await networkInfo.isConnected;
     try {
       rideLocalDataSource.initialize();
-
-      final rideModel = RideModel(
-        id: ride.id,
-        name: ride.name,
-        title: ride.title,
-        destination: ride.destination,
-        start: ride.start,
-        end: ride.end,
-        price: ride.price,
-      );
-      return Right(await rideLocalDataSource.addRide(rideModel));
+      return Right(await rideLocalDataSource.addRide(_rideToRideModel(ride)));
     } on LocalException {
       return Left(LocalFailure());
     }
-
-    // if (await networkInfo.isConnected) {
-    //   try {
-    //     return Right(await rideRemoteDataSource.addRide(ride as RideModel));
-    //   } on ServerException {
-    //     return Left(ServerFailure());
-    //   }
-    // } else {
-    //   return Left(NetworkFailure());
-    // }
   }
 
   @override
-  Future<Either<Failure, List<Ride>>> getAllRides() async {
+  Future<Either<Failure, Ride>> deleteRide(Ride ride) async {
     await networkInfo.isConnected;
     try {
-      rideLocalDataSource.initialize();
-      return Right(await rideLocalDataSource.getAllRides());
+      return Right(
+          await rideLocalDataSource.deleteRide(_rideToRideModel(ride)));
     } on LocalException {
       return Left(LocalFailure());
     }
-    // if (await networkInfo.isConnected) {
-    //   try {
-    //     return Right(await rideRemoteDataSource.getAllRides());
-    //   } on ServerException {
-    //     return Left(ServerFailure());
-    //   }
-    // } else {
-    //   try {
-    //     return Right(await rideLocalDataSource.getAllRides());
-    //   } on LocalException {
-    //     return Left(LocalFailure());
-    //   }
-    // }
+  }
+
+  @override
+  Future<Either<Failure, Ride>> updateRide(Ride ride) async {
+    await networkInfo.isConnected;
+    try {
+      return Right(
+          await rideLocalDataSource.updateRide(_rideToRideModel(ride)));
+    } on LocalException {
+      return Left(LocalFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Ride>>> getRides() async {
+    await networkInfo.isConnected;
+    try {
+      rideLocalDataSource.initialize();
+      return Right(await rideLocalDataSource.getRides());
+    } on LocalException {
+      return Left(LocalFailure());
+    }
+  }
+
+  RideModel _rideToRideModel(Ride ride) {
+    return RideModel(
+      id: ride.id,
+      name: ride.name,
+      title: ride.title,
+      destination: ride.destination,
+      start: ride.start,
+      end: ride.end,
+      price: ride.price,
+    );
   }
 }

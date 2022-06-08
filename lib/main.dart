@@ -29,8 +29,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<ManageWorkBloc>()..add(LoadAllRides()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+            create: (context) => sl<ManageWorkBloc>()..add(LoadRidesFromRepository()))
+      ],
       child: MaterialApp(
         title: 'Taxi Rahmati',
         theme: AppThemeData().lighTheme,

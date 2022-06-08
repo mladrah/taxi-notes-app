@@ -9,7 +9,8 @@ import '../widgets/date_time_form_field.dart';
 import '../widgets/radio_button.dart';
 
 class RideFormPage extends StatefulWidget {
-  const RideFormPage({Key? key}) : super(key: key);
+  final Ride? ride;
+  const RideFormPage({Key? key, this.ride}) : super(key: key);
 
   @override
   State<RideFormPage> createState() => _RideFormPageState();
@@ -17,14 +18,21 @@ class RideFormPage extends StatefulWidget {
 
 class _RideFormPageState extends State<RideFormPage> {
   final _formKey = GlobalKey<FormState>();
-  Title _title = Title.herr;
-  late String _name;
-  late String _destination;
-  late String _price;
-  DateTime? _startDate = DateTime.now();
-  DateTime? _startTime = DateTime.now();
-  DateTime? _endDate = DateTime.now();
-  DateTime? _endTime = DateTime.now();
+  late Title _title = widget.ride == null ? Title.herr : widget.ride!.title;
+  late String _name = widget.ride == null ? '' : widget.ride!.name;
+  late String _destination =
+      widget.ride == null ? '' : widget.ride!.destination;
+  late String _price = widget.ride == null
+      ? ''
+      : widget.ride!.price.toString().replaceAll('.', ',');
+  late DateTime? _startDate =
+      widget.ride == null ? DateTime.now() : widget.ride!.start;
+  late DateTime? _startTime =
+      widget.ride == null ? DateTime.now() : widget.ride!.start;
+  late DateTime? _endDate =
+      widget.ride == null ? DateTime.now() : widget.ride!.end;
+  late DateTime? _endTime =
+      widget.ride == null ? DateTime.now() : widget.ride!.end;
 
   @override
   Widget build(BuildContext context) {
@@ -39,16 +47,12 @@ class _RideFormPageState extends State<RideFormPage> {
     return BlocListener<ManageWorkBloc, ManageWorkState>(
       listener: (context, state) {
         if (state is Created) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Added')),
-          );
+          Navigator.pop(context);
+        } else if (state is Updated) {
+          Navigator.pop(context, state.ride);
         } else if (state is Error) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Error: $_price ' + state.message)),
-          );
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Else: ' + state.toString())),
+            SnackBar(content: Text(state.message)),
           );
         }
       },
@@ -94,6 +98,7 @@ class _RideFormPageState extends State<RideFormPage> {
                   CustomTextFormField(
                     label: 'Name',
                     onChanged: (value) => _name = value,
+                    initialValue: _name,
                   ),
                   const SizedBox(
                     height: 16,
@@ -101,6 +106,7 @@ class _RideFormPageState extends State<RideFormPage> {
                   CustomTextFormField(
                     label: 'Ort',
                     onChanged: (value) => _destination = value,
+                    initialValue: _destination,
                   ),
                   const SizedBox(
                     height: 16,
@@ -109,6 +115,8 @@ class _RideFormPageState extends State<RideFormPage> {
                     label: 'Start',
                     onChangedDate: (value) => _startDate = value,
                     onChangedTime: (value) => _startTime = value,
+                    initialValueDate: _startDate,
+                    initialValueTime: _startTime,
                   ),
                   const SizedBox(
                     height: 16,
@@ -117,6 +125,8 @@ class _RideFormPageState extends State<RideFormPage> {
                     label: 'Ende',
                     onChangedDate: (value) => _endDate = value,
                     onChangedTime: (value) => _endTime = value,
+                    initialValueDate: _endDate,
+                    initialValueTime: _endTime,
                   ),
                   const SizedBox(
                     height: 16,
@@ -124,17 +134,30 @@ class _RideFormPageState extends State<RideFormPage> {
                   CurrencyFormField(
                     label: 'Preis (€)',
                     onChanged: (value) => _price = value,
+                    initialValue: _price,
                   ),
                   const SizedBox(
                     height: 16,
                   ),
-                  CustomElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        dispatchAdd();
+                  BlocBuilder<ManageWorkBloc, ManageWorkState>(
+                    builder: (context, state) {
+                      if (state is Loading) {
+                        return const CustomElevatedButton(
+                          onPressed: null,
+                          label: 'Erstellen',
+                          child: CircularProgressIndicator(),
+                        );
+                      } else {
+                        return CustomElevatedButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              _dispatchEvent();
+                            }
+                          },
+                          label: widget.ride == null ? 'Erstellen' : 'Ändern',
+                        );
                       }
                     },
-                    label: 'Erstellen',
                   )
                 ],
               ),
@@ -145,9 +168,26 @@ class _RideFormPageState extends State<RideFormPage> {
     );
   }
 
-  void dispatchAdd() {
-    context.read<ManageWorkBloc>().add(
-          AddRideToList(
+  void _dispatchEvent() {
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   SnackBar(content: Text('$_title $_name $_price')),
+    // );
+    if (widget.ride == null) {
+      context.read<ManageWorkBloc>().add(
+            AddRideToRepository(
+              title: _title,
+              name: _name,
+              destination: _destination,
+              startDate: _startDate!,
+              startTime: _startTime!,
+              endDate: _endDate!,
+              endTime: _endTime!,
+              price: _price,
+            ),
+          );
+    } else {
+      context.read<ManageWorkBloc>().add(UpdateRideInRepository(
+            id: widget.ride!.id,
             title: _title,
             name: _name,
             destination: _destination,
@@ -156,19 +196,7 @@ class _RideFormPageState extends State<RideFormPage> {
             endDate: _endDate!,
             endTime: _endTime!,
             price: _price,
-          ),
-        );
-    // BlocProvider.of<ManageWorkBloc>(context).add(
-    //   AddRideToList(
-    //     title: _title,
-    //     name: _name,
-    //     destination: _destination,
-    //     startDate: _startDate!,
-    //     startTime: _startTime!,
-    //     endDate: _endDate!,
-    //     endTime: _endTime!,
-    //     price: _price,
-    //   ),
-    // );
+          ));
+    }
   }
 }

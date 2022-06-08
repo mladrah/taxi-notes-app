@@ -4,14 +4,15 @@ import 'package:taxi_rahmati/core/usecases/usecase.dart';
 import 'package:taxi_rahmati/features/manage_work/domain/repositories/ride_repository.dart';
 
 import '../entities/ride.dart';
+import 'shared/params_ride.dart';
 
-class GetAllRides extends UseCase<List<Ride>, NoParams> {
+class UpdateRide implements UseCase<Ride, Params> {
   final RideRepository rideRepository;
 
-  GetAllRides({required this.rideRepository});
+  UpdateRide({required this.rideRepository});
 
   @override
-  Future<Either<Failure, List<Ride>>> call(NoParams params) async {
-    return await rideRepository.getAllRides();
+  Future<Either<Failure, Ride>> call(params) async {
+    return await rideRepository.updateRide(params.ride);
   }
 }

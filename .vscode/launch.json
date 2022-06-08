@@ -14,7 +14,8 @@
         {
             "name": "taxi_rahmati",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "program": "lib/main.dart"
         },
         {
             "name": "taxi_rahmati (profile mode)",

@@ -20,7 +20,7 @@ class Ride extends Equatable {
       required this.price});
 
   @override
-  List<Object> get props => [id, name, title, destination, start, end, price];
+  List<Object> get props => [id, title, name, destination, start, end, price];
 }
 
 enum Title { herr, frau }

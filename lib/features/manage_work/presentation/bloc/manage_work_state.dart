@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 part of 'manage_work_bloc.dart';
 
 abstract class ManageWorkState extends Equatable {
@@ -7,26 +9,35 @@ abstract class ManageWorkState extends Equatable {
   List<Object> get props => [];
 }
 
-class Empty extends ManageWorkState {}
-
 class Loading extends ManageWorkState {}
 
-// ignore: must_be_immutable
 class Loaded extends ManageWorkState {
-  List<Ride> allRides;
+  List<Ride> rides;
 
-  Loaded({required this.allRides});
+  Loaded({required this.rides});
+
+  @override
+  List<Object> get props => [rides];
 }
 
-// ignore: must_be_immutable
-class Created extends ManageWorkState {
+class Created extends ManageWorkState {}
+
+class Deleted extends ManageWorkState {}
+
+class Updated extends ManageWorkState {
   Ride ride;
 
-  Created({required this.ride});
+  Updated({required this.ride});
+
+  @override
+  List<Object> get props => [ride];
 }
 
 class Error extends ManageWorkState {
   final String message;
 
   const Error({required this.message});
+
+  @override
+  List<Object> get props => [message];
 }

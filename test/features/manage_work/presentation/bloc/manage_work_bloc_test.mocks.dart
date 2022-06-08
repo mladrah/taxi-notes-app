@@ -5,19 +5,25 @@
 import 'dart:async' as _i5;
 
 import 'package:dartz/dartz.dart' as _i3;
-import 'package:decimal/decimal.dart' as _i11;
+import 'package:decimal/decimal.dart' as _i14;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:taxi_rahmati/core/error/failures.dart' as _i6;
-import 'package:taxi_rahmati/core/usecases/usecase.dart' as _i9;
-import 'package:taxi_rahmati/core/util/input_converter.dart' as _i10;
+import 'package:taxi_rahmati/core/usecases/usecase.dart' as _i10;
+import 'package:taxi_rahmati/core/util/input_converter.dart' as _i13;
 import 'package:taxi_rahmati/features/manage_work/domain/entities/ride.dart'
     as _i7;
 import 'package:taxi_rahmati/features/manage_work/domain/repositories/ride_repository.dart'
     as _i2;
 import 'package:taxi_rahmati/features/manage_work/domain/usecases/add_ride.dart'
     as _i4;
-import 'package:taxi_rahmati/features/manage_work/domain/usecases/get_all_rides.dart'
+import 'package:taxi_rahmati/features/manage_work/domain/usecases/delete_ride.dart'
+    as _i11;
+import 'package:taxi_rahmati/features/manage_work/domain/usecases/get_rides.dart'
+    as _i9;
+import 'package:taxi_rahmati/features/manage_work/domain/usecases/shared/params_ride.dart'
     as _i8;
+import 'package:taxi_rahmati/features/manage_work/domain/usecases/update_ride.dart'
+    as _i12;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -46,18 +52,18 @@ class MockAddRide extends _i1.Mock implements _i4.AddRide {
       (super.noSuchMethod(Invocation.getter(#rideRepository),
           returnValue: _FakeRideRepository_0()) as _i2.RideRepository);
   @override
-  _i5.Future<_i3.Either<_i6.Failure, _i7.Ride>> call(_i4.Params? params) =>
+  _i5.Future<_i3.Either<_i6.Failure, _i7.Ride>> call(_i8.Params? params) =>
       (super.noSuchMethod(Invocation.method(#call, [params]),
               returnValue: Future<_i3.Either<_i6.Failure, _i7.Ride>>.value(
                   _FakeEither_1<_i6.Failure, _i7.Ride>()))
           as _i5.Future<_i3.Either<_i6.Failure, _i7.Ride>>);
 }
 
-/// A class which mocks [GetAllRides].
+/// A class which mocks [GetRides].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockGetAllRides extends _i1.Mock implements _i8.GetAllRides {
-  MockGetAllRides() {
+class MockGetRides extends _i1.Mock implements _i9.GetRides {
+  MockGetRides() {
     _i1.throwOnMissingStub(this);
   }
 
@@ -67,26 +73,66 @@ class MockGetAllRides extends _i1.Mock implements _i8.GetAllRides {
           returnValue: _FakeRideRepository_0()) as _i2.RideRepository);
   @override
   _i5.Future<_i3.Either<_i6.Failure, List<_i7.Ride>>> call(
-          _i9.NoParams? params) =>
+          _i10.NoParams? params) =>
       (super.noSuchMethod(Invocation.method(#call, [params]),
           returnValue: Future<_i3.Either<_i6.Failure, List<_i7.Ride>>>.value(
               _FakeEither_1<_i6.Failure, List<_i7.Ride>>())) as _i5
           .Future<_i3.Either<_i6.Failure, List<_i7.Ride>>>);
 }
 
+/// A class which mocks [DeleteRide].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockDeleteRide extends _i1.Mock implements _i11.DeleteRide {
+  MockDeleteRide() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i2.RideRepository get rideRepository =>
+      (super.noSuchMethod(Invocation.getter(#rideRepository),
+          returnValue: _FakeRideRepository_0()) as _i2.RideRepository);
+  @override
+  _i5.Future<_i3.Either<_i6.Failure, _i7.Ride>> call(_i8.Params? params) =>
+      (super.noSuchMethod(Invocation.method(#call, [params]),
+              returnValue: Future<_i3.Either<_i6.Failure, _i7.Ride>>.value(
+                  _FakeEither_1<_i6.Failure, _i7.Ride>()))
+          as _i5.Future<_i3.Either<_i6.Failure, _i7.Ride>>);
+}
+
+/// A class which mocks [UpdateRide].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockUpdateRide extends _i1.Mock implements _i12.UpdateRide {
+  MockUpdateRide() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i2.RideRepository get rideRepository =>
+      (super.noSuchMethod(Invocation.getter(#rideRepository),
+          returnValue: _FakeRideRepository_0()) as _i2.RideRepository);
+  @override
+  _i5.Future<_i3.Either<_i6.Failure, _i7.Ride>> call(_i8.Params? params) =>
+      (super.noSuchMethod(Invocation.method(#call, [params]),
+              returnValue: Future<_i3.Either<_i6.Failure, _i7.Ride>>.value(
+                  _FakeEither_1<_i6.Failure, _i7.Ride>()))
+          as _i5.Future<_i3.Either<_i6.Failure, _i7.Ride>>);
+}
+
 /// A class which mocks [InputConverter].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockInputConverter extends _i1.Mock implements _i10.InputConverter {
+class MockInputConverter extends _i1.Mock implements _i13.InputConverter {
   MockInputConverter() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Either<_i6.Failure, _i11.Decimal> stringToDecimal(String? string) =>
+  _i3.Either<_i6.Failure, _i14.Decimal> stringToDecimal(String? string) =>
       (super.noSuchMethod(Invocation.method(#stringToDecimal, [string]),
-              returnValue: _FakeEither_1<_i6.Failure, _i11.Decimal>())
-          as _i3.Either<_i6.Failure, _i11.Decimal>);
+              returnValue: _FakeEither_1<_i6.Failure, _i14.Decimal>())
+          as _i3.Either<_i6.Failure, _i14.Decimal>);
   @override
   _i3.Either<_i6.Failure, DateTime> stringToDateTime(String? string) =>
       (super.noSuchMethod(Invocation.method(#stringToDateTime, [string]),
@@ -95,7 +141,8 @@ class MockInputConverter extends _i1.Mock implements _i10.InputConverter {
   @override
   _i3.Either<_i6.Failure, DateTime> dateAndTimeToDateTime(
           DateTime? date, DateTime? time) =>
-      (super.noSuchMethod(Invocation.method(#dateTimesToDateTime, [date, time]),
+      (super.noSuchMethod(
+              Invocation.method(#dateAndTimeToDateTime, [date, time]),
               returnValue: _FakeEither_1<_i6.Failure, DateTime>())
           as _i3.Either<_i6.Failure, DateTime>);
 }

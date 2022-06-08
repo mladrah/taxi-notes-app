@@ -51,6 +51,8 @@ class AppThemeData {
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: Colors.white,
         errorStyle: const TextStyle(height: 0),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),

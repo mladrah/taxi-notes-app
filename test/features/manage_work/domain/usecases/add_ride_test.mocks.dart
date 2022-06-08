@@ -33,15 +33,27 @@ class MockRideRepository extends _i1.Mock implements _i3.RideRepository {
   }
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, List<_i6.Ride>>> getAllRides() =>
-      (super.noSuchMethod(Invocation.method(#getAllRides, []),
-          returnValue: Future<_i2.Either<_i5.Failure, List<_i6.Ride>>>.value(
-              _FakeEither_0<_i5.Failure, List<_i6.Ride>>())) as _i4
-          .Future<_i2.Either<_i5.Failure, List<_i6.Ride>>>);
-  @override
   _i4.Future<_i2.Either<_i5.Failure, _i6.Ride>> addRide(_i6.Ride? ride) =>
       (super.noSuchMethod(Invocation.method(#addRide, [ride]),
               returnValue: Future<_i2.Either<_i5.Failure, _i6.Ride>>.value(
                   _FakeEither_0<_i5.Failure, _i6.Ride>()))
           as _i4.Future<_i2.Either<_i5.Failure, _i6.Ride>>);
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, _i6.Ride>> deleteRide(_i6.Ride? ride) =>
+      (super.noSuchMethod(Invocation.method(#deleteRide, [ride]),
+              returnValue: Future<_i2.Either<_i5.Failure, _i6.Ride>>.value(
+                  _FakeEither_0<_i5.Failure, _i6.Ride>()))
+          as _i4.Future<_i2.Either<_i5.Failure, _i6.Ride>>);
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, _i6.Ride>> updateRide(_i6.Ride? ride) =>
+      (super.noSuchMethod(Invocation.method(#updateRide, [ride]),
+              returnValue: Future<_i2.Either<_i5.Failure, _i6.Ride>>.value(
+                  _FakeEither_0<_i5.Failure, _i6.Ride>()))
+          as _i4.Future<_i2.Either<_i5.Failure, _i6.Ride>>);
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, List<_i6.Ride>>> getRides() =>
+      (super.noSuchMethod(Invocation.method(#getRides, []),
+          returnValue: Future<_i2.Either<_i5.Failure, List<_i6.Ride>>>.value(
+              _FakeEither_0<_i5.Failure, List<_i6.Ride>>())) as _i4
+          .Future<_i2.Either<_i5.Failure, List<_i6.Ride>>>);
 }
