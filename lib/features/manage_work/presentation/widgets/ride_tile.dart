@@ -52,14 +52,14 @@ class RideTile extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  flex: 2,
+                  flex: 4,
                   child: Text(
                     (ride.title == Title.herr ? 'Hr. ' : 'Fr. ') + ride.name,
                     textAlign: TextAlign.center,
                   ),
                 ),
                 Expanded(
-                  flex: 2,
+                  flex: 4,
                   child: Text(
                     ride.destination,
                     textAlign: TextAlign.center,

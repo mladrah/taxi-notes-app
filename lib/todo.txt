@@ -1,1 +1,4 @@
 -adjust tests
+-time format 24h (main page)
+-test print list for high number of rides
+-workyears etc. + printing
