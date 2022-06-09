@@ -1,3 +1,11 @@
 -adjust tests
+<<<<<<< HEAD
 -date und timeformat global zugriff
 -workdays etc. + printing
+=======
+-time format 24h (main page)
+-test print list for high number of rides
+-workyears etc. + printing
+-ui scaling best practise
+-when updating check if something changed, when not dont call usecase
+>>>>>>> de67881f69abddf361f32b0c525f5dc595623257

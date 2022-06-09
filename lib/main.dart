@@ -1,9 +1,11 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart' hide Title;
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:taxi_rahmati/features/manage_work/domain/entities/ride.dart';
 import 'package:taxi_rahmati/features/manage_work/presentation/bloc/manage_work_bloc.dart';
 import 'package:taxi_rahmati/features/manage_work/presentation/pages/main_page.dart';
+
 import 'app_theme_data.dart';
 import 'core/routing/route_generator.dart';
 import 'injection_container.dart' as di;

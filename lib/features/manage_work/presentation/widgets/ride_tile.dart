@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' hide Title;
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 import '../../domain/entities/ride.dart';
@@ -38,7 +39,7 @@ class RideTile extends StatelessWidget {
             _onTap(context);
           },
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(48.h),
             child: Row(
               children: [
                 Expanded(
@@ -69,7 +70,7 @@ class RideTile extends StatelessWidget {
                   width: 8,
                 ),
                 Expanded(
-                  flex: 4,
+                  flex: 3,
                   child: Text(
                     ride.destination,
                     textAlign: TextAlign.center,
