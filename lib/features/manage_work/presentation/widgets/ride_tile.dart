@@ -39,7 +39,7 @@ class RideTile extends StatelessWidget {
             _onTap(context);
           },
           child: Padding(
-            padding: EdgeInsets.all(48.h),
+            padding: EdgeInsets.all(16),
             child: Row(
               children: [
                 Expanded(

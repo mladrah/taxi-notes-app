@@ -71,85 +71,69 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
         }
       },
       child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: RideDetailsField(
-                    label: 'Anrede',
-                    value: widget.ride.title == Title.herr ? 'Herr' : 'Frau',
-                    borderRight: true,
+        child: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: RideDetailsField(
+                      label: 'Anrede',
+                      value: widget.ride.title == Title.herr ? 'Herr' : 'Frau',
+                    ),
                   ),
-                ),
-                Expanded(
-                  flex: 3,
-                  child: RideDetailsField(
-                    label: 'Name',
-                    value: widget.ride.name,
+                  Expanded(
+                    flex: 3,
+                    child: RideDetailsField(
+                      label: 'Name',
+                      value: widget.ride.name,
+                    ),
                   ),
-                ),
-              ],
-            ),
-            RideDetailsField(
-              label: 'Ort',
-              value: widget.ride.destination,
-              borderTop: false,
-              borderLeft: false,
-              borderRight: false,
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: RideDetailsField(
-                    label: 'Datum (Start)',
-                    value: _dateFormatter.format(widget.ride.start),
-                    borderTop: false,
-                    borderRight: true,
+                ],
+              ),
+              RideDetailsField(
+                label: 'Ort',
+                value: widget.ride.destination,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: RideDetailsField(
+                      label: 'Datum (Start)',
+                      value: _dateFormatter.format(widget.ride.start),
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: RideDetailsField(
-                    label: 'Zeit (Start)',
-                    value: _timeFormatter.format(widget.ride.start),
-                    borderTop: false,
+                  Expanded(
+                    child: RideDetailsField(
+                      label: 'Zeit (Start)',
+                      value: _timeFormatter.format(widget.ride.start),
+                    ),
                   ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: RideDetailsField(
-                    label: 'Datum (Ende)',
-                    value: _dateFormatter.format(widget.ride.end),
-                    borderTop: false,
-                    borderRight: true,
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: RideDetailsField(
+                      label: 'Datum (Ende)',
+                      value: _dateFormatter.format(widget.ride.end),
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: RideDetailsField(
-                    label: 'Zeit (Ende)',
-                    value: _timeFormatter.format(widget.ride.end),
-                    borderTop: false,
+                  Expanded(
+                    child: RideDetailsField(
+                      label: 'Zeit (Ende)',
+                      value: _timeFormatter.format(widget.ride.end),
+                    ),
                   ),
-                ),
-              ],
-            ),
-            RideDetailsField(
+                ],
+              ),
+              RideDetailsField(
                 label: 'Preis',
                 value: '${widget.ride.price.toString().replaceAll('.', ',')} €',
-                borderTop: false),
-            Padding(
-              padding: EdgeInsets.fromLTRB(48.h, 32.h, 48.h, 32.h),
-              child: CustomElevatedButton(
-                  label: 'Ändern',
-                  onPressed: () {
-                    _onEditButton(context);
-                  }),
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );

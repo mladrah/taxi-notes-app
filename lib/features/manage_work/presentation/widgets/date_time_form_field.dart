@@ -1,6 +1,5 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 class DateTimeFormField extends StatelessWidget {
@@ -31,7 +30,7 @@ class DateTimeFormField extends StatelessWidget {
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         SizedBox(
-          height: 16.h,
+          height: 16,
         ),
         Row(
           children: [
@@ -53,7 +52,7 @@ class DateTimeFormField extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: 32.w,
+              width: 16,
             ),
             Expanded(
               child: DateTimeField(

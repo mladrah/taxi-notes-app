@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart' hide Title;
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:taxi_rahmati/features/manage_work/presentation/bloc/manage_work_bloc.dart';
 import '../../domain/entities/ride.dart';
 import '../widgets/currency_form_field.dart';
@@ -65,7 +64,7 @@ class _RideFormPageState extends State<RideFormPage> {
       child: SingleChildScrollView(
         child: Center(
           child: Padding(
-            padding: EdgeInsets.all(48.h),
+            padding: EdgeInsets.all(16),
             child: Form(
               key: _formKey,
               child: Column(
@@ -104,7 +103,7 @@ class _RideFormPageState extends State<RideFormPage> {
                     initialValue: _name,
                   ),
                   SizedBox(
-                    height: 32.h,
+                    height: 16,
                   ),
                   CustomTextFormField(
                     label: 'Ort',
@@ -112,7 +111,7 @@ class _RideFormPageState extends State<RideFormPage> {
                     initialValue: _destination,
                   ),
                   SizedBox(
-                    height: 32.h,
+                    height: 16,
                   ),
                   DateTimeFormField(
                     label: 'Start',
@@ -122,7 +121,7 @@ class _RideFormPageState extends State<RideFormPage> {
                     initialValueTime: _startTime,
                   ),
                   SizedBox(
-                    height: 32.h,
+                    height: 8,
                   ),
                   DateTimeFormField(
                     label: 'Ende',
@@ -132,7 +131,7 @@ class _RideFormPageState extends State<RideFormPage> {
                     initialValueTime: _endTime,
                   ),
                   SizedBox(
-                    height: 32.h,
+                    height: 16,
                   ),
                   CurrencyFormField(
                     label: 'Preis (€)',
@@ -140,7 +139,7 @@ class _RideFormPageState extends State<RideFormPage> {
                     initialValue: _price,
                   ),
                   SizedBox(
-                    height: 32.h,
+                    height: 16,
                   ),
                   BlocBuilder<ManageWorkBloc, ManageWorkState>(
                     builder: (context, state) {
