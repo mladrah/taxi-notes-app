@@ -12,9 +12,9 @@ class HintMessage extends StatelessWidget {
         message,
         textAlign: TextAlign.center,
         style: TextStyle(
-            height: 1.75,
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).hintColor),
+          fontWeight: FontWeight.bold,
+          color: Theme.of(context).hintColor,
+        ),
       ),
     );
   }

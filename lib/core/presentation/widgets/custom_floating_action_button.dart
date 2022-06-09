@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taxi_rahmati/core/presentation/widgets/custom_box_shadow.dart';
 
 class CustomFloatingActionButton extends StatelessWidget {
   final Widget child;
@@ -14,8 +15,18 @@ class CustomFloatingActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton(
       onPressed: onPressed,
-      backgroundColor: Theme.of(context).primaryColor,
-      child: child,
+      child: Container(
+        height: double.infinity,
+        width: double.infinity,
+        child: child,
+        decoration: BoxDecoration(
+          color: Colors.transparent,
+          borderRadius: const BorderRadius.all(
+            Radius.circular(100),
+          ),
+          boxShadow: CustomBoxShadow.boxShadow(context),
+        ),
+      ),
     );
   }
 }

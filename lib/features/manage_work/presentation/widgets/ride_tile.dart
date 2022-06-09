@@ -6,7 +6,7 @@ import '../../domain/entities/ride.dart';
 class RideTile extends StatelessWidget {
   final Ride ride;
   final DateFormat _dateFormatter = DateFormat('dd.MM.yyyy');
-  final DateFormat _timeFormatter = DateFormat('hh:mm');
+  final DateFormat _timeFormatter = DateFormat('HH:mm');
 
   RideTile({
     Key? key,
@@ -17,15 +17,14 @@ class RideTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).primaryColor,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Theme.of(context).primaryColor),
         boxShadow: [
           BoxShadow(
             color: Theme.of(context).primaryColor.withOpacity(0.25),
-            spreadRadius: 1,
+            spreadRadius: 3,
             blurRadius: 7,
-            offset: const Offset(0, 3),
+            offset: const Offset(0, 0),
           ),
         ],
       ),
@@ -33,8 +32,8 @@ class RideTile extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(16),
-          splashColor: Theme.of(context).primaryColor.withAlpha(75),
-          highlightColor: Theme.of(context).primaryColor.withAlpha(25),
+          // splashColor: Colors.white.withOpacity(0.5),
+          // highlightColor: Colors.white.withOpacity(0.25),
           onTap: () {
             _onTap(context);
           },
@@ -47,32 +46,49 @@ class RideTile extends StatelessWidget {
                   child: Text(
                     '${_timeFormatter.format(ride.start)} -\n${_timeFormatter.format(ride.end)}',
                     style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  flex: 3,
+                  child: Text(
+                    (ride.title == Title.herr ? 'Hr. ' : 'Fr. ') + ride.name,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-                Expanded(
-                  flex: 4,
-                  child: Text(
-                    (ride.title == Title.herr ? 'Hr. ' : 'Fr. ') + ride.name,
-                    textAlign: TextAlign.center,
-                  ),
+                SizedBox(
+                  width: 8,
                 ),
                 Expanded(
                   flex: 4,
                   child: Text(
                     ride.destination,
                     textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
                   ),
+                ),
+                SizedBox(
+                  width: 8,
                 ),
                 Expanded(
                   flex: 2,
                   child: Text(
                     '${ride.price.toString().replaceAll('.', ',')} €',
                     textAlign: TextAlign.right,
-                    style: TextStyle(
+                    style: const TextStyle(
+                      fontStyle: FontStyle.italic,
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).primaryColor,
+                      color: Colors.white,
                     ),
                   ),
                 ),

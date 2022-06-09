@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart' hide Title;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:taxi_rahmati/features/manage_work/presentation/widgets/custom_elevated_button.dart';
+import 'package:taxi_rahmati/core/presentation/widgets/custom_elevated_button.dart';
 
+import '../../../../core/presentation/widgets/custom_floating_action_button.dart';
 import '../../domain/entities/ride.dart';
 import '../bloc/manage_work_bloc.dart';
 
@@ -17,13 +18,18 @@ class RideDetailsPage extends StatefulWidget {
 
 class _RideDetailsPageState extends State<RideDetailsPage> {
   final DateFormat _dateFormatter = DateFormat('dd.MM.yyyy');
-  final DateFormat _timeFormatter = DateFormat('hh:mm');
+  final DateFormat _timeFormatter = DateFormat('HH:mm');
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Fahrt'),
+        title: const Text(
+          'Fahrt',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         actions: [
           IconButton(
             onPressed: () {
@@ -44,6 +50,10 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
         ],
       ),
       body: buildBody(context),
+      floatingActionButton: CustomFloatingActionButton(
+        onPressed: () => _onEditButton(context),
+        child: const Icon(Icons.edit),
+      ),
     );
   }
 
@@ -131,14 +141,6 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
                 label: 'Preis',
                 value: '${widget.ride.price.toString().replaceAll('.', ',')} €',
                 borderTop: false),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-              child: CustomElevatedButton(
-                  label: 'Ändern',
-                  onPressed: () {
-                    _onEditButton(context);
-                  }),
-            ),
           ],
         ),
       ),

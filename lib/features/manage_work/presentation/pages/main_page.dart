@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:taxi_rahmati/core/presentation/widgets/custom_floating_action_button.dart';
 import 'package:taxi_rahmati/features/manage_work/presentation/bloc/manage_work_bloc.dart';
 import 'package:taxi_rahmati/features/manage_work/presentation/widgets/ride_tile.dart';
 
 import '../../domain/entities/ride.dart';
-import '../widgets/add_ride_button.dart';
-import '../widgets/hint_message.dart';
+import '../../../../core/presentation/widgets/hint_message.dart';
 
 // ignore: must_be_immutable
 class MainPage extends StatelessWidget {
@@ -17,7 +17,12 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Taxi Rahmati'),
+        title: const Text(
+          'Taxi Rahmati',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         actions: [
           BlocBuilder<ManageWorkBloc, ManageWorkState>(
             builder: (context, state) {
@@ -37,7 +42,10 @@ class MainPage extends StatelessWidget {
         ],
       ),
       body: buildBody(context),
-      floatingActionButton: const AddRideButton(),
+      floatingActionButton: CustomFloatingActionButton(
+        onPressed: () => Navigator.of(context).pushNamed('/rideForm'),
+        child: const Icon(Icons.add),
+      ),
     );
   }
 
@@ -73,12 +81,14 @@ class MainPage extends StatelessWidget {
 
   Widget _buildList(List<Ride> rides) {
     this.rides = rides;
-
+    // for (int i = 0; i < 20; i++) {
+    //   this.rides.add(rides[0]);
+    // }
     return ListView.separated(
       separatorBuilder: (BuildContext context, int index) {
         return const SizedBox(height: 16);
       },
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 80),
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 80),
       itemCount: rides.length,
       itemBuilder: (BuildContext context, int index) {
         return RideTile(

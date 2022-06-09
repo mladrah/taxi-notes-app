@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taxi_rahmati/core/presentation/widgets/custom_box_shadow.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   final VoidCallback? onPressed;
@@ -14,9 +15,14 @@ class CustomElevatedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 50,
+    return Container(
+      width: 150,
+      height: 60,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(100),
+        color: Colors.transparent,
+        boxShadow: CustomBoxShadow.boxShadow(context),
+      ),
       child: ElevatedButton(
         onPressed: onPressed,
         child: child ??

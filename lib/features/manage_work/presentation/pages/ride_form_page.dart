@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:taxi_rahmati/features/manage_work/presentation/bloc/manage_work_bloc.dart';
 import '../../domain/entities/ride.dart';
 import '../widgets/currency_form_field.dart';
-import '../widgets/custom_elevated_button.dart';
+import '../../../../core/presentation/widgets/custom_elevated_button.dart';
 import '../widgets/custom_text_form_field.dart';
 import '../widgets/date_time_form_field.dart';
 import '../widgets/radio_button.dart';
@@ -38,7 +38,12 @@ class _RideFormPageState extends State<RideFormPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Fahrt hinzufügen'),
+          title: const Text(
+            'Fahrt hinzufügen',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
         body: buildBody(context));
   }

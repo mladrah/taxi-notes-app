@@ -152,9 +152,12 @@ class ManageWorkBloc extends Bloc<ManageWorkEvent, ManageWorkState> {
 
     final result = await getAllRidesUseCase(NoParams());
 
-    result.fold(
-        (failure) => emit(Error(message: _mapFailureToMessage(failure))),
-        (rides) => emit(Loaded(rides: rides)));
+    result
+        .fold((failure) => emit(Error(message: _mapFailureToMessage(failure))),
+            (rides) {
+      rides.sort((a, b) => a.start.compareTo(b.start));
+      emit(Loaded(rides: rides));
+    });
   }
 
   String _mapFailureToMessage(Failure failure) {

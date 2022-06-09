@@ -1,54 +1,67 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class AppThemeData {
-  final primaryColor = const Color(0xFFFCA311);
-  final textColor = const Color(0xFF001D3D);
-  final highlightTextColor = const Color(0xFF003566);
-  final greyColor = const Color(0xFFC0C0C0);
+  // ignore: prefer_const_constructors
+  final _primaryColor = Color.fromARGB(255, 0, 0, 0);
 
-  Map<int, Color> primaryColorMap = {
-    50: const Color.fromRGBO(252, 163, 17, .1),
-    100: const Color.fromRGBO(252, 163, 17, .2),
-    200: const Color.fromRGBO(252, 163, 17, .3),
-    300: const Color.fromRGBO(252, 163, 17, .4),
-    400: const Color.fromRGBO(252, 163, 17, .5),
-    500: const Color.fromRGBO(252, 163, 17, .6),
-    600: const Color.fromRGBO(252, 163, 17, .7),
-    700: const Color.fromRGBO(252, 163, 17, .8),
-    800: const Color.fromRGBO(252, 163, 17, .9),
-    900: const Color.fromRGBO(252, 163, 17, 1),
-  };
+  // ignore: prefer_const_constructors
+  final _textColor = Color.fromARGB(255, 0, 0, 0);
 
-  ThemeData get lighTheme {
+  final _focusColor = const Color(0xFF003566);
+  final _hintColor = const Color(0xFFC0C0C0);
+
+  ThemeData lighTheme(BuildContext context) {
+    Map<int, Color> primaryColorMap = {
+      50: Color.fromRGBO(
+          _primaryColor.red, _primaryColor.green, _primaryColor.blue, .1),
+      100: Color.fromRGBO(
+          _primaryColor.red, _primaryColor.green, _primaryColor.blue, .2),
+      200: Color.fromRGBO(
+          _primaryColor.red, _primaryColor.green, _primaryColor.blue, .3),
+      300: Color.fromRGBO(
+          _primaryColor.red, _primaryColor.green, _primaryColor.blue, .4),
+      400: Color.fromRGBO(
+          _primaryColor.red, _primaryColor.green, _primaryColor.blue, .5),
+      500: Color.fromRGBO(
+          _primaryColor.red, _primaryColor.green, _primaryColor.blue, .6),
+      600: Color.fromRGBO(
+          _primaryColor.red, _primaryColor.green, _primaryColor.blue, 7),
+      700: Color.fromRGBO(
+          _primaryColor.red, _primaryColor.green, _primaryColor.blue, .8),
+      800: Color.fromRGBO(
+          _primaryColor.red, _primaryColor.green, _primaryColor.blue, .9),
+      900: Color.fromRGBO(
+          _primaryColor.red, _primaryColor.green, _primaryColor.blue, 1),
+    };
+
     return ThemeData(
-      textTheme: GoogleFonts.kodchasanTextTheme().apply(
-        bodyColor: textColor,
-        displayColor: textColor,
-      ),
-      primarySwatch: MaterialColor(0xFFFCA311, primaryColorMap),
-      primaryColor: primaryColor,
-      hintColor: greyColor,
-      focusColor: highlightTextColor,
+      textTheme: Theme.of(context).textTheme.apply(
+            fontFamily: 'Kodchasan',
+            bodyColor: _textColor,
+            displayColor: _textColor,
+          ),
+      primarySwatch:
+          MaterialColor(_primaryColor.value.toInt(), primaryColorMap),
+      primaryColor: _primaryColor,
+      hintColor: _hintColor,
+      focusColor: _focusColor,
+      scaffoldBackgroundColor: Colors.white,
       appBarTheme: AppBarTheme(
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        foregroundColor: textColor,
-        titleTextStyle: GoogleFonts.kodchasan(
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          color: textColor,
-        ),
+        backgroundColor: Colors.transparent,
+        foregroundColor: _textColor,
+        elevation: 0,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          textStyle: GoogleFonts.kodchasan(
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(100),
           ),
         ),
+      ),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: _primaryColor,
+        foregroundColor: Colors.white,
+        elevation: 0,
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,

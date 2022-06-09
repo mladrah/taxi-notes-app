@@ -32,11 +32,12 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-            create: (context) => sl<ManageWorkBloc>()..add(LoadRidesFromRepository()))
+            create: (context) =>
+                sl<ManageWorkBloc>()..add(LoadRidesFromRepository()))
       ],
       child: MaterialApp(
         title: 'Taxi Rahmati',
-        theme: AppThemeData().lighTheme,
+        theme: AppThemeData().lighTheme(context),
         initialRoute: '/',
         onGenerateRoute: RouteGenerator.generateRoute,
       ),
