@@ -38,9 +38,9 @@ class _RideFormPageState extends State<RideFormPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text(
-            'Fahrt hinzufügen',
-            style: TextStyle(
+          title: Text(
+            widget.ride == null ? 'Fahrt hinzufügen' : 'Fahrt ändern',
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -61,10 +61,11 @@ class _RideFormPageState extends State<RideFormPage> {
           );
         }
       },
-      child: SingleChildScrollView(
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.all(16),
+      child: Center(
+        child: SingleChildScrollView(
+          child: Container(
+            width: 500,
+            padding: const EdgeInsets.all(16),
             child: Form(
               key: _formKey,
               child: Column(
@@ -102,16 +103,31 @@ class _RideFormPageState extends State<RideFormPage> {
                     onChanged: (value) => _name = value,
                     initialValue: _name,
                   ),
-                  SizedBox(
-                    height: 16,
+                  const SizedBox(
+                    height: 8,
                   ),
                   CustomTextFormField(
                     label: 'Ort',
                     onChanged: (value) => _destination = value,
                     initialValue: _destination,
                   ),
-                  SizedBox(
-                    height: 16,
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  CurrencyFormField(
+                    label: 'Preis (€)',
+                    onChanged: (value) => _price = value,
+                    initialValue: _price,
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Divider(
+                    color: Theme.of(context).primaryColor,
+                    height: 2,
+                  ),
+                  const SizedBox(
+                    height: 8,
                   ),
                   DateTimeFormField(
                     label: 'Start',
@@ -120,8 +136,8 @@ class _RideFormPageState extends State<RideFormPage> {
                     initialValueDate: _startDate,
                     initialValueTime: _startTime,
                   ),
-                  SizedBox(
-                    height: 8,
+                  const SizedBox(
+                    height: 16,
                   ),
                   DateTimeFormField(
                     label: 'Ende',
@@ -130,15 +146,7 @@ class _RideFormPageState extends State<RideFormPage> {
                     initialValueDate: _endDate,
                     initialValueTime: _endTime,
                   ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                  CurrencyFormField(
-                    label: 'Preis (€)',
-                    onChanged: (value) => _price = value,
-                    initialValue: _price,
-                  ),
-                  SizedBox(
+                  const SizedBox(
                     height: 16,
                   ),
                   BlocBuilder<ManageWorkBloc, ManageWorkState>(
@@ -186,6 +194,7 @@ class _RideFormPageState extends State<RideFormPage> {
           );
     } else {
       context.read<ManageWorkBloc>().add(UpdateRideInRepository(
+            oldRide: widget.ride!,
             id: widget.ride!.id,
             title: _title,
             name: _name,

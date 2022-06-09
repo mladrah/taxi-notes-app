@@ -1,4 +1,6 @@
 // ignore_for_file: constant_identifier_names
+// ignore: unused_import
+import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
@@ -129,15 +131,24 @@ class ManageWorkBloc extends Bloc<ManageWorkEvent, ManageWorkState> {
     } else {
       emit(Loading());
 
-      final result = await updateRideUseCase(Params(
-          ride: Ride(
-              id: event.id,
-              title: event.title,
-              name: event.name,
-              destination: event.destination,
-              start: startParsed,
-              end: endParsed,
-              price: priceParsed)));
+      final Ride newRide = Ride(
+          id: event.id,
+          title: event.title,
+          name: event.name,
+          destination: event.destination,
+          start: startParsed,
+          end: endParsed,
+          price: priceParsed);
+
+      if (event.oldRide == newRide) {
+        emit(Updated(ride: event.oldRide));
+        log('Not Updated');
+        return;
+      }
+
+      final result = await updateRideUseCase(
+        Params(ride: newRide),
+      );
 
       result.fold(
         (failure) => emit(Error(message: _mapFailureToMessage(failure))),

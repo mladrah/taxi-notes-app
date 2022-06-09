@@ -10,9 +10,10 @@ class RidesPrintPreviewPage extends StatelessWidget {
   // 35 rides für 1 workday
   final List<Ride> rides;
 
-  final String highlightHexColor = 'F0F0F0';
+  final String highlightHexColor = 'E8E8E8';
   final DateFormat _dateFormatter = DateFormat('dd.MM.yyyy');
   final DateFormat _timeFormatter = DateFormat('HH:mm');
+  final int _flexStart = 2;
   final int _flexName = 3;
   final int _flexDestination = 3;
 
@@ -55,7 +56,16 @@ class RidesPrintPreviewPage extends StatelessWidget {
           pw.SizedBox(height: 32),
           pw.Row(
             children: [
-              _buildHeaderTile(label: 'Start'),
+              _buildHeaderTile(
+                label: 'Datum',
+                flex: _flexStart,
+              ),
+              pw.SizedBox(
+                width: 8,
+              ),
+              _buildHeaderTile(
+                label: 'Start',
+              ),
               pw.SizedBox(
                 width: 8,
               ),
@@ -63,15 +73,24 @@ class RidesPrintPreviewPage extends StatelessWidget {
               pw.SizedBox(
                 width: 8,
               ),
-              _buildHeaderTile(label: 'Name', flex: _flexName),
+              _buildHeaderTile(
+                label: 'Name',
+                flex: _flexName,
+              ),
               pw.SizedBox(
                 width: 8,
               ),
-              _buildHeaderTile(label: 'Ort', flex: _flexDestination),
+              _buildHeaderTile(
+                label: 'Ort',
+                flex: _flexDestination,
+              ),
               pw.SizedBox(
                 width: 8,
               ),
-              _buildHeaderTile(label: 'Preis'),
+              _buildHeaderTile(
+                label: 'Preis',
+                alignment: pw.Alignment.centerRight,
+              ),
             ],
           ),
           pw.Divider(),
@@ -90,11 +109,60 @@ class RidesPrintPreviewPage extends StatelessWidget {
     );
   }
 
-  pw.Expanded _buildHeaderTile({required String label, int? flex}) {
+  pw.Container _buildRideRow({required Ride ride, PdfColor? backgroundColor}) {
+    return pw.Container(
+        color: backgroundColor,
+        child: pw.Row(
+          children: [
+            _buildRideRowTile(
+              value: _dateFormatter.format(ride.start),
+              flex: _flexStart,
+            ),
+            pw.SizedBox(
+              width: 8,
+            ),
+            _buildRideRowTile(
+              value: _timeFormatter.format(ride.start),
+            ),
+            pw.SizedBox(
+              width: 8,
+            ),
+            _buildRideRowTile(
+              value: _timeFormatter.format(ride.end),
+            ),
+            pw.SizedBox(
+              width: 8,
+            ),
+            _buildRideRowTile(
+              value: '${ride.title == Title.herr ? 'Hr.' : 'Fr.'} ${ride.name}',
+              flex: _flexName,
+            ),
+            pw.SizedBox(
+              width: 8,
+            ),
+            _buildRideRowTile(
+              value: ride.destination,
+              flex: _flexDestination,
+            ),
+            pw.SizedBox(
+              width: 8,
+            ),
+            _buildRideRowTile(
+              value: ride.price.toString().replaceAll('.', ','),
+              alignment: pw.Alignment.centerRight,
+              fontWeight: pw.FontWeight.bold,
+            ),
+          ],
+        ));
+  }
+
+  pw.Expanded _buildHeaderTile(
+      {required String label, int? flex, pw.Alignment? alignment}) {
     return pw.Expanded(
       flex: flex ?? 1,
       child: pw.Container(
         height: 16,
+        alignment: alignment ?? pw.Alignment.centerLeft,
         child: pw.Text(
           label,
           style: pw.TextStyle(
@@ -105,54 +173,21 @@ class RidesPrintPreviewPage extends StatelessWidget {
     );
   }
 
-  pw.Container _buildRideRow({required Ride ride, PdfColor? backgroundColor}) {
-    return pw.Container(
-        color: backgroundColor,
-        child: pw.Row(
-          children: [
-            _buildRideRowTile(
-              label: _timeFormatter.format(ride.start),
-            ),
-            pw.SizedBox(
-              width: 8,
-            ),
-            _buildRideRowTile(
-              label: _timeFormatter.format(ride.end),
-            ),
-            pw.SizedBox(
-              width: 8,
-            ),
-            _buildRideRowTile(
-              label: '${ride.title == Title.herr ? 'Hr.' : 'Fr.'} ${ride.name}',
-              flex: _flexName,
-            ),
-            pw.SizedBox(
-              width: 8,
-            ),
-            _buildRideRowTile(
-              label: ride.destination,
-              flex: _flexDestination,
-            ),
-            pw.SizedBox(
-              width: 8,
-            ),
-            _buildRideRowTile(
-              label: ride.price.toString().replaceAll('.', ','),
-            ),
-          ],
-        ));
-  }
-
-  pw.Expanded _buildRideRowTile({required String label, int? flex}) {
+  pw.Expanded _buildRideRowTile(
+      {required String value,
+      int? flex,
+      pw.Alignment? alignment,
+      pw.FontWeight? fontWeight}) {
     return pw.Expanded(
       flex: flex ?? 1,
       child: pw.Container(
         height: 16,
         child: pw.FittedBox(
-          alignment: pw.Alignment.centerLeft,
-          child: pw.Text(
-            label,
-          ),
+          alignment: alignment ?? pw.Alignment.centerLeft,
+          child: pw.Text(value,
+              style: pw.TextStyle(
+                fontWeight: fontWeight ?? pw.FontWeight.normal,
+              )),
         ),
       ),
     );

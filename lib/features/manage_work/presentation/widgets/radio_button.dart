@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RadioButton<T> extends StatelessWidget {
   final String label;
@@ -17,18 +16,21 @@ class RadioButton<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(
-        label,
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Radio<T>(
+          value: value,
+          groupValue: groupValue,
+          onChanged: onChanged,
         ),
-      ),
-      leading: Radio<T>(
-        value: value,
-        groupValue: groupValue,
-        onChanged: onChanged,
-      ),
+        Text(
+          label,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
     );
   }
 }

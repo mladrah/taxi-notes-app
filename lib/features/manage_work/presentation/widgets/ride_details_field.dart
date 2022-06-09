@@ -12,25 +12,44 @@ class RideDetailsField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        // color: Colors.grey.withOpacity(0.15),
-        // padding: const EdgeInsets.all(16),
-        // child: Column(
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   children: [
-        //     Text(
-        //       label!,
-        //       textAlign: TextAlign.left,
-        //     ),
-        //     Text(
-        //       value,
-        //       textAlign: TextAlign.left,
-        //       style: TextStyle(
-        //         fontWeight: FontWeight.bold,
-        //       ),
-        //     ),
-        //   ],
-        // ),
-        );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          height: 25,
+          alignment: Alignment.centerLeft,
+          padding: const EdgeInsets.only(left: 16, right: 16),
+          child: label == null
+              ? const SizedBox.shrink()
+              : FittedBox(
+                  child: Text(
+                    label!,
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+        ),
+        Container(
+          height: 50,
+          alignment: Alignment.centerLeft,
+          padding: const EdgeInsets.only(left: 16, right: 16),
+          decoration: BoxDecoration(
+            color: Colors.grey.withOpacity(0.175),
+            borderRadius: BorderRadius.circular(100),
+          ),
+          child: FittedBox(
+            child: Text(
+              value,
+              style: const TextStyle(
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

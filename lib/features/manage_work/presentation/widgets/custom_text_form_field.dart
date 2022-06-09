@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final String label;
   final String initialValue;
-  final double? width;
   final void Function(String) onChanged;
 
   const CustomTextFormField({
@@ -12,7 +10,6 @@ class CustomTextFormField extends StatelessWidget {
     required this.label,
     required this.onChanged,
     this.initialValue = '',
-    this.width,
   }) : super(key: key);
 
   @override
@@ -20,7 +17,7 @@ class CustomTextFormField extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          width: width ?? double.infinity,
+          width: double.infinity,
           child: TextFormField(
             onChanged: onChanged,
             initialValue: initialValue,

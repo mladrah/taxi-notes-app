@@ -42,6 +42,7 @@ class DeleteRideFromRepository extends ManageWorkEvent {
 }
 
 class UpdateRideInRepository extends ManageWorkEvent {
+  final Ride oldRide;
   final String id;
   final Title title;
   final String name;
@@ -52,20 +53,32 @@ class UpdateRideInRepository extends ManageWorkEvent {
   final DateTime endTime;
   final String price;
 
-  const UpdateRideInRepository(
-      {required this.id,
-      required this.title,
-      required this.name,
-      required this.destination,
-      required this.startDate,
-      required this.startTime,
-      required this.endDate,
-      required this.endTime,
-      required this.price});
+  const UpdateRideInRepository({
+    required this.oldRide,
+    required this.id,
+    required this.title,
+    required this.name,
+    required this.destination,
+    required this.startDate,
+    required this.startTime,
+    required this.endDate,
+    required this.endTime,
+    required this.price,
+  });
 
   @override
-  List<Object> get props =>
-      [title, name, destination, startDate, startTime, endDate, endTime, price];
+  List<Object> get props => [
+        oldRide,
+        id,
+        title,
+        name,
+        destination,
+        startDate,
+        startTime,
+        endDate,
+        endTime,
+        price
+      ];
 }
 
 class LoadRidesFromRepository extends ManageWorkEvent {}

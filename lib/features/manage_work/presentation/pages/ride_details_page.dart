@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart' hide Title;
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:taxi_rahmati/features/manage_work/presentation/widgets/ride_details_field.dart';
 
-import '../../../../core/presentation/widgets/custom_elevated_button.dart';
 import '../../../../core/presentation/widgets/custom_floating_action_button.dart';
 import '../../domain/entities/ride.dart';
 import '../bloc/manage_work_bloc.dart';
@@ -71,68 +69,79 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
         }
       },
       child: Center(
-        child: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: RideDetailsField(
-                      label: 'Anrede',
-                      value: widget.ride.title == Title.herr ? 'Herr' : 'Frau',
+        child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            width: 500,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: RideDetailsField(
+                        label: 'Anrede',
+                        value:
+                            widget.ride.title == Title.herr ? 'Herr' : 'Frau',
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: RideDetailsField(
-                      label: 'Name',
-                      value: widget.ride.name,
+                    const SizedBox(width: 8),
+                    Expanded(
+                      flex: 2,
+                      child: RideDetailsField(
+                        label: 'Name',
+                        value: widget.ride.name,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              RideDetailsField(
-                label: 'Ort',
-                value: widget.ride.destination,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: RideDetailsField(
-                      label: 'Datum (Start)',
-                      value: _dateFormatter.format(widget.ride.start),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                RideDetailsField(
+                  label: 'Ort',
+                  value: widget.ride.destination,
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Expanded(
+                      child: RideDetailsField(
+                        label: 'Start',
+                        value: _dateFormatter.format(widget.ride.start),
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: RideDetailsField(
-                      label: 'Zeit (Start)',
-                      value: _timeFormatter.format(widget.ride.start),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: RideDetailsField(
+                        value: _timeFormatter.format(widget.ride.start),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: RideDetailsField(
-                      label: 'Datum (Ende)',
-                      value: _dateFormatter.format(widget.ride.end),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Expanded(
+                      child: RideDetailsField(
+                        label: 'Ende',
+                        value: _dateFormatter.format(widget.ride.end),
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: RideDetailsField(
-                      label: 'Zeit (Ende)',
-                      value: _timeFormatter.format(widget.ride.end),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: RideDetailsField(
+                        value: _timeFormatter.format(widget.ride.end),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              RideDetailsField(
-                label: 'Preis',
-                value: '${widget.ride.price.toString().replaceAll('.', ',')} €',
-              ),
-            ],
+                  ],
+                ),
+                const SizedBox(height: 8),
+                RideDetailsField(
+                  label: 'Preis',
+                  value:
+                      '${widget.ride.price.toString().replaceAll('.', ',')} €',
+                ),
+              ],
+            ),
           ),
         ),
       ),

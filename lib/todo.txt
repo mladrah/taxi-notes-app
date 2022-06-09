@@ -1,8 +1,6 @@
 -adjust tests
 -date und timeformat global zugriff
 -workdays etc. + printing
--time format 24h (main page)
--test print list for high number of rides
--workyears etc. + printing
--ui scaling best practise
+-second pdf page for more than 35 rides
 -when updating check if something changed, when not dont call usecase
+-first release (docs)

@@ -29,8 +29,8 @@ class DateTimeFormField extends StatelessWidget {
           label,
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        SizedBox(
-          height: 16,
+        const SizedBox(
+          height: 8,
         ),
         Row(
           children: [
@@ -51,8 +51,8 @@ class DateTimeFormField extends StatelessWidget {
                 },
               ),
             ),
-            SizedBox(
-              width: 16,
+            const SizedBox(
+              width: 8,
             ),
             Expanded(
               child: DateTimeField(

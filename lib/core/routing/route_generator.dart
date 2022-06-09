@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:taxi_rahmati/features/manage_work/domain/usecases/add_ride.dart';
 import 'package:taxi_rahmati/features/manage_work/presentation/pages/main_page.dart';
 import 'package:taxi_rahmati/features/manage_work/presentation/pages/ride_details_page.dart';
 import 'package:taxi_rahmati/features/manage_work/presentation/pages/ride_form_page.dart';
@@ -77,8 +76,11 @@ class RouteGenerator {
         body: Center(
           child: Text(
             'Route ${routeName!} does not exist',
-            style: TextStyle(
-                color: Colors.grey, fontSize: 15, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+              color: Colors.grey,
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       );

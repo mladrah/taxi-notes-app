@@ -86,7 +86,7 @@ class MainPage extends StatelessWidget {
     // }
     return ListView.separated(
       separatorBuilder: (BuildContext context, int index) {
-        return const SizedBox(height: 16);
+        return const SizedBox(height: 8);
       },
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 80),
       itemCount: rides.length,

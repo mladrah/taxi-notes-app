@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppThemeData {
   // ignore: prefer_const_constructors
-  final _primaryColor = Color.fromARGB(255, 0, 0, 0);
+  final _primaryColor = Color(0xff0D0A0B); // default: 0xff0D0A0B
 
   // ignore: prefer_const_constructors
   final _textColor = Color.fromARGB(255, 0, 0, 0);

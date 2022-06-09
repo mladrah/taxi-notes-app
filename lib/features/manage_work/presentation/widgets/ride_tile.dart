@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart' hide Title;
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 import '../../domain/entities/ride.dart';
 
 class RideTile extends StatelessWidget {
   final Ride ride;
-  final DateFormat _dateFormatter = DateFormat('dd.MM.yyyy');
   final DateFormat _timeFormatter = DateFormat('HH:mm');
 
   RideTile({
@@ -17,6 +15,7 @@ class RideTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 75,
       decoration: BoxDecoration(
         color: Theme.of(context).primaryColor,
         borderRadius: BorderRadius.circular(16),
@@ -38,63 +37,124 @@ class RideTile extends StatelessWidget {
           onTap: () {
             _onTap(context);
           },
-          child: Padding(
-            padding: EdgeInsets.all(16),
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 2,
+          child: Row(
+            children: [
+              Container(
+                width: 75,
+                height: double.infinity,
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(8),
+                decoration: const BoxDecoration(
+                  border: Border(
+                    right: BorderSide(
+                      color: Colors.white,
+                      width: 2,
+                    ),
+                  ),
+                ),
+                child: FittedBox(
                   child: Text(
                     '${_timeFormatter.format(ride.start)} -\n${_timeFormatter.format(ride.end)}',
+                    textAlign: TextAlign.center,
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w900,
                     ),
                   ),
                 ),
-                SizedBox(
-                  width: 8,
-                ),
-                Expanded(
-                  flex: 3,
-                  child: Text(
-                    (ride.title == Title.herr ? 'Hr. ' : 'Fr. ') + ride.name,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+              ),
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  height: double.infinity,
+                  child: Row(children: [
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                        height: double.infinity,
+                        alignment: Alignment.center,
+                        child: FittedBox(
+                          child: Text(
+                            '${ride.title == Title.herr ? 'Hr.' : 'Fr.'} ${ride.name}',
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Expanded(
-                  flex: 3,
-                  child: Text(
-                    ride.destination,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Text(
-                    '${ride.price.toString().replaceAll('.', ',')} €',
-                    textAlign: TextAlign.right,
-                    style: const TextStyle(
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                    const SizedBox(
+                      width: 8,
                     ),
-                  ),
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                        height: double.infinity,
+                        alignment: Alignment.center,
+                        child: FittedBox(
+                          child: Text(
+                            ride.destination,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        height: double.infinity,
+                        alignment: Alignment.center,
+                        child: FittedBox(
+                          child: Text(
+                            '${ride.price.toString().replaceAll('.', ',')} €',
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    // Expanded(
+                    //   flex: 1,
+                    //   child: Text(
+                    //     '${ride.price.toString().replaceAll('.', ',')} €',
+                    //     textAlign: TextAlign.right,
+                    //     style: const TextStyle(
+                    //       fontStyle: FontStyle.italic,
+                    //       fontWeight: FontWeight.bold,
+                    //       color: Colors.white,
+                    //     ),
+                    //   ),
+                    // ),
+                  ]),
                 ),
-              ],
-            ),
+              )
+              // Padding(
+              //   padding: const EdgeInsets.all(16),
+              //   child: Row(
+              //     children: [
+
+              //       SizedBox(
+              //         width: 8,
+              //       ),
+
+              //     ],
+              //   ),
+              // ),
+            ],
           ),
         ),
       ),
