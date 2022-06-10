@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.taxi_rahmati">
+    package="com.misour.taxi_rahmati">
    <application
-        android:label="taxi_rahmati"
+        android:label="Taxi Notes"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

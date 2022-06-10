@@ -1,7 +1,5 @@
-import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart' hide Title;
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:taxi_rahmati/features/manage_work/domain/entities/ride.dart';
 import 'package:taxi_rahmati/features/manage_work/presentation/bloc/manage_work_bloc.dart';
 
 import 'app_theme_data.dart';
@@ -15,15 +13,6 @@ void main() async {
   runApp(const MyApp());
 }
 
-final tRide = Ride(
-    id: '1',
-    title: Title.herr,
-    name: 'Lorem',
-    destination: 'Ipsum',
-    start: DateTime.now(),
-    end: DateTime.now(),
-    price: Decimal.parse('29.30'));
-
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -36,7 +25,7 @@ class MyApp extends StatelessWidget {
                 sl<ManageWorkBloc>()..add(LoadRidesFromRepository()))
       ],
       child: MaterialApp(
-        title: 'Taxi Rahmati',
+        title: 'Taxi Notes',
         theme: AppThemeData().lighTheme(context),
         initialRoute: '/',
         onGenerateRoute: RouteGenerator.generateRoute,

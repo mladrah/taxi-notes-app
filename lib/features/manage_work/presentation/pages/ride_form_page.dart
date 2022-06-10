@@ -65,7 +65,11 @@ class _RideFormPageState extends State<RideFormPage> {
         child: SingleChildScrollView(
           child: Container(
             width: 500,
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.only(
+              left: 16,
+              right: 16,
+              bottom: 16,
+            ),
             child: Form(
               key: _formKey,
               child: Column(
@@ -124,7 +128,7 @@ class _RideFormPageState extends State<RideFormPage> {
                   ),
                   Divider(
                     color: Theme.of(context).primaryColor,
-                    height: 2,
+                    thickness: 1,
                   ),
                   const SizedBox(
                     height: 8,

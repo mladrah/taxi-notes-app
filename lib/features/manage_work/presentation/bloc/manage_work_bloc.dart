@@ -7,6 +7,7 @@ import 'package:equatable/equatable.dart';
 import 'package:taxi_rahmati/core/usecases/usecase.dart';
 import 'package:taxi_rahmati/core/util/input_converter.dart';
 import 'package:uuid/uuid.dart';
+import 'dart:io';
 
 import '../../../../core/error/failures.dart';
 import '../../domain/entities/ride.dart';

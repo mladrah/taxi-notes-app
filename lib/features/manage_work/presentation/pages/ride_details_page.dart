@@ -31,21 +31,22 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
           ),
         ),
         actions: [
-          IconButton(
-            onPressed: () {
-              _dispatchDeleteEvent(context);
+          BlocBuilder<ManageWorkBloc, ManageWorkState>(
+            builder: (context, state) {
+              late final VoidCallback? onPressed;
+              if (state is Loading) {
+                onPressed = null;
+              } else {
+                onPressed = () => _dispatchDeleteEvent(context);
+              }
+              return IconButton(
+                onPressed: onPressed,
+                tooltip: 'Löschen',
+                icon: const Icon(
+                  Icons.delete_forever_rounded,
+                ),
+              );
             },
-            icon: BlocBuilder<ManageWorkBloc, ManageWorkState>(
-              builder: (context, state) {
-                if (state is Loading) {
-                  return const CircularProgressIndicator();
-                } else {
-                  return const Icon(
-                    Icons.delete_forever_rounded,
-                  );
-                }
-              },
-            ),
           )
         ],
       ),
@@ -53,6 +54,7 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
       floatingActionButton: CustomFloatingActionButton(
         onPressed: () => _onEditButton(context),
         child: const Icon(Icons.edit),
+        tooltip: 'Fahrt bearbeiten',
       ),
     );
   }
@@ -69,80 +71,86 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
         }
       },
       child: Center(
-        child: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.all(16),
-            width: 500,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+        child: BlocBuilder<ManageWorkBloc, ManageWorkState>(
+          builder: (context, state) {
+            return _buildForm();
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildForm() {
+    return SingleChildScrollView(
+      child: Container(
+        padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+        width: 500,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
               children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: RideDetailsField(
-                        label: 'Anrede',
-                        value:
-                            widget.ride.title == Title.herr ? 'Herr' : 'Frau',
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      flex: 2,
-                      child: RideDetailsField(
-                        label: 'Name',
-                        value: widget.ride.name,
-                      ),
-                    ),
-                  ],
+                Expanded(
+                  child: RideDetailsField(
+                    label: 'Anrede',
+                    value: widget.ride.title == Title.herr ? 'Herr' : 'Frau',
+                  ),
                 ),
-                const SizedBox(height: 8),
-                RideDetailsField(
-                  label: 'Ort',
-                  value: widget.ride.destination,
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    Expanded(
-                      child: RideDetailsField(
-                        label: 'Start',
-                        value: _dateFormatter.format(widget.ride.start),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: RideDetailsField(
-                        value: _timeFormatter.format(widget.ride.start),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    Expanded(
-                      child: RideDetailsField(
-                        label: 'Ende',
-                        value: _dateFormatter.format(widget.ride.end),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: RideDetailsField(
-                        value: _timeFormatter.format(widget.ride.end),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                RideDetailsField(
-                  label: 'Preis',
-                  value:
-                      '${widget.ride.price.toString().replaceAll('.', ',')} €',
+                const SizedBox(width: 8),
+                Expanded(
+                  flex: 2,
+                  child: RideDetailsField(
+                    label: 'Name',
+                    value: widget.ride.name,
+                  ),
                 ),
               ],
             ),
-          ),
+            const SizedBox(height: 8),
+            RideDetailsField(
+              label: 'Ort',
+              value: widget.ride.destination,
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Expanded(
+                  child: RideDetailsField(
+                    label: 'Start',
+                    value: _dateFormatter.format(widget.ride.start),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: RideDetailsField(
+                    value: _timeFormatter.format(widget.ride.start),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Expanded(
+                  child: RideDetailsField(
+                    label: 'Ende',
+                    value: _dateFormatter.format(widget.ride.end),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: RideDetailsField(
+                    value: _timeFormatter.format(widget.ride.end),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            RideDetailsField(
+              label: 'Preis',
+              value: '${widget.ride.price.toString().replaceAll('.', ',')} €',
+            ),
+          ],
         ),
       ),
     );

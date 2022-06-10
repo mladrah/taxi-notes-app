@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:taxi_rahmati/core/presentation/widgets/custom_floating_action_button.dart';
 import 'package:taxi_rahmati/features/manage_work/presentation/bloc/manage_work_bloc.dart';
+import 'package:taxi_rahmati/features/manage_work/presentation/widgets/empty_list_hint_message.dart';
 import 'package:taxi_rahmati/features/manage_work/presentation/widgets/ride_tile.dart';
 
 import '../../domain/entities/ride.dart';
@@ -18,7 +19,7 @@ class MainPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Taxi Rahmati',
+          'Taxi Notes',
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
@@ -33,6 +34,7 @@ class MainPage extends StatelessWidget {
                         onPressed: () {
                           _onPrintButton(context);
                         },
+                        tooltip: 'Drucken',
                         icon: const Icon(Icons.print_rounded));
               } else {
                 return const SizedBox.shrink();
@@ -44,6 +46,7 @@ class MainPage extends StatelessWidget {
       body: buildBody(context),
       floatingActionButton: CustomFloatingActionButton(
         onPressed: () => Navigator.of(context).pushNamed('/rideForm'),
+        tooltip: 'Fahrt hinzufügen',
         child: const Icon(Icons.add),
       ),
     );
@@ -64,7 +67,7 @@ class MainPage extends StatelessWidget {
                 return const CircularProgressIndicator();
               } else if (state is Loaded) {
                 return state.rides.isEmpty
-                    ? const HintMessage(message: 'Keine Arbeit!\n+ Klicken')
+                    ? const EmptyListHintMessage()
                     : _buildList(state.rides);
               } else if (state is Error) {
                 return HintMessage(

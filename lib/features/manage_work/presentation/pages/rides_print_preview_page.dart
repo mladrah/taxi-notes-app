@@ -51,7 +51,10 @@ class RidesPrintPreviewPage extends StatelessWidget {
         children: [
           pw.Text(
             '${_dateFormatter.format(rides[0].start)} - ${_dateFormatter.format(rides[rides.length - 1].end)}',
-            style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 18),
+            style: pw.TextStyle(
+              fontWeight: pw.FontWeight.bold,
+              fontSize: 18,
+            ),
           ),
           pw.SizedBox(height: 32),
           pw.Row(
@@ -103,6 +106,18 @@ class RidesPrintPreviewPage extends StatelessWidget {
                       ? PdfColor.fromHex(highlightHexColor)
                       : null);
             },
+          ),
+          pw.Divider(),
+          pw.Container(
+            height: 16,
+            width: double.infinity,
+            child: pw.Text(
+              'Gesamt: ${rides.map((ride) => ride.price).reduce((a, b) => a + b).toString().replaceAll('.', ',')}',
+              textAlign: pw.TextAlign.right,
+              style: pw.TextStyle(
+                fontWeight: pw.FontWeight.bold,
+              ),
+            ),
           ),
         ],
       ),
