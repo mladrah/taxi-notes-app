@@ -1,18 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:taxi_rahmati/core/presentation/widgets/custom_floating_action_button.dart';
-import 'package:taxi_rahmati/features/manage_work/presentation/bloc/manage_work_bloc.dart';
-import 'package:taxi_rahmati/features/manage_work/presentation/widgets/empty_list_hint_message.dart';
-import 'package:taxi_rahmati/features/manage_work/presentation/widgets/ride_tile.dart';
 
-import '../../domain/entities/ride.dart';
-import '../../../../core/presentation/widgets/hint_message.dart';
+import '../widgets/create_work_unit_button.dart';
 
-// ignore: must_be_immutable
 class MainPage extends StatelessWidget {
-  late List<Ride> rides;
-
-  MainPage({Key? key}) : super(key: key);
+  const MainPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,85 +15,24 @@ class MainPage extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        actions: [
-          BlocBuilder<ManageWorkBloc, ManageWorkState>(
-            builder: (context, state) {
-              if (state is Loaded) {
-                return state.rides.isEmpty
-                    ? const SizedBox.shrink()
-                    : IconButton(
-                        onPressed: () {
-                          _onPrintButton(context);
-                        },
-                        tooltip: 'Drucken',
-                        icon: const Icon(Icons.print_rounded));
-              } else {
-                return const SizedBox.shrink();
-              }
-            },
-          )
-        ],
+        backgroundColor: Colors.transparent,
       ),
-      body: buildBody(context),
-      floatingActionButton: CustomFloatingActionButton(
-        onPressed: () => Navigator.of(context).pushNamed('/rideForm'),
-        tooltip: 'Fahrt hinzufügen',
-        child: const Icon(Icons.add),
-      ),
+      body: _buildBody(context),
     );
   }
 
-  Widget buildBody(BuildContext context) {
-    return Center(
-      child: BlocConsumer<ManageWorkBloc, ManageWorkState>(
-        listener: (context, state) {
-          if (state is Created || state is Deleted || state is Updated) {
-            context.read<ManageWorkBloc>().add(LoadRidesFromRepository());
-          }
-        },
-        builder: (context, state) {
-          return BlocBuilder<ManageWorkBloc, ManageWorkState>(
-            builder: (context, state) {
-              if (state is Loading) {
-                return const CircularProgressIndicator();
-              } else if (state is Loaded) {
-                return state.rides.isEmpty
-                    ? const EmptyListHintMessage()
-                    : _buildList(state.rides);
-              } else if (state is Error) {
-                return HintMessage(
-                    message: '${state.message}!\nBitte versuche es erneut');
-              } else {
-                return const HintMessage(message: 'Unbekannter Fehler: ');
-              }
-            },
-          );
-        },
+  Widget _buildBody(BuildContext context) {
+    return GridView.builder(
+      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: 120,
+        crossAxisSpacing: 8,
+        mainAxisSpacing: 8,
       ),
-    );
-  }
-
-  Widget _buildList(List<Ride> rides) {
-    this.rides = rides;
-    // for (int i = 0; i < 20; i++) {
-    //   this.rides.add(rides[0]);
-    // }
-    return ListView.separated(
-      separatorBuilder: (BuildContext context, int index) {
-        return const SizedBox(height: 8);
-      },
-      padding: const EdgeInsets.fromLTRB(16, 0, 16, 80),
-      itemCount: rides.length,
+      padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+      itemCount: 1,
       itemBuilder: (BuildContext context, int index) {
-        return RideTile(
-          ride: rides[index],
-        );
+        return const CreateWorkUnitButton();
       },
     );
-  }
-
-  void _onPrintButton(BuildContext context) async {
-    Navigator.of(context)
-        .pushNamed('/ridesPrintPreview', arguments: {'rides': rides});
   }
 }

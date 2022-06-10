@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taxi_rahmati/features/manage_work/presentation/pages/work_unit_page.dart';
 import 'package:taxi_rahmati/features/manage_work/presentation/pages/main_page.dart';
 import 'package:taxi_rahmati/features/manage_work/presentation/pages/ride_details_page.dart';
 import 'package:taxi_rahmati/features/manage_work/presentation/pages/ride_form_page.dart';
@@ -17,8 +18,14 @@ class RouteGenerator {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(
-          builder: (_) => MainPage(),
+          builder: (_) => const MainPage(),
           settings: const RouteSettings(name: '/'),
+        );
+
+      case '/workUnit':
+        return MaterialPageRoute(
+          builder: (_) => WorkUnitPage(),
+          settings: const RouteSettings(name: '/workUnit'),
         );
 
       case '/rideForm':
