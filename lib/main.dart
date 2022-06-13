@@ -21,8 +21,9 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-            create: (context) =>
-                sl<ManageWorkBloc>()..add(LoadRidesFromRepository()))
+          create: (context) =>
+              sl<ManageWorkBloc>()..add(LoadWorkUnitsFromRepository()),
+        )
       ],
       child: MaterialApp(
         title: 'Taxi Notes',

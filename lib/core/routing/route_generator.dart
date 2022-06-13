@@ -5,6 +5,7 @@ import 'package:taxi_rahmati/features/manage_work/presentation/pages/ride_detail
 import 'package:taxi_rahmati/features/manage_work/presentation/pages/ride_form_page.dart';
 
 import '../../features/manage_work/domain/entities/ride.dart';
+import '../../features/manage_work/domain/entities/work_unit.dart';
 import '../../features/manage_work/presentation/pages/rides_print_preview_page.dart';
 
 class RouteGenerator {
@@ -18,35 +19,41 @@ class RouteGenerator {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(
-          builder: (_) => const MainPage(),
+          builder: (_) => MainPage(),
           settings: const RouteSettings(name: '/'),
         );
 
       case '/workUnit':
+        WorkUnit? workUnit = args?['workUnit'] as WorkUnit?;
         return MaterialPageRoute(
-          builder: (_) => WorkUnitPage(),
+          builder: (_) => WorkUnitPage(workUnit: workUnit),
           settings: const RouteSettings(name: '/workUnit'),
         );
 
       case '/rideForm':
+        WorkUnit? workUnit = args?['workUnit'] as WorkUnit?;
         Ride? ride = args?['ride'] as Ride?;
+
         return MaterialPageRoute(
-          builder: (_) => RideFormPage(ride: ride),
+          builder: (_) => RideFormPage(workUnit: workUnit, ride: ride),
           settings: const RouteSettings(name: '/rideForm'),
         );
 
       case '/rideDetails':
+        WorkUnit workUnit = args?['workUnit'] as WorkUnit;
         final ride = args!['ride'] as Ride;
+
         return MaterialPageRoute(
             builder: (_) => RideDetailsPage(
+                  workUnit: workUnit,
                   ride: ride,
                 ),
             settings: const RouteSettings(name: '/rideDetails'));
       case '/ridesPrintPreview':
-        final rides = args!['rides'] as List<Ride>;
+        final workUnit = args!['workUnit'] as WorkUnit;
         return MaterialPageRoute(
             builder: (_) => RidesPrintPreviewPage(
-                  rides: rides,
+                  workUnit: workUnit,
                 ),
             settings: const RouteSettings(name: '/ridesPrintPreview'));
 

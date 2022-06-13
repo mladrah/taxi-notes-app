@@ -15,7 +15,7 @@ void main() {
 
   setUp(() {
     mockRideRepository = MockRideRepository();
-    usecase = DeleteRide(rideRepository: mockRideRepository);
+    usecase = DeleteRide(workUnitRepository: mockRideRepository);
   });
 
   final ride = Ride(
@@ -32,7 +32,7 @@ void main() {
     when(mockRideRepository.deleteRide(ride))
         .thenAnswer((_) async => Right(ride));
 
-    final result = await usecase(Params(ride: ride));
+    final result = await usecase(WorkUnitRidesParams(ride: ride));
 
     expect(result, Right(ride));
 

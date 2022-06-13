@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:taxi_rahmati/features/manage_work/domain/entities/ride.dart';
-import 'package:taxi_rahmati/features/manage_work/domain/repositories/ride_repository.dart';
+import 'package:taxi_rahmati/features/manage_work/domain/repositories/work_unit_repository.dart';
 import 'package:taxi_rahmati/features/manage_work/domain/usecases/add_ride.dart';
 import 'package:taxi_rahmati/features/manage_work/domain/usecases/shared/params_ride.dart';
 
@@ -12,14 +12,14 @@ import 'package:uuid/uuid.dart';
 
 import 'add_ride_test.mocks.dart';
 
-@GenerateMocks([RideRepository])
+@GenerateMocks([WorkUnitRepository])
 void main() {
   late MockRideRepository mockRideRepository;
   late AddRide usecase;
 
   setUp(() {
     mockRideRepository = MockRideRepository();
-    usecase = AddRide(rideRepository: mockRideRepository);
+    usecase = AddRide(workUnitRepository: mockRideRepository);
   });
 
   final ride = Ride(
@@ -35,7 +35,7 @@ void main() {
     // mock implementation of the interface
     when(mockRideRepository.addRide(ride)).thenAnswer((_) async => Right(ride));
 
-    final result = await usecase(Params(ride: ride));
+    final result = await usecase(WorkUnitRidesParams(ride: ride));
 
     expect(result, Right(ride));
 

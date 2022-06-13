@@ -9,13 +9,13 @@ import 'package:taxi_rahmati/core/util/input_converter.dart';
 import 'package:taxi_rahmati/features/manage_work/domain/entities/ride.dart';
 import 'package:taxi_rahmati/features/manage_work/domain/usecases/add_ride.dart';
 import 'package:taxi_rahmati/features/manage_work/domain/usecases/delete_ride.dart';
-import 'package:taxi_rahmati/features/manage_work/domain/usecases/get_rides.dart';
+import 'package:taxi_rahmati/features/manage_work/domain/usecases/get_work_unit.dart';
 import 'package:taxi_rahmati/features/manage_work/domain/usecases/update_ride.dart';
 import 'package:taxi_rahmati/features/manage_work/presentation/bloc/manage_work_bloc.dart';
 import 'package:uuid/uuid.dart';
 import 'manage_work_bloc_test.mocks.dart';
 
-@GenerateMocks([AddRide, GetRides, DeleteRide, UpdateRide, InputConverter])
+@GenerateMocks([AddRide, GetWorkUnit, DeleteRide, UpdateRide, InputConverter])
 void main() {
   late ManageWorkBloc bloc;
   late MockAddRide mockAddRide;
@@ -34,7 +34,7 @@ void main() {
         addRideUseCase: mockAddRide,
         deleteRideUseCase: mockDeleteRide,
         updateRideUseCase: mockUpdateRide,
-        getAllRidesUseCase: mockGetAllRides,
+        getWorkUnitUseCase: mockGetAllRides,
         inputConverter: mockInputConverter);
   });
 
@@ -104,7 +104,7 @@ void main() {
 
       // act
       bloc.add(
-        AddRideToRepository(
+        AddRideInWorkUnit(
           title: tTitle,
           name: tName,
           destination: tDestination,
@@ -141,7 +141,7 @@ void main() {
 
       // act
       bloc.add(
-        AddRideToRepository(
+        AddRideInWorkUnit(
           title: tTitle,
           name: tName,
           destination: tDestination,
@@ -159,7 +159,7 @@ void main() {
       when(mockAddRide(any)).thenAnswer((_) async => Right(ride));
 
       bloc.add(
-        AddRideToRepository(
+        AddRideInWorkUnit(
           title: tTitle,
           name: tName,
           destination: tDestination,
@@ -185,13 +185,13 @@ void main() {
         // assert later
         final expected = [
           Loading(),
-          Created(),
+          WorkUnitAltered(),
         ];
         expectLater(bloc.stream.asBroadcastStream(), emitsInOrder(expected));
 
         // act
         bloc.add(
-          AddRideToRepository(
+          AddRideInWorkUnit(
             title: tTitle,
             name: tName,
             destination: tDestination,
@@ -220,7 +220,7 @@ void main() {
         expectLater(bloc.stream.asBroadcastStream(), emitsInOrder(expected));
         // act
         bloc.add(
-          AddRideToRepository(
+          AddRideInWorkUnit(
             title: tTitle,
             name: tName,
             destination: tDestination,
@@ -250,7 +250,7 @@ void main() {
         // act
 
         bloc.add(
-          AddRideToRepository(
+          AddRideInWorkUnit(
             title: tTitle,
             name: tName,
             destination: tDestination,
@@ -283,7 +283,7 @@ void main() {
         when(mockGetAllRides(any)).thenAnswer((_) async => Right(allRides));
 
         // act
-        bloc.add(LoadRidesFromRepository());
+        bloc.add(LoadWorkUnitFromRepository());
         await untilCalled(mockGetAllRides(any));
 
         // assert
@@ -300,13 +300,13 @@ void main() {
 
         final expected = [
           Loading(),
-          Loaded(rides: allRides),
+          WorkUnitLoaded(rides: allRides),
         ];
 
         expectLater(bloc.stream.asBroadcastStream(), emitsInOrder(expected));
 
         // act
-        bloc.add(LoadRidesFromRepository());
+        bloc.add(LoadWorkUnitFromRepository());
       },
     );
 
@@ -325,7 +325,7 @@ void main() {
         expectLater(bloc.stream.asBroadcastStream(), emitsInOrder(expected));
 
         // act
-        bloc.add(LoadRidesFromRepository());
+        bloc.add(LoadWorkUnitFromRepository());
       },
     );
     test(
@@ -343,7 +343,7 @@ void main() {
         expectLater(bloc.stream.asBroadcastStream(), emitsInOrder(expected));
 
         // act
-        bloc.add(LoadRidesFromRepository());
+        bloc.add(LoadWorkUnitFromRepository());
       },
     );
   });

@@ -9,28 +9,55 @@ abstract class ManageWorkState extends Equatable {
   List<Object> get props => [];
 }
 
+class Initial extends ManageWorkState {}
+
 class Loading extends ManageWorkState {}
 
-class Loaded extends ManageWorkState {
-  List<Ride> rides;
+class WorkUnitsLoaded extends ManageWorkState {
+  List<WorkUnit> workUnits;
 
-  Loaded({required this.rides});
+  WorkUnitsLoaded({required this.workUnits});
 
   @override
-  List<Object> get props => [rides];
+  List<Object> get props => [workUnits];
 }
 
-class Created extends ManageWorkState {}
+class WorkUnitLoaded extends ManageWorkState {
+  WorkUnit workUnit;
 
-class Deleted extends ManageWorkState {}
-
-class Updated extends ManageWorkState {
-  Ride ride;
-
-  Updated({required this.ride});
+  WorkUnitLoaded({required this.workUnit});
 
   @override
-  List<Object> get props => [ride];
+  List<Object> get props => [workUnit];
+}
+
+class WorkUnitDeleted extends ManageWorkState {}
+
+class RideAdded extends ManageWorkState {
+  WorkUnit workUnit;
+
+  RideAdded({required this.workUnit});
+
+  @override
+  List<Object> get props => [workUnit];
+}
+
+class RideDeleted extends ManageWorkState {
+  WorkUnit workUnit;
+
+  RideDeleted({required this.workUnit});
+
+  @override
+  List<Object> get props => [workUnit];
+}
+
+class RideUpdated extends ManageWorkState {
+  WorkUnit workUnit;
+
+  RideUpdated({required this.workUnit});
+
+  @override
+  List<Object> get props => [workUnit];
 }
 
 class Error extends ManageWorkState {

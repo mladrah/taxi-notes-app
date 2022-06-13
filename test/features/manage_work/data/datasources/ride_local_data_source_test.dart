@@ -6,7 +6,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taxi_rahmati/core/error/exceptions.dart';
-import 'package:taxi_rahmati/features/manage_work/data/datasources/ride_local_data_source.dart';
+import 'package:taxi_rahmati/features/manage_work/data/datasources/work_unit_local_data_source.dart';
 import 'package:taxi_rahmati/features/manage_work/data/models/ride_model.dart';
 import 'package:taxi_rahmati/features/manage_work/domain/entities/ride.dart';
 
@@ -16,12 +16,12 @@ import 'ride_local_data_source_test.mocks.dart';
 @GenerateMocks([SharedPreferences])
 void main() {
   late MockSharedPreferences mockSharedPreferences;
-  late RideLocalDataSourceImpl rideLocalDataSourceImpl;
+  late WorkUnitLocalDataSourceImpl rideLocalDataSourceImpl;
 
   setUp(() {
     mockSharedPreferences = MockSharedPreferences();
     rideLocalDataSourceImpl =
-        RideLocalDataSourceImpl(sharedPreferences: mockSharedPreferences);
+        WorkUnitLocalDataSourceImpl(sharedPreferences: mockSharedPreferences);
   });
 
   final rideModel = RideModel(
@@ -73,7 +73,7 @@ void main() {
       when(mockSharedPreferences.getString(any))
           .thenReturn(fixture('all_rides.json'));
 
-      final result = await rideLocalDataSourceImpl.getRides();
+      final result = await rideLocalDataSourceImpl.getWorkUnit();
 
       verify(mockSharedPreferences.getString(ALL_RIDES));
       expect(result, allRides);
@@ -84,7 +84,7 @@ void main() {
         () async {
       when(mockSharedPreferences.getString(any)).thenReturn(null);
 
-      final call = rideLocalDataSourceImpl.getRides;
+      final call = rideLocalDataSourceImpl.getWorkUnit;
 
       expect(() => call(), throwsA(isA<LocalException>()));
     });

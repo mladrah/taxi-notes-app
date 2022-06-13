@@ -1,12 +1,14 @@
 import 'package:equatable/equatable.dart';
 
 import '../../entities/ride.dart';
+import '../../entities/work_unit.dart';
 
-class Params extends Equatable {
+class WorkUnitRidesParams extends Equatable {
+  final WorkUnit workUnit;
   final Ride ride;
 
-  const Params({required this.ride});
+  const WorkUnitRidesParams({required this.workUnit, required this.ride});
 
   @override
-  List<Object> get props => [ride];
+  List<Object> get props => [workUnit, ride];
 }

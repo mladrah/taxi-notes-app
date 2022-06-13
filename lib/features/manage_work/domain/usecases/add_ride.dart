@@ -3,16 +3,18 @@ import 'package:taxi_rahmati/core/usecases/usecase.dart';
 import 'package:taxi_rahmati/features/manage_work/domain/entities/ride.dart';
 
 import '../../../../core/error/failures.dart';
-import '../repositories/ride_repository.dart';
+import '../entities/work_unit.dart';
+import '../repositories/work_unit_repository.dart';
 import 'shared/params_ride.dart';
 
-class AddRide implements UseCase<Ride, Params> {
-  final RideRepository rideRepository;
+class AddRide implements UseCase<WorkUnit, WorkUnitRidesParams> {
+  final WorkUnitRepository workUnitRepository;
 
-  AddRide({required this.rideRepository});
+  AddRide({required this.workUnitRepository});
 
   @override
-  Future<Either<Failure, Ride>> call(Params params) async {
-    return await rideRepository.addRide(params.ride);
+  Future<Either<Failure, WorkUnit>> call(WorkUnitRidesParams params) async {
+    return await workUnitRepository.addRide(
+        workUnit: params.workUnit, ride: params.ride);
   }
 }

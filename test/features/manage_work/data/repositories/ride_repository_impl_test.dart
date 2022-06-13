@@ -6,18 +6,18 @@ import 'package:mockito/mockito.dart';
 import 'package:taxi_rahmati/core/error/exceptions.dart';
 import 'package:taxi_rahmati/core/error/failures.dart';
 import 'package:taxi_rahmati/core/network/network_info.dart';
-import 'package:taxi_rahmati/features/manage_work/data/datasources/ride_local_data_source.dart';
+import 'package:taxi_rahmati/features/manage_work/data/datasources/work_unit_local_data_source.dart';
 import 'package:taxi_rahmati/features/manage_work/data/datasources/ride_remote_date_source.dart';
 import 'package:taxi_rahmati/features/manage_work/data/models/ride_model.dart';
-import 'package:taxi_rahmati/features/manage_work/data/repositories/ride_repository_impl.dart';
+import 'package:taxi_rahmati/features/manage_work/data/repositories/work_unit_repository_impl.dart';
 import 'package:taxi_rahmati/features/manage_work/domain/entities/ride.dart';
 import 'package:uuid/uuid.dart';
 
 import 'ride_repository_impl_test.mocks.dart';
 
-@GenerateMocks([RideLocalDataSource, RideRemoteDataSource, NetworkInfo])
+@GenerateMocks([WorkUnitLocalDataSource, WorkUnitRemoteDataSource, NetworkInfo])
 void main() {
-  late RideRepositoryImpl rideRepositoryImpl;
+  late WorkUnitRepositoryImpl rideRepositoryImpl;
 
   late MockRideLocalDataSource mockRideLocalDataSource;
   late MockRideRemoteDataSource mockRideRemoteDataSource;
@@ -28,7 +28,7 @@ void main() {
     mockRideRemoteDataSource = MockRideRemoteDataSource();
     mockNetworkInfo = MockNetworkInfo();
 
-    rideRepositoryImpl = RideRepositoryImpl(
+    rideRepositoryImpl = WorkUnitRepositoryImpl(
         rideLocalDataSource: mockRideLocalDataSource,
         rideRemoteDataSource: mockRideRemoteDataSource,
         networkInfo: mockNetworkInfo);
@@ -51,11 +51,11 @@ void main() {
       when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
       when(mockRideRemoteDataSource.getRides())
           .thenAnswer((_) async => allRides);
-      when(mockRideLocalDataSource.getRides())
+      when(mockRideLocalDataSource.getWorkUnit())
           .thenAnswer((_) async => allRides);
 
       // act
-      rideRepositoryImpl.getRides();
+      rideRepositoryImpl.getWorkUnit();
 
       // assert
       verify(mockNetworkInfo.isConnected);
@@ -97,10 +97,10 @@ void main() {
       test(
           'should return local data when the call to local data source is successful',
           () async {
-        when(mockRideLocalDataSource.getRides())
+        when(mockRideLocalDataSource.getWorkUnit())
             .thenAnswer((_) async => allRides);
 
-        final result = await rideRepositoryImpl.getRides();
+        final result = await rideRepositoryImpl.getWorkUnit();
 
         verifyZeroInteractions(mockRideRemoteDataSource);
         expect(result, Right(allRides));
@@ -109,9 +109,9 @@ void main() {
       test(
           'should return local failure when the call to local data source is unsuccessful',
           () async {
-        when(mockRideLocalDataSource.getRides()).thenThrow(LocalException());
+        when(mockRideLocalDataSource.getWorkUnit()).thenThrow(LocalException());
 
-        final result = await rideRepositoryImpl.getRides();
+        final result = await rideRepositoryImpl.getWorkUnit();
 
         verifyZeroInteractions(mockRideRemoteDataSource);
         expect(result, Left(LocalFailure()));

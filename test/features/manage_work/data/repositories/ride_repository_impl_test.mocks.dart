@@ -6,7 +6,7 @@ import 'dart:async' as _i4;
 
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:taxi_rahmati/core/network/network_info.dart' as _i6;
-import 'package:taxi_rahmati/features/manage_work/data/datasources/ride_local_data_source.dart'
+import 'package:taxi_rahmati/features/manage_work/data/datasources/work_unit_local_data_source.dart'
     as _i3;
 import 'package:taxi_rahmati/features/manage_work/data/datasources/ride_remote_date_source.dart'
     as _i5;
@@ -29,7 +29,7 @@ class _FakeRideModel_0 extends _i1.Fake implements _i2.RideModel {}
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockRideLocalDataSource extends _i1.Mock
-    implements _i3.RideLocalDataSource {
+    implements _i3.WorkUnitLocalDataSour
   MockRideLocalDataSource() {
     _i1.throwOnMissingStub(this);
   }
@@ -73,7 +73,7 @@ class MockRideLocalDataSource extends _i1.Mock
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockRideRemoteDataSource extends _i1.Mock
-    implements _i5.RideRemoteDataSource {
+    implements _i5.WorkUnitRemoteDataSource {
   MockRideRemoteDataSource() {
     _i1.throwOnMissingStub(this);
   }

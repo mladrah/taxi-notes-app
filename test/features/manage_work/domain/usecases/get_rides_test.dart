@@ -4,18 +4,18 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:taxi_rahmati/core/usecases/usecase.dart';
 import 'package:taxi_rahmati/features/manage_work/domain/entities/ride.dart';
-import 'package:taxi_rahmati/features/manage_work/domain/usecases/get_rides.dart';
+import 'package:taxi_rahmati/features/manage_work/domain/usecases/get_work_unit.dart';
 import 'package:uuid/uuid.dart';
 
 import 'add_ride_test.mocks.dart';
 
 void main() {
   late MockRideRepository rideRepository;
-  late GetRides usecase;
+  late GetWorkUnit usecase;
 
   setUp(() {
     rideRepository = MockRideRepository();
-    usecase = GetRides(rideRepository: rideRepository);
+    usecase = GetWorkUnit(workUnitRepository: rideRepository);
   });
 
   final ride = Ride(
@@ -31,14 +31,14 @@ void main() {
 
   test('should get all Rides', () async {
     // mock implementation of the interface
-    when(rideRepository.getRides()).thenAnswer((_) async => Right(allRides));
+    when(rideRepository.getWorkUnit()).thenAnswer((_) async => Right(allRides));
 
     final result = await usecase(NoParams());
 
     expect(result, Right(allRides));
 
     // Verify that the method has been called on the Repository
-    verify(rideRepository.getRides());
+    verify(rideRepository.getWorkUnit());
 
     // Only the above method should be called and nothing more.
     verifyNoMoreInteractions(rideRepository);

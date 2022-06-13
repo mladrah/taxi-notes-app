@@ -5,12 +5,15 @@ import 'package:taxi_rahmati/features/manage_work/presentation/widgets/ride_deta
 
 import '../../../../core/presentation/widgets/custom_floating_action_button.dart';
 import '../../domain/entities/ride.dart';
+import '../../domain/entities/work_unit.dart';
 import '../bloc/manage_work_bloc.dart';
 
 // ignore: must_be_immutable
 class RideDetailsPage extends StatefulWidget {
+  late WorkUnit workUnit;
   late Ride ride;
-  RideDetailsPage({Key? key, required this.ride}) : super(key: key);
+  RideDetailsPage({Key? key, required this.workUnit, required this.ride})
+      : super(key: key);
 
   @override
   State<RideDetailsPage> createState() => _RideDetailsPageState();
@@ -62,8 +65,8 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
   Widget buildBody(BuildContext context) {
     return BlocListener<ManageWorkBloc, ManageWorkState>(
       listener: (context, state) {
-        if (state is Deleted) {
-          Navigator.of(context).pop();
+        if (state is RideDeleted || state is WorkUnitDeleted) {
+          Navigator.pop(context);
         } else if (state is Error) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.message)),
@@ -107,9 +110,22 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
               ],
             ),
             const SizedBox(height: 8),
-            RideDetailsField(
-              label: 'Ort',
-              value: widget.ride.destination,
+            Row(
+              children: [
+                Expanded(
+                  child: RideDetailsField(
+                    label: 'Von',
+                    value: widget.ride.fromDestination,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: RideDetailsField(
+                    label: 'Nach',
+                    value: widget.ride.toDestination,
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 8),
             Row(
@@ -157,19 +173,23 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
   }
 
   void _dispatchDeleteEvent(BuildContext context) {
-    context
-        .read<ManageWorkBloc>()
-        .add(DeleteRideFromRepository(ride: widget.ride));
+    context.read<ManageWorkBloc>().add(
+        DeleteRideFromRepository(workUnit: widget.workUnit, ride: widget.ride));
   }
 
   void _onEditButton(BuildContext context) async {
-    final result = await Navigator.of(context)
-        .pushNamed('/rideForm', arguments: {'ride': widget.ride});
+    final result = await Navigator.of(context).pushNamed('/rideForm',
+        arguments: {'ride': widget.ride, 'workUnit': widget.workUnit});
 
     if (result != null) {
-      setState(() {
-        widget.ride = result as Ride;
-      });
+      final WorkUnit workUnit = result as WorkUnit;
+      for (Ride r in workUnit.rides) {
+        if (r.id.compareTo(widget.ride.id) == 0) {
+          widget.ride = r;
+          break;
+        }
+      }
+      setState(() {});
     }
   }
 }

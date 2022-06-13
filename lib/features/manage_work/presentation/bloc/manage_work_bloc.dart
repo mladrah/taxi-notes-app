@@ -1,21 +1,24 @@
 // ignore_for_file: constant_identifier_names
 // ignore: unused_import
+import 'dart:async';
 import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:taxi_rahmati/core/usecases/usecase.dart';
 import 'package:taxi_rahmati/core/util/input_converter.dart';
+import 'package:taxi_rahmati/features/manage_work/domain/entities/work_unit.dart';
+import 'package:taxi_rahmati/features/manage_work/domain/usecases/create_work_unit.dart';
+import 'package:taxi_rahmati/features/manage_work/domain/usecases/delete_work_unit.dart';
 import 'package:uuid/uuid.dart';
-import 'dart:io';
-
 import '../../../../core/error/failures.dart';
 import '../../domain/entities/ride.dart';
+import '../../domain/usecases/get_work_units.dart';
 import '../../domain/usecases/shared/params_ride.dart';
 import '../../domain/usecases/update_ride.dart';
 import '../../domain/usecases/delete_ride.dart';
 import '../../domain/usecases/add_ride.dart';
-import '../../domain/usecases/get_rides.dart';
 
 part 'manage_work_event.dart';
 part 'manage_work_state.dart';
@@ -26,26 +29,30 @@ const String INVALID_INPUT_DATE_MESSAGE = 'Invalid Date Input';
 const String INVALID_INPUT_PRICE_MESSAGE = 'Invalid Price Input';
 
 class ManageWorkBloc extends Bloc<ManageWorkEvent, ManageWorkState> {
+  final CreateWorkUnit createWorkUnitUseCase;
+  final DeleteWorkUnit deleteWorkUnitUseCase;
+  final GetWorkUnits getWorkUnitsUseCase;
   final AddRide addRideUseCase;
   final DeleteRide deleteRideUseCase;
   final UpdateRide updateRideUseCase;
-  final GetRides getAllRidesUseCase;
   final InputConverter inputConverter;
 
-  ManageWorkBloc(
-      {required this.addRideUseCase,
-      required this.deleteRideUseCase,
-      required this.updateRideUseCase,
-      required this.getAllRidesUseCase,
-      required this.inputConverter})
-      : super(Loading()) {
-    on<AddRideToRepository>(_onAddRideToRepository);
+  ManageWorkBloc({
+    required this.createWorkUnitUseCase,
+    required this.deleteWorkUnitUseCase,
+    required this.getWorkUnitsUseCase,
+    required this.addRideUseCase,
+    required this.deleteRideUseCase,
+    required this.updateRideUseCase,
+    required this.inputConverter,
+  }) : super(Initial()) {
+    on<LoadWorkUnitsFromRepository>(_onLoadWorkUnitsFromRepository);
+    on<AddRideInWorkUnit>(_onAddRideToRepository);
     on<DeleteRideFromRepository>(_onDeleteRideFromRepository);
     on<UpdateRideInRepository>(_onUpdateRideInRepository);
-    on<LoadRidesFromRepository>(_onLoadRidesFromRepository);
   }
 
-  void _onAddRideToRepository(AddRideToRepository event, Emitter emit) async {
+  void _onAddRideToRepository(AddRideInWorkUnit event, Emitter emit) async {
     bool isFailed = false;
     List<String> errorMessages = [];
     late final DateTime startParsed;
@@ -74,19 +81,30 @@ class ManageWorkBloc extends Bloc<ManageWorkEvent, ManageWorkState> {
     } else {
       emit(Loading());
 
-      final result = await addRideUseCase(Params(
+      late final WorkUnit newWorkUnit;
+      if (event.workUnit == null) {
+        final createWorkUnitResult = await createWorkUnitUseCase(NoParams());
+        createWorkUnitResult.fold(
+            (failure) => emit(Error(message: _mapFailureToMessage(failure))),
+            (workUnit) => newWorkUnit = workUnit);
+        log('created new workunit with id: ${newWorkUnit.id}');
+      }
+
+      final result = await addRideUseCase(WorkUnitRidesParams(
+          workUnit: event.workUnit ?? newWorkUnit,
           ride: Ride(
               id: const Uuid().v1(),
               title: event.title,
               name: event.name,
-              destination: event.destination,
+              fromDestination: event.fromDestination,
+              toDestination: event.toDestination,
               start: startParsed,
               end: endParsed,
               price: priceParsed)));
 
       result.fold(
         (failure) => emit(Error(message: _mapFailureToMessage(failure))),
-        (ride) => emit(Created()),
+        (workUnit) => emit(RideAdded(workUnit: workUnit)),
       );
     }
   }
@@ -95,11 +113,26 @@ class ManageWorkBloc extends Bloc<ManageWorkEvent, ManageWorkState> {
       DeleteRideFromRepository event, Emitter<ManageWorkState> emit) async {
     emit(Loading());
 
-    final result = await deleteRideUseCase(Params(ride: event.ride));
+    final result = await deleteRideUseCase(
+        WorkUnitRidesParams(workUnit: event.workUnit, ride: event.ride));
 
-    result.fold(
-        (failure) => emit(Error(message: _mapFailureToMessage(failure))),
-        (r) => emit(Deleted()));
+    late final WorkUnit workUnitResult;
+    result
+        .fold((failure) => emit(Error(message: _mapFailureToMessage(failure))),
+            (workUnit) {
+      workUnitResult = workUnit;
+      // emit(RideDeleted(workUnit: workUnit));
+    });
+
+    if (workUnitResult.rides.isEmpty) {
+      final deleteResult =
+          await deleteWorkUnitUseCase(Params(workUnit: workUnitResult));
+
+      deleteResult.fold((l) => emit(Error(message: _mapFailureToMessage(l))),
+          (r) => emit(WorkUnitDeleted()));
+    } else {
+      emit(RideDeleted(workUnit: workUnitResult));
+    }
   }
 
   void _onUpdateRideInRepository(
@@ -136,39 +169,33 @@ class ManageWorkBloc extends Bloc<ManageWorkEvent, ManageWorkState> {
           id: event.id,
           title: event.title,
           name: event.name,
-          destination: event.destination,
+          fromDestination: event.fromDestination,
+          toDestination: event.toDestination,
           start: startParsed,
           end: endParsed,
           price: priceParsed);
 
-      if (event.oldRide == newRide) {
-        emit(Updated(ride: event.oldRide));
-        log('Not Updated');
-        return;
-      }
-
       final result = await updateRideUseCase(
-        Params(ride: newRide),
+        WorkUnitRidesParams(workUnit: event.workUnit, ride: newRide),
       );
 
       result.fold(
         (failure) => emit(Error(message: _mapFailureToMessage(failure))),
-        (ride) => emit(Updated(ride: ride)),
+        (workUnit) => emit(RideUpdated(workUnit: workUnit)),
       );
     }
   }
 
-  void _onLoadRidesFromRepository(
-      LoadRidesFromRepository event, Emitter emit) async {
+  void _onLoadWorkUnitsFromRepository(
+      LoadWorkUnitsFromRepository event, Emitter<ManageWorkState> emit) async {
     emit(Loading());
 
-    final result = await getAllRidesUseCase(NoParams());
+    final result = await getWorkUnitsUseCase(NoParams());
 
     result
         .fold((failure) => emit(Error(message: _mapFailureToMessage(failure))),
-            (rides) {
-      rides.sort((a, b) => a.start.compareTo(b.start));
-      emit(Loaded(rides: rides));
+            (workUnits) {
+      emit(WorkUnitsLoaded(workUnits: workUnits));
     });
   }
 

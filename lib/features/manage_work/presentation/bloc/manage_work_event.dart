@@ -7,58 +7,26 @@ abstract class ManageWorkEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class AddRideToRepository extends ManageWorkEvent {
+class LoadWorkUnitsFromRepository extends ManageWorkEvent {}
+
+class AddRideInWorkUnit extends ManageWorkEvent {
+  final WorkUnit? workUnit;
   final Title title;
   final String name;
-  final String destination;
+  final String fromDestination;
+  final String toDestination;
   final DateTime startDate;
   final DateTime startTime;
   final DateTime endDate;
   final DateTime endTime;
   final String price;
 
-  const AddRideToRepository(
-      {required this.title,
-      required this.name,
-      required this.destination,
-      required this.startDate,
-      required this.startTime,
-      required this.endDate,
-      required this.endTime,
-      required this.price});
-
-  @override
-  List<Object> get props =>
-      [title, name, destination, startDate, startTime, endDate, endTime, price];
-}
-
-class DeleteRideFromRepository extends ManageWorkEvent {
-  final Ride ride;
-
-  const DeleteRideFromRepository({required this.ride});
-
-  @override
-  List<Object> get props => [ride];
-}
-
-class UpdateRideInRepository extends ManageWorkEvent {
-  final Ride oldRide;
-  final String id;
-  final Title title;
-  final String name;
-  final String destination;
-  final DateTime startDate;
-  final DateTime startTime;
-  final DateTime endDate;
-  final DateTime endTime;
-  final String price;
-
-  const UpdateRideInRepository({
-    required this.oldRide,
-    required this.id,
+  const AddRideInWorkUnit({
+    required this.workUnit,
     required this.title,
     required this.name,
-    required this.destination,
+    required this.fromDestination,
+    required this.toDestination,
     required this.startDate,
     required this.startTime,
     required this.endDate,
@@ -68,11 +36,72 @@ class UpdateRideInRepository extends ManageWorkEvent {
 
   @override
   List<Object> get props => [
+        title,
+        name,
+        fromDestination,
+        toDestination,
+        startDate,
+        startTime,
+        endDate,
+        endTime,
+        price,
+      ];
+}
+
+class DeleteRideFromRepository extends ManageWorkEvent {
+  final WorkUnit workUnit;
+  final Ride ride;
+
+  const DeleteRideFromRepository({
+    required this.workUnit,
+    required this.ride,
+  });
+
+  @override
+  List<Object> get props => [
+        workUnit,
+        ride,
+      ];
+}
+
+class UpdateRideInRepository extends ManageWorkEvent {
+  final WorkUnit workUnit;
+  final Ride oldRide;
+  final String id;
+  final Title title;
+  final String name;
+  final String fromDestination;
+  final String toDestination;
+  final DateTime startDate;
+  final DateTime startTime;
+  final DateTime endDate;
+  final DateTime endTime;
+  final String price;
+
+  const UpdateRideInRepository({
+    required this.workUnit,
+    required this.oldRide,
+    required this.id,
+    required this.title,
+    required this.name,
+    required this.fromDestination,
+    required this.toDestination,
+    required this.startDate,
+    required this.startTime,
+    required this.endDate,
+    required this.endTime,
+    required this.price,
+  });
+
+  @override
+  List<Object> get props => [
+        workUnit,
         oldRide,
         id,
         title,
         name,
-        destination,
+        fromDestination,
+        toDestination,
         startDate,
         startTime,
         endDate,
@@ -81,4 +110,13 @@ class UpdateRideInRepository extends ManageWorkEvent {
       ];
 }
 
-class LoadRidesFromRepository extends ManageWorkEvent {}
+class LoadWorkUnitFromRepository extends ManageWorkEvent {
+  final WorkUnit workUnit;
+
+  const LoadWorkUnitFromRepository({
+    required this.workUnit,
+  });
+
+  @override
+  List<Object> get props => [workUnit];
+}

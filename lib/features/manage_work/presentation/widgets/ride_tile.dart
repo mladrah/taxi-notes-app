@@ -2,13 +2,16 @@ import 'package:flutter/material.dart' hide Title;
 import 'package:intl/intl.dart';
 
 import '../../domain/entities/ride.dart';
+import '../../domain/entities/work_unit.dart';
 
 class RideTile extends StatelessWidget {
+  final WorkUnit workUnit;
   final Ride ride;
   final DateFormat _timeFormatter = DateFormat('HH:mm');
-
+  final DateFormat _dateFormatter = DateFormat('dd.MM');
   RideTile({
     Key? key,
+    required this.workUnit,
     required this.ride,
   }) : super(key: key);
 
@@ -32,15 +35,13 @@ class RideTile extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(16),
-          // splashColor: Colors.white.withOpacity(0.5),
-          // highlightColor: Colors.white.withOpacity(0.25),
           onTap: () {
             _onTap(context);
           },
           child: Row(
             children: [
               Container(
-                width: 75,
+                // width: 75,
                 height: double.infinity,
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(8),
@@ -54,7 +55,7 @@ class RideTile extends StatelessWidget {
                 ),
                 child: FittedBox(
                   child: Text(
-                    '${_timeFormatter.format(ride.start)} -\n${_timeFormatter.format(ride.end)}',
+                    '${_dateFormatter.format(ride.start)}\n${_timeFormatter.format(ride.start)}',
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       color: Colors.white,
@@ -69,10 +70,47 @@ class RideTile extends StatelessWidget {
                   height: double.infinity,
                   child: Row(children: [
                     Expanded(
-                      flex: 2,
                       child: Container(
                         height: double.infinity,
-                        alignment: Alignment.center,
+                        alignment: Alignment.centerLeft,
+                        child: FittedBox(
+                          child: Text(
+                            ride.fromDestination,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Expanded(
+                      child: Container(
+                        height: double.infinity,
+                        alignment: Alignment.centerLeft,
+                        child: FittedBox(
+                          child: Text(
+                            ride.toDestination,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Expanded(
+                      child: Container(
+                        height: double.infinity,
+                        alignment: Alignment.centerLeft,
                         child: FittedBox(
                           child: Text(
                             '${ride.title == Title.herr ? 'Hr.' : 'Fr.'} ${ride.name}',
@@ -85,75 +123,27 @@ class RideTile extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: Container(
-                        height: double.infinity,
-                        alignment: Alignment.center,
-                        child: FittedBox(
-                          child: Text(
-                            ride.destination,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        height: double.infinity,
-                        alignment: Alignment.center,
-                        child: FittedBox(
-                          child: Text(
-                            '${ride.price.toString().replaceAll('.', ',')} €',
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontStyle: FontStyle.italic,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-
                     // Expanded(
                     //   flex: 1,
-                    //   child: Text(
-                    //     '${ride.price.toString().replaceAll('.', ',')} €',
-                    //     textAlign: TextAlign.right,
-                    //     style: const TextStyle(
-                    //       fontStyle: FontStyle.italic,
-                    //       fontWeight: FontWeight.bold,
-                    //       color: Colors.white,
+                    //   child: Container(
+                    //     height: double.infinity,
+                    //     alignment: Alignment.center,
+                    //     child: FittedBox(
+                    //       child: Text(
+                    //         '${ride.price.toString().replaceAll('.', ',')} €',
+                    //         textAlign: TextAlign.center,
+                    //         style: const TextStyle(
+                    //           color: Colors.white,
+                    //           fontWeight: FontWeight.bold,
+                    //           fontStyle: FontStyle.italic,
+                    //         ),
+                    //       ),
                     //     ),
                     //   ),
                     // ),
                   ]),
                 ),
               )
-              // Padding(
-              //   padding: const EdgeInsets.all(16),
-              //   child: Row(
-              //     children: [
-
-              //       SizedBox(
-              //         width: 8,
-              //       ),
-
-              //     ],
-              //   ),
-              // ),
             ],
           ),
         ),
@@ -162,6 +152,7 @@ class RideTile extends StatelessWidget {
   }
 
   void _onTap(BuildContext context) {
-    Navigator.of(context).pushNamed('/rideDetails', arguments: {'ride': ride});
+    Navigator.of(context).pushNamed('/rideDetails',
+        arguments: {'ride': ride, 'workUnit': workUnit});
   }
 }

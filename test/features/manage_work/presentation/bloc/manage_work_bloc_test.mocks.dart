@@ -12,13 +12,13 @@ import 'package:taxi_rahmati/core/usecases/usecase.dart' as _i10;
 import 'package:taxi_rahmati/core/util/input_converter.dart' as _i13;
 import 'package:taxi_rahmati/features/manage_work/domain/entities/ride.dart'
     as _i7;
-import 'package:taxi_rahmati/features/manage_work/domain/repositories/ride_repository.dart'
+import 'package:taxi_rahmati/features/manage_work/domain/repositories/work_unit_repository.dart'
     as _i2;
 import 'package:taxi_rahmati/features/manage_work/domain/usecases/add_ride.dart'
     as _i4;
 import 'package:taxi_rahmati/features/manage_work/domain/usecases/delete_ride.dart'
     as _i11;
-import 'package:taxi_rahmati/features/manage_work/domain/usecases/get_rides.dart'
+import 'package:taxi_rahmati/features/manage_work/domain/usecases/get_work_unit.dart'
     as _i9;
 import 'package:taxi_rahmati/features/manage_work/domain/usecases/shared/params_ride.dart'
     as _i8;
@@ -35,7 +35,7 @@ import 'package:taxi_rahmati/features/manage_work/domain/usecases/update_ride.da
 // ignore_for_file: unnecessary_parenthesis
 // ignore_for_file: camel_case_types
 
-class _FakeRideRepository_0 extends _i1.Fake implements _i2.RideRepository {}
+class _FakeRideRepository_0 extends _i1.Fake implements _i2.WorkUnitRepositor
 
 class _FakeEither_1<L, R> extends _i1.Fake implements _i3.Either<L, R> {}
 
@@ -48,11 +48,11 @@ class MockAddRide extends _i1.Mock implements _i4.AddRide {
   }
 
   @override
-  _i2.RideRepository get rideRepository =>
+  _i2.WorkUnitRepository get rideRepositor
       (super.noSuchMethod(Invocation.getter(#rideRepository),
-          returnValue: _FakeRideRepository_0()) as _i2.RideRepository);
+          returnValue: _FakeRideRepository_0()) as _i2.WorkUnitReposito
   @override
-  _i5.Future<_i3.Either<_i6.Failure, _i7.Ride>> call(_i8.Params? params) =>
+  _i5.Future<_i3.Either<_i6.Failure, _i7.Ride>> call(_i8.WorkUnitRidesParams? params) =>
       (super.noSuchMethod(Invocation.method(#call, [params]),
               returnValue: Future<_i3.Either<_i6.Failure, _i7.Ride>>.value(
                   _FakeEither_1<_i6.Failure, _i7.Ride>()))
@@ -62,15 +62,15 @@ class MockAddRide extends _i1.Mock implements _i4.AddRide {
 /// A class which mocks [GetRides].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockGetRides extends _i1.Mock implements _i9.GetRides {
+class MockGetRides extends _i1.Mock implements _i9.GetWorkUnit {
   MockGetRides() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i2.RideRepository get rideRepository =>
+  _i2.WorkUnitRepository get rideRepositor
       (super.noSuchMethod(Invocation.getter(#rideRepository),
-          returnValue: _FakeRideRepository_0()) as _i2.RideRepository);
+          returnValue: _FakeRideRepository_0()) as _i2.WorkUnitReposito
   @override
   _i5.Future<_i3.Either<_i6.Failure, List<_i7.Ride>>> call(
           _i10.NoParams? params) =>
@@ -89,11 +89,11 @@ class MockDeleteRide extends _i1.Mock implements _i11.DeleteRide {
   }
 
   @override
-  _i2.RideRepository get rideRepository =>
+  _i2.WorkUnitRepository get rideRepositor
       (super.noSuchMethod(Invocation.getter(#rideRepository),
-          returnValue: _FakeRideRepository_0()) as _i2.RideRepository);
+          returnValue: _FakeRideRepository_0()) as _i2.WorkUnitReposito
   @override
-  _i5.Future<_i3.Either<_i6.Failure, _i7.Ride>> call(_i8.Params? params) =>
+  _i5.Future<_i3.Either<_i6.Failure, _i7.Ride>> call(_i8.WorkUnitRidesParams? params) =>
       (super.noSuchMethod(Invocation.method(#call, [params]),
               returnValue: Future<_i3.Either<_i6.Failure, _i7.Ride>>.value(
                   _FakeEither_1<_i6.Failure, _i7.Ride>()))
@@ -109,11 +109,11 @@ class MockUpdateRide extends _i1.Mock implements _i12.UpdateRide {
   }
 
   @override
-  _i2.RideRepository get rideRepository =>
+  _i2.WorkUnitRepository get rideRepositor
       (super.noSuchMethod(Invocation.getter(#rideRepository),
-          returnValue: _FakeRideRepository_0()) as _i2.RideRepository);
+          returnValue: _FakeRideRepository_0()) as _i2.WorkUnitReposito
   @override
-  _i5.Future<_i3.Either<_i6.Failure, _i7.Ride>> call(_i8.Params? params) =>
+  _i5.Future<_i3.Either<_i6.Failure, _i7.Ride>> call(_i8.WorkUnitRidesParams? params) =>
       (super.noSuchMethod(Invocation.method(#call, [params]),
               returnValue: Future<_i3.Either<_i6.Failure, _i7.Ride>>.value(
                   _FakeEither_1<_i6.Failure, _i7.Ride>()))
