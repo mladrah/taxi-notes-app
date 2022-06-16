@@ -1,11 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:taxi_rahmati/features/manage_work/presentation/widgets/empty_list_hint_message.dart';
+import 'package:taxi_rahmati/features/manage_work/presentation/pages/ride_form_page.dart';
 
 import '../../../../core/presentation/widgets/hint_message.dart';
-import '../../../../injection_container.dart';
+import '../../domain/entities/ride.dart';
 import '../../domain/entities/work_unit.dart';
 import '../bloc/manage_work_bloc.dart';
 import '../widgets/create_work_unit_button.dart';
@@ -47,6 +45,7 @@ class MainPage extends StatelessWidget {
           return const CircularProgressIndicator();
         } else if (state is WorkUnitsLoaded) {
           workUnits = state.workUnits;
+          _addSuggestions(workUnits);
           return _buildGrid(context, workUnits);
         } else if (state is Error) {
           return HintMessage(
@@ -74,5 +73,15 @@ class MainPage extends StatelessWidget {
         );
       },
     );
+  }
+
+  void _addSuggestions(List<WorkUnit> workUnits) {
+    for (WorkUnit workUnit in workUnits) {
+      for (Ride ride in workUnit.rides) {
+        SuggestionContainer.addDestinationSuggestion(ride.fromDestination);
+        SuggestionContainer.addDestinationSuggestion(ride.toDestination);
+        SuggestionContainer.addNameSuggestion(ride.name);
+      }
+    }
   }
 }

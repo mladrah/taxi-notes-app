@@ -1,35 +1,40 @@
 import 'package:flutter/material.dart' hide Title;
-import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
-import 'package:taxi_rahmati/features/manage_work/domain/entities/work_unit.dart';
+import 'package:quiver/iterables.dart';
 
+import '../../../../core/util/date_time_formatter.dart';
 import '../../domain/entities/ride.dart';
+import '../../domain/entities/work_unit.dart';
 
 class RidesPrintPreviewPage extends StatelessWidget {
-  // 35 rides für 1 workday
   final WorkUnit workUnit;
 
+  final int _ridesPerPage = 35;
   final String highlightHexColor = 'E8E8E8';
-  final DateFormat _dateFormatter = DateFormat('dd.MM.yyyy');
-  final DateFormat _timeFormatter = DateFormat('HH:mm');
   final int _flexDate = 4;
   final int _flexTime = 2;
-  final int _flexDestination = 4;
-  final int _flexName = 5;
+  final int _flexDestination = 5;
+  final int _flexName = 6;
 
-  RidesPrintPreviewPage({Key? key, required this.workUnit}) : super(key: key);
+  const RidesPrintPreviewPage({Key? key, required this.workUnit})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var pages = partition(workUnit.rides, _ridesPerPage);
+
     final doc = pw.Document();
-    doc.addPage(
-      pw.Page(
-        pageFormat: PdfPageFormat.a4,
-        build: _buildPdf,
-      ),
-    );
+
+    for (int i = 0; i < pages.length; i++) {
+      doc.addPage(
+        pw.Page(
+          pageFormat: PdfPageFormat.a4,
+          build: (context) => _buildPdf(context, pages.elementAt(i)),
+        ),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -46,7 +51,7 @@ class RidesPrintPreviewPage extends StatelessWidget {
     );
   }
 
-  pw.Container _buildPdf(pw.Context context) {
+  pw.Container _buildPdf(pw.Context context, List<Ride> rides) {
     return pw.Container(
       child: pw.Column(
         crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -55,10 +60,10 @@ class RidesPrintPreviewPage extends StatelessWidget {
             '${workUnit.monthName} ${workUnit.rides[0].start.year}\nKrankenfahrten',
             style: pw.TextStyle(
               fontWeight: pw.FontWeight.bold,
-              fontSize: 18,
+              fontSize: 16,
             ),
           ),
-          pw.SizedBox(height: 32),
+          pw.SizedBox(height: 16),
           pw.Row(
             children: [
               _buildHeaderTile(
@@ -97,27 +102,15 @@ class RidesPrintPreviewPage extends StatelessWidget {
           ),
           pw.Divider(),
           pw.ListView.builder(
-            itemCount: workUnit.rides.length,
+            itemCount: rides.length,
             itemBuilder: (pw.Context context, int index) {
               return _buildRideRow(
-                  ride: workUnit.rides[index],
+                  ride: rides[index],
                   backgroundColor: index % 2 == 0
                       ? PdfColor.fromHex(highlightHexColor)
                       : null);
             },
           ),
-          // pw.Divider(),
-          // pw.Container(
-          //   height: 16,
-          //   width: double.infinity,
-          //   child: pw.Text(
-          //     'Gesamt: ${workUnit.rides.map((ride) => ride.price).reduce((a, b) => a + b).toString().replaceAll('.', ',')}',
-          //     textAlign: pw.TextAlign.right,
-          //     style: pw.TextStyle(
-          //       fontWeight: pw.FontWeight.bold,
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );
@@ -129,14 +122,14 @@ class RidesPrintPreviewPage extends StatelessWidget {
         child: pw.Row(
           children: [
             _buildRideRowTile(
-              value: _dateFormatter.format(ride.start),
+              value: DateTimeFormatter.dayMonthYear(ride.start),
               flex: _flexDate,
             ),
             pw.SizedBox(
               width: 8,
             ),
             _buildRideRowTile(
-              value: _timeFormatter.format(ride.start),
+              value: DateTimeFormatter.hourMinute(ride.start),
               flex: _flexTime,
             ),
             pw.SizedBox(

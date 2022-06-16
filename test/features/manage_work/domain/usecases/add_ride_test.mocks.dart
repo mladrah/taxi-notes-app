@@ -8,6 +8,8 @@ import 'package:dartz/dartz.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:taxi_rahmati/core/error/failures.dart' as _i5;
 import 'package:taxi_rahmati/features/manage_work/domain/entities/ride.dart'
+    as _i7;
+import 'package:taxi_rahmati/features/manage_work/domain/entities/work_unit.dart'
     as _i6;
 import 'package:taxi_rahmati/features/manage_work/domain/repositories/work_unit_repository.dart'
     as _i3;
@@ -24,36 +26,60 @@ import 'package:taxi_rahmati/features/manage_work/domain/repositories/work_unit_
 
 class _FakeEither_0<L, R> extends _i1.Fake implements _i2.Either<L, R> {}
 
-/// A class which mocks [RideRepository].
+/// A class which mocks [WorkUnitRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockRideRepository extends _i1.Mock implements _i3.WorkUnitReposito
-  MockRideRepository() {
+class MockWorkUnitRepository extends _i1.Mock
+    implements _i3.WorkUnitRepository {
+  MockWorkUnitRepository() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i6.Ride>> addRide(_i6.Ride? ride) =>
-      (super.noSuchMethod(Invocation.method(#addRide, [ride]),
-              returnValue: Future<_i2.Either<_i5.Failure, _i6.Ride>>.value(
-                  _FakeEither_0<_i5.Failure, _i6.Ride>()))
-          as _i4.Future<_i2.Either<_i5.Failure, _i6.Ride>>);
+  _i4.Future<_i2.Either<_i5.Failure, _i6.WorkUnit>> createWorkUnit() =>
+      (super.noSuchMethod(Invocation.method(#createWorkUnit, []),
+              returnValue: Future<_i2.Either<_i5.Failure, _i6.WorkUnit>>.value(
+                  _FakeEither_0<_i5.Failure, _i6.WorkUnit>()))
+          as _i4.Future<_i2.Either<_i5.Failure, _i6.WorkUnit>>);
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i6.Ride>> deleteRide(_i6.Ride? ride) =>
-      (super.noSuchMethod(Invocation.method(#deleteRide, [ride]),
-              returnValue: Future<_i2.Either<_i5.Failure, _i6.Ride>>.value(
-                  _FakeEither_0<_i5.Failure, _i6.Ride>()))
-          as _i4.Future<_i2.Either<_i5.Failure, _i6.Ride>>);
+  _i4.Future<_i2.Either<_i5.Failure, void>> deleteWorkUnit(
+          {_i6.WorkUnit? workUnit}) =>
+      (super.noSuchMethod(
+              Invocation.method(#deleteWorkUnit, [], {#workUnit: workUnit}),
+              returnValue: Future<_i2.Either<_i5.Failure, void>>.value(
+                  _FakeEither_0<_i5.Failure, void>()))
+          as _i4.Future<_i2.Either<_i5.Failure, void>>);
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i6.Ride>> updateRide(_i6.Ride? ride) =>
-      (super.noSuchMethod(Invocation.method(#updateRide, [ride]),
-              returnValue: Future<_i2.Either<_i5.Failure, _i6.Ride>>.value(
-                  _FakeEither_0<_i5.Failure, _i6.Ride>()))
-          as _i4.Future<_i2.Either<_i5.Failure, _i6.Ride>>);
+  _i4.Future<_i2.Either<_i5.Failure, List<_i6.WorkUnit>>> getWorkUnits() =>
+      (super.noSuchMethod(Invocation.method(#getWorkUnits, []),
+              returnValue:
+                  Future<_i2.Either<_i5.Failure, List<_i6.WorkUnit>>>.value(
+                      _FakeEither_0<_i5.Failure, List<_i6.WorkUnit>>()))
+          as _i4.Future<_i2.Either<_i5.Failure, List<_i6.WorkUnit>>>);
   @override
-  _i4.Future<_i2.Either<_i5.Failure, List<_i6.Ride>>> getRides() =>
-      (super.noSuchMethod(Invocation.method(#getRides, []),
-          returnValue: Future<_i2.Either<_i5.Failure, List<_i6.Ride>>>.value(
-              _FakeEither_0<_i5.Failure, List<_i6.Ride>>())) as _i4
-          .Future<_i2.Either<_i5.Failure, List<_i6.Ride>>>);
+  _i4.Future<_i2.Either<_i5.Failure, _i6.WorkUnit>> addRide(
+          {_i6.WorkUnit? workUnit, _i7.Ride? ride}) =>
+      (super.noSuchMethod(
+          Invocation.method(#addRide, [], {#workUnit: workUnit, #ride: ride}),
+          returnValue: Future<_i2.Either<_i5.Failure, _i6.WorkUnit>>.value(
+              _FakeEither_0<_i5.Failure, _i6.WorkUnit>())) as _i4
+          .Future<_i2.Either<_i5.Failure, _i6.WorkUnit>>);
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, _i6.WorkUnit>> deleteRide(
+          {_i6.WorkUnit? workUnit, _i7.Ride? ride}) =>
+      (super.noSuchMethod(
+              Invocation.method(
+                  #deleteRide, [], {#workUnit: workUnit, #ride: ride}),
+              returnValue: Future<_i2.Either<_i5.Failure, _i6.WorkUnit>>.value(
+                  _FakeEither_0<_i5.Failure, _i6.WorkUnit>()))
+          as _i4.Future<_i2.Either<_i5.Failure, _i6.WorkUnit>>);
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, _i6.WorkUnit>> updateRide(
+          {_i6.WorkUnit? workUnit, _i7.Ride? ride}) =>
+      (super.noSuchMethod(
+              Invocation.method(
+                  #updateRide, [], {#workUnit: workUnit, #ride: ride}),
+              returnValue: Future<_i2.Either<_i5.Failure, _i6.WorkUnit>>.value(
+                  _FakeEither_0<_i5.Failure, _i6.WorkUnit>()))
+          as _i4.Future<_i2.Either<_i5.Failure, _i6.WorkUnit>>);
 }

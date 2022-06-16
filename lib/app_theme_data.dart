@@ -7,8 +7,6 @@ class AppThemeData {
   // ignore: prefer_const_constructors
   final _textColor = Color.fromARGB(255, 0, 0, 0);
 
-  final _focusColor = const Color(0xFF003566);
-
   ThemeData lighTheme(BuildContext context) {
     Map<int, Color> primaryColorMap = {
       50: Color.fromRGBO(
@@ -43,7 +41,7 @@ class AppThemeData {
           MaterialColor(_primaryColor.value.toInt(), primaryColorMap),
       primaryColor: _primaryColor,
       hintColor: Colors.grey.withOpacity(0.75),
-      focusColor: _focusColor,
+      focusColor: _primaryColor.withOpacity(0.15),
       scaffoldBackgroundColor: Colors.white,
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,

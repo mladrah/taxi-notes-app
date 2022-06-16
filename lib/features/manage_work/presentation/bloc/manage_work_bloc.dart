@@ -1,11 +1,11 @@
 // ignore_for_file: constant_identifier_names
 // ignore: unused_import
 import 'dart:async';
+// ignore: unused_import
 import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:taxi_rahmati/core/usecases/usecase.dart';
 import 'package:taxi_rahmati/core/util/input_converter.dart';
 import 'package:taxi_rahmati/features/manage_work/domain/entities/work_unit.dart';
@@ -78,35 +78,38 @@ class ManageWorkBloc extends Bloc<ManageWorkEvent, ManageWorkState> {
 
     if (isFailed) {
       emit(Error(message: errorMessages.join(' | ')));
-    } else {
-      emit(Loading());
-
-      late final WorkUnit newWorkUnit;
-      if (event.workUnit == null) {
-        final createWorkUnitResult = await createWorkUnitUseCase(NoParams());
-        createWorkUnitResult.fold(
-            (failure) => emit(Error(message: _mapFailureToMessage(failure))),
-            (workUnit) => newWorkUnit = workUnit);
-        log('created new workunit with id: ${newWorkUnit.id}');
-      }
-
-      final result = await addRideUseCase(WorkUnitRidesParams(
-          workUnit: event.workUnit ?? newWorkUnit,
-          ride: Ride(
-              id: const Uuid().v1(),
-              title: event.title,
-              name: event.name,
-              fromDestination: event.fromDestination,
-              toDestination: event.toDestination,
-              start: startParsed,
-              end: endParsed,
-              price: priceParsed)));
-
-      result.fold(
-        (failure) => emit(Error(message: _mapFailureToMessage(failure))),
-        (workUnit) => emit(RideAdded(workUnit: workUnit)),
-      );
+      return;
     }
+
+    emit(Loading());
+
+    late final WorkUnit newWorkUnit;
+    if (event.workUnit == null) {
+      final createWorkUnitResult = await createWorkUnitUseCase(NoParams());
+      createWorkUnitResult.fold(
+          (failure) => emit(Error(message: _mapFailureToMessage(failure))),
+          (workUnit) => newWorkUnit = workUnit);
+    }
+
+    final result = await addRideUseCase(WorkUnitRidesParams(
+        workUnit: event.workUnit ?? newWorkUnit,
+        ride: Ride(
+            id: const Uuid().v1(),
+            title: event.title,
+            name: event.name,
+            fromDestination: event.fromDestination,
+            toDestination: event.toDestination,
+            start: startParsed,
+            end: endParsed,
+            price: priceParsed)));
+
+    result.fold(
+      (failure) => emit(Error(message: _mapFailureToMessage(failure))),
+      (workUnit) {
+        _sortRidesOfWorkUnit(workUnit);
+        emit(RideAdded(workUnit: workUnit));
+      },
+    );
   }
 
   void _onDeleteRideFromRepository(
@@ -121,14 +124,14 @@ class ManageWorkBloc extends Bloc<ManageWorkEvent, ManageWorkState> {
         .fold((failure) => emit(Error(message: _mapFailureToMessage(failure))),
             (workUnit) {
       workUnitResult = workUnit;
-      // emit(RideDeleted(workUnit: workUnit));
     });
 
     if (workUnitResult.rides.isEmpty) {
       final deleteResult =
           await deleteWorkUnitUseCase(Params(workUnit: workUnitResult));
 
-      deleteResult.fold((l) => emit(Error(message: _mapFailureToMessage(l))),
+      deleteResult.fold(
+          (failure) => emit(Error(message: _mapFailureToMessage(failure))),
           (r) => emit(WorkUnitDeleted()));
     } else {
       emit(RideDeleted(workUnit: workUnitResult));
@@ -195,8 +198,21 @@ class ManageWorkBloc extends Bloc<ManageWorkEvent, ManageWorkState> {
     result
         .fold((failure) => emit(Error(message: _mapFailureToMessage(failure))),
             (workUnits) {
+      _sortWorkUnits(workUnits);
       emit(WorkUnitsLoaded(workUnits: workUnits));
     });
+  }
+
+  void _sortWorkUnits(List<WorkUnit> workUnits) {
+    for (WorkUnit wu in workUnits) {
+      _sortRidesOfWorkUnit(wu);
+    }
+
+    workUnits.sort((a, b) => a.rides[0].start.compareTo(b.rides[0].start));
+  }
+
+  void _sortRidesOfWorkUnit(WorkUnit workUnit) {
+    workUnit.rides.sort((a, b) => a.start.compareTo(b.start));
   }
 
   String _mapFailureToMessage(Failure failure) {

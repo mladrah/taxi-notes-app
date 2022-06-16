@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:taxi_rahmati/features/manage_work/presentation/bloc/manage_work_bloc.dart';
 import '../../domain/entities/ride.dart';
 import '../../domain/entities/work_unit.dart';
-import '../widgets/currency_form_field.dart';
 import '../../../../core/presentation/widgets/custom_elevated_button.dart';
 import '../widgets/custom_text_form_field.dart';
 import '../widgets/date_time_form_field.dart';
@@ -14,6 +13,7 @@ import '../widgets/radio_button.dart';
 class RideFormPage extends StatefulWidget {
   final WorkUnit? workUnit;
   final Ride? ride;
+
   const RideFormPage({
     Key? key,
     required this.workUnit,
@@ -126,6 +126,8 @@ class _RideFormPageState extends State<RideFormPage> {
                         child: CustomTextFormField(
                           label: 'Von',
                           onChanged: (value) => _fromDestination = value,
+                          suggestions:
+                              SuggestionContainer.destinationSuggestions,
                           initialValue: _fromDestination,
                         ),
                       ),
@@ -136,6 +138,8 @@ class _RideFormPageState extends State<RideFormPage> {
                         child: CustomTextFormField(
                           label: 'Nach',
                           onChanged: (value) => _toDestination = value,
+                          suggestions:
+                              SuggestionContainer.destinationSuggestions,
                           initialValue: _toDestination,
                         ),
                       ),
@@ -147,6 +151,7 @@ class _RideFormPageState extends State<RideFormPage> {
                   CustomTextFormField(
                     label: 'Name',
                     onChanged: (value) => _name = value,
+                    suggestions: SuggestionContainer.nameSuggestions,
                     initialValue: _name,
                   ),
                   Row(
@@ -240,6 +245,26 @@ class _RideFormPageState extends State<RideFormPage> {
             endTime: _endTime!,
             price: _price,
           ));
+    }
+  }
+}
+
+class SuggestionContainer {
+  static List<String> _nameSuggestions = <String>[];
+  static List<String> _destinationSuggestions = <String>[];
+
+  static List<String> get nameSuggestions => _nameSuggestions;
+  static List<String> get destinationSuggestions => _destinationSuggestions;
+
+  static void addNameSuggestion(String name) {
+    if (!_nameSuggestions.contains(name)) {
+      _nameSuggestions.add(name);
+    }
+  }
+
+  static void addDestinationSuggestion(String destination) {
+    if (!_destinationSuggestions.contains(destination)) {
+      _destinationSuggestions.add(destination);
     }
   }
 }

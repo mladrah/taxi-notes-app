@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-// ignore: unused_import
-import '../../../../core/presentation/widgets/custom_box_shadow.dart';
-
 class CreateWorkUnitButton extends StatelessWidget {
   const CreateWorkUnitButton({Key? key}) : super(key: key);
 
@@ -21,9 +18,9 @@ class CreateWorkUnitButton extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: () => _onTap(context),
-          splashColor: Theme.of(context).primaryColor.withOpacity(0.25),
-          highlightColor: Theme.of(context).primaryColor.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(16),
+          splashColor: Theme.of(context).primaryColor.withOpacity(0.1),
+          highlightColor: Theme.of(context).primaryColor.withOpacity(0.05),
+          borderRadius: BorderRadius.circular(8),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Center(

@@ -27,6 +27,6 @@ class WorkUnit extends Equatable {
       'Dezember'
     ];
 
-    return months[rides[0].start.month];
+    return months[rides[0].start.month - 1];
   }
 }

@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:taxi_rahmati/core/usecases/usecase.dart';
-import 'package:taxi_rahmati/features/manage_work/domain/entities/ride.dart';
 
 import '../../../../core/error/failures.dart';
 import '../entities/work_unit.dart';

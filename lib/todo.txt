@@ -1,5 +1,2 @@
 -adjust tests (6)
--date und timeformat global zugriff (4)
--second pdf page for more than 35 rides (2)
 -when updating check if something changed, when not dont call usecase (5)
--vorschläge bei formular (3)

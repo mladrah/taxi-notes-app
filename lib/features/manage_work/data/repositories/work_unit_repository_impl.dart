@@ -106,7 +106,9 @@ class WorkUnitRepositoryImpl extends WorkUnitRepository {
 
   WorkUnitModel _workToWorkUnitModel(WorkUnit workUnit) {
     List<RideModel> rideModels = [];
-    for (Ride r in workUnit.rides) rideModels.add(_rideToRideModel(r));
+    for (Ride r in workUnit.rides) {
+      rideModels.add(_rideToRideModel(r));
+    }
 
     return WorkUnitModel(id: workUnit.id, rideModels: rideModels);
   }

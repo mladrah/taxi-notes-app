@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart' hide Title;
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
+import 'package:taxi_rahmati/core/util/date_time_formatter.dart';
 import 'package:taxi_rahmati/features/manage_work/presentation/widgets/ride_details_field.dart';
 
 import '../../../../core/presentation/widgets/custom_floating_action_button.dart';
@@ -20,9 +20,6 @@ class RideDetailsPage extends StatefulWidget {
 }
 
 class _RideDetailsPageState extends State<RideDetailsPage> {
-  final DateFormat _dateFormatter = DateFormat('dd.MM.yyyy');
-  final DateFormat _timeFormatter = DateFormat('HH:mm');
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,20 +92,19 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
               children: [
                 Expanded(
                   child: RideDetailsField(
-                    label: 'Anrede',
-                    value: widget.ride.title == Title.herr ? 'Herr' : 'Frau',
+                    label: 'Start',
+                    value: DateTimeFormatter.dayMonthYear(widget.ride.start),
                   ),
                 ),
                 const SizedBox(width: 8),
                 Expanded(
-                  flex: 2,
                   child: RideDetailsField(
-                    label: 'Name',
-                    value: widget.ride.name,
+                    value: DateTimeFormatter.hourMinute(widget.ride.start),
                   ),
                 ),
               ],
             ),
+
             const SizedBox(height: 8),
             Row(
               children: [
@@ -132,40 +128,42 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
               children: [
                 Expanded(
                   child: RideDetailsField(
-                    label: 'Start',
-                    value: _dateFormatter.format(widget.ride.start),
+                    label: 'Anrede',
+                    value: widget.ride.title == Title.herr ? 'Herr' : 'Frau',
                   ),
                 ),
                 const SizedBox(width: 8),
                 Expanded(
+                  flex: 2,
                   child: RideDetailsField(
-                    value: _timeFormatter.format(widget.ride.start),
+                    label: 'Name',
+                    value: widget.ride.name,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                Expanded(
-                  child: RideDetailsField(
-                    label: 'Ende',
-                    value: _dateFormatter.format(widget.ride.end),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: RideDetailsField(
-                    value: _timeFormatter.format(widget.ride.end),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            RideDetailsField(
-              label: 'Preis',
-              value: '${widget.ride.price.toString().replaceAll('.', ',')} €',
-            ),
+            // const SizedBox(height: 8),
+            // Row(
+            //   children: [
+            //     Expanded(
+            //       child: RideDetailsField(
+            //         label: 'Ende',
+            //         value: _dateFormatter.format(widget.ride.end),
+            //       ),
+            //     ),
+            //     const SizedBox(width: 8),
+            //     Expanded(
+            //       child: RideDetailsField(
+            //         value: _timeFormatter.format(widget.ride.end),
+            //       ),
+            //     ),
+            //   ],
+            // ),
+            // const SizedBox(height: 8),
+            // RideDetailsField(
+            //   label: 'Preis',
+            //   value: '${widget.ride.price.toString().replaceAll('.', ',')} €',
+            // ),
           ],
         ),
       ),

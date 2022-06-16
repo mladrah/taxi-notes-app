@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/presentation/widgets/custom_box_shadow.dart';
+import '../../../../core/util/date_time_formatter.dart';
 import '../../domain/entities/work_unit.dart';
 
 class WorkUnitTile extends StatelessWidget {
@@ -40,7 +41,7 @@ class WorkUnitTile extends StatelessWidget {
                   ),
                   child: FittedBox(
                     child: Text(
-                      '${workUnit.rides[0].start.year}\n${workUnit.monthName}',
+                      '${workUnit.rides[0].start.year}\n${DateTimeFormatter.dayMonth(workUnit.rides[0].start)} - ${DateTimeFormatter.dayMonth(workUnit.rides[workUnit.rides.length - 1].start)}',
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         color: Colors.white,

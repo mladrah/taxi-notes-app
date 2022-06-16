@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:taxi_rahmati/core/presentation/widgets/custom_floating_action_button.dart';
-import 'package:taxi_rahmati/features/manage_work/presentation/bloc/manage_work_bloc.dart';
-import 'package:taxi_rahmati/features/manage_work/presentation/widgets/empty_list_hint_message.dart';
-import 'package:taxi_rahmati/features/manage_work/presentation/widgets/ride_tile.dart';
+
+import '../../../../core/presentation/widgets/custom_floating_action_button.dart';
+import '../../../../core/util/date_time_formatter.dart';
 import '../../domain/entities/ride.dart';
 import '../../domain/entities/work_unit.dart';
+import '../bloc/manage_work_bloc.dart';
+import '../widgets/empty_list_hint_message.dart';
+import '../widgets/ride_tile.dart';
 
 // ignore: must_be_immutable
 class WorkUnitPage extends StatefulWidget {
@@ -26,7 +28,7 @@ class _WorkUnitPageState extends State<WorkUnitPage> {
         title: Text(
           widget.workUnit == null
               ? 'Neu'
-              : '${widget.workUnit!.monthName} ${widget.workUnit!.rides[0].start.year}',
+              : '${DateTimeFormatter.dayMonth(widget.workUnit!.rides[0].start)} - ${DateTimeFormatter.dayMonth(widget.workUnit!.rides[widget.workUnit!.rides.length - 1].start)}',
           style: const TextStyle(
             fontWeight: FontWeight.bold,
           ),

@@ -24,11 +24,6 @@ class WorkUnitRemoteDataSourceImpl extends WorkUnitRemoteDataSource {
   }
 
   @override
-  Future<WorkUnitModel> getWorkUnit({required WorkUnitModel workUnitModel}) {
-    throw UnimplementedError();
-  }
-
-  @override
   Future<List<WorkUnitModel>> getWorkUnits() {
     throw UnimplementedError();
   }
@@ -41,7 +36,6 @@ class WorkUnitRemoteDataSourceImpl extends WorkUnitRemoteDataSource {
 
   @override
   Future<void> deleteWorkUnit({required WorkUnitModel workUnitModel}) {
-    // TODO: implement deleteWorkUnit
     throw UnimplementedError();
   }
 }
