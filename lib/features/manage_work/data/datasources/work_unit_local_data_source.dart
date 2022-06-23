@@ -1,19 +1,18 @@
 // ignore_for_file: constant_identifier_names
-
-import 'dart:convert';
 // ignore: unused_import
 import 'dart:developer';
+import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taxi_rahmati/core/error/exceptions.dart';
-import 'package:taxi_rahmati/features/manage_work/data/datasources/data_source.dart';
+import 'package:taxi_rahmati/features/manage_work/data/datasources/work_unit_data_source.dart';
 import 'package:taxi_rahmati/features/manage_work/data/models/ride_model.dart';
 import 'package:taxi_rahmati/features/manage_work/data/models/work_unit_model.dart';
 import 'package:uuid/uuid.dart';
 
 const String WORK_UNITS = 'WORK_UNITS';
-const String INITIALIZED = 'INITIALIZED';
+const String INITIALIZE = 'INITIALIZE';
 
-abstract class WorkUnitLocalDataSource extends DataSource {
+abstract class WorkUnitLocalDataSource extends WorkUnitDataSource {
   Future<void> initialize();
   Future<void> saveWorkUnits(List<WorkUnitModel> workUnitModels);
 }
@@ -25,13 +24,13 @@ class WorkUnitLocalDataSourceImpl extends WorkUnitLocalDataSource {
 
   @override
   Future<void> initialize() async {
-    final isInitialized = sharedPreferences.getString(INITIALIZED);
+    final isInitialized = sharedPreferences.getString(INITIALIZE);
 
     if (isInitialized == null) {
       sharedPreferences.setString(
           WORK_UNITS, _getJsonStringFromWorkUnits(<WorkUnitModel>[]));
 
-      sharedPreferences.setString(INITIALIZED, 'initialized');
+      sharedPreferences.setString(INITIALIZE, 'initialized');
     }
   }
 

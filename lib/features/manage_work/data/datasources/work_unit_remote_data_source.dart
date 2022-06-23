@@ -1,9 +1,9 @@
-import 'package:taxi_rahmati/features/manage_work/data/datasources/data_source.dart';
+import 'package:taxi_rahmati/features/manage_work/data/datasources/work_unit_data_source.dart';
 import 'package:taxi_rahmati/features/manage_work/data/models/work_unit_model.dart';
 
 import '../models/ride_model.dart';
 
-abstract class WorkUnitRemoteDataSource extends DataSource {}
+abstract class WorkUnitRemoteDataSource extends WorkUnitDataSource {}
 
 class WorkUnitRemoteDataSourceImpl extends WorkUnitRemoteDataSource {
   @override

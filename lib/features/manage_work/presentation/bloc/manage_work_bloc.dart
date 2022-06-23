@@ -134,6 +134,7 @@ class ManageWorkBloc extends Bloc<ManageWorkEvent, ManageWorkState> {
           (failure) => emit(Error(message: _mapFailureToMessage(failure))),
           (r) => emit(WorkUnitDeleted()));
     } else {
+      _sortRidesOfWorkUnit(workUnitResult);
       emit(RideDeleted(workUnit: workUnitResult));
     }
   }
@@ -184,7 +185,10 @@ class ManageWorkBloc extends Bloc<ManageWorkEvent, ManageWorkState> {
 
       result.fold(
         (failure) => emit(Error(message: _mapFailureToMessage(failure))),
-        (workUnit) => emit(RideUpdated(workUnit: workUnit)),
+        (workUnit) {
+          _sortRidesOfWorkUnit(workUnit);
+          emit(RideUpdated(workUnit: workUnit));
+        },
       );
     }
   }

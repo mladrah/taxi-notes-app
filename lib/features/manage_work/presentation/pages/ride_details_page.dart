@@ -73,6 +73,11 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
       child: Center(
         child: BlocBuilder<ManageWorkBloc, ManageWorkState>(
           builder: (context, state) {
+            if (state is Loading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
             return _buildForm();
           },
         ),

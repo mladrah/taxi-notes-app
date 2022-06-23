@@ -81,6 +81,8 @@ class RideTile extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     ride.fromDestination,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -97,6 +99,8 @@ class RideTile extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     ride.toDestination,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -112,7 +116,10 @@ class RideTile extends StatelessWidget {
                 child: Container(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    '${ride.title == Title.herr ? 'Hr.' : 'Fr.'} ${ride.name}',
+                    '${ride.title == Title.herr ? 'Hr.' : 'Fr.'} ${ride.name}'
+                        .replaceAll('', '\u{200B}'),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,

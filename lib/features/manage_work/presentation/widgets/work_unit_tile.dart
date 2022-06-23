@@ -41,7 +41,7 @@ class WorkUnitTile extends StatelessWidget {
                   ),
                   child: FittedBox(
                     child: Text(
-                      '${workUnit.rides[0].start.year}\n${DateTimeFormatter.dayMonth(workUnit.rides[0].start)} - ${DateTimeFormatter.dayMonth(workUnit.rides[workUnit.rides.length - 1].start)}',
+                      '${workUnit.rides[0].start.year}\n${DateTimeFormatter.dayMonthInterval(workUnit.rides[0].start, workUnit.rides[workUnit.rides.length - 1].start)}',
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         color: Colors.white,

@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Taxi Notes',
         theme: AppThemeData().lighTheme(context),
         initialRoute: '/',

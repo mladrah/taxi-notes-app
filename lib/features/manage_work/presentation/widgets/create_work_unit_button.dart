@@ -26,7 +26,7 @@ class CreateWorkUnitButton extends StatelessWidget {
             child: Center(
               child: FittedBox(
                 child: Text(
-                  '+ Neu',
+                  '+ Neue\nListe',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,

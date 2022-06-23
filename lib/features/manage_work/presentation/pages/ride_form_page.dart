@@ -49,7 +49,7 @@ class _RideFormPageState extends State<RideFormPage> {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            widget.ride == null ? 'Fahrt hinzufügen' : 'Fahrt ändern',
+            widget.ride == null ? 'Neue Fahrt erstellen' : 'Fahrt ändern',
             style: const TextStyle(
               fontWeight: FontWeight.bold,
             ),

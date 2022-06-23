@@ -27,8 +27,11 @@ class _WorkUnitPageState extends State<WorkUnitPage> {
       appBar: AppBar(
         title: Text(
           widget.workUnit == null
-              ? 'Neu'
-              : '${DateTimeFormatter.dayMonth(widget.workUnit!.rides[0].start)} - ${DateTimeFormatter.dayMonth(widget.workUnit!.rides[widget.workUnit!.rides.length - 1].start)}',
+              ? 'Neue Liste'
+              : DateTimeFormatter.dayMonthInterval(
+                  widget.workUnit!.rides[0].start,
+                  widget.workUnit!.rides[widget.workUnit!.rides.length - 1]
+                      .start),
           style: const TextStyle(
             fontWeight: FontWeight.bold,
           ),
