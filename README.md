@@ -1,5 +1,3 @@
-# taxi_rahmati
-
-A new Flutter project.
+# Taxi Notes
 
 Tracking Taxi Rides.
