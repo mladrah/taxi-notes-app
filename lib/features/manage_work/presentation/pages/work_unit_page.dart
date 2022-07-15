@@ -31,7 +31,10 @@ class _WorkUnitPageState extends State<WorkUnitPage> {
       floatingActionButton: CustomFloatingActionButton(
         onPressed: () => _onCreateButton(context),
         tooltip: 'Fahrt hinzufügen',
-        child: const Icon(Icons.add),
+        child: const Icon(
+          Icons.add,
+          color: Colors.black,
+        ),
       ),
     );
   }

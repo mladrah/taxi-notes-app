@@ -60,7 +60,10 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
       body: buildBody(context),
       floatingActionButton: CustomFloatingActionButton(
         onPressed: () => _onEditButton(context),
-        child: const Icon(Icons.edit),
+        child: const Icon(
+          Icons.edit,
+          color: Colors.black,
+        ),
         tooltip: 'Fahrt bearbeiten',
       ),
     );

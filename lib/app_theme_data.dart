@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AppThemeData {
   // ignore: prefer_const_constructors
   // final _primaryColor = Color(0xff0D0A0B); // default: 0xff0D0A0B
-  final _primaryColor = Colors.grey.shade800;
+  final _primaryColor = Colors.grey.withOpacity(0.175);
 
   // ignore: prefer_const_constructors
   final _textColor = Color.fromARGB(255, 0, 0, 0);

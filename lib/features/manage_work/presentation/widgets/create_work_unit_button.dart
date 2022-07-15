@@ -10,7 +10,6 @@ class CreateWorkUnitButton extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Theme.of(context).primaryColor,
           width: 3,
         ),
       ),
@@ -21,15 +20,14 @@ class CreateWorkUnitButton extends StatelessWidget {
           splashColor: Theme.of(context).primaryColor.withOpacity(0.1),
           highlightColor: Theme.of(context).primaryColor.withOpacity(0.05),
           borderRadius: BorderRadius.circular(8),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
+          child: const Padding(
+            padding: EdgeInsets.all(8.0),
             child: Center(
               child: FittedBox(
                 child: Text(
                   '+ Neue\nListe',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

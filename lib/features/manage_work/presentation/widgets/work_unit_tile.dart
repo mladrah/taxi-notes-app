@@ -44,7 +44,6 @@ class WorkUnitTile extends StatelessWidget {
                       '${workUnit.rides[0].start.year}\n${DateTimeFormatter.dayMonthInterval(workUnit.rides[0].start, workUnit.rides[workUnit.rides.length - 1].start)}',
                       textAlign: TextAlign.center,
                       style: const TextStyle(
-                        color: Colors.white,
                         fontWeight: FontWeight.w900,
                         fontSize: 17,
                       ),
@@ -65,7 +64,6 @@ class WorkUnitTile extends StatelessWidget {
                             child: Text(
                               '${workUnit.rides.length.toString()} ${workUnit.rides.length > 1 ? 'Fahrten' : 'Fahrt'}',
                               style: const TextStyle(
-                                color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),

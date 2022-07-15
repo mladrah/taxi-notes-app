@@ -25,8 +25,7 @@ class RideDetailsField extends StatelessWidget {
               : FittedBox(
                   child: Text(
                     label!,
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),

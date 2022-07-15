@@ -54,9 +54,8 @@ class RideTile extends StatelessWidget {
                   child: Text(
                     DateTimeFormatter.dayMonth(ride.start),
                     style: const TextStyle(
-                      color: Colors.white,
                       fontWeight: FontWeight.w900,
-                      fontSize: 17,
+                      fontSize: 16,
                     ),
                   ),
                 ),
@@ -68,9 +67,8 @@ class RideTile extends StatelessWidget {
                   child: Text(
                     DateTimeFormatter.hourMinute(ride.start),
                     style: const TextStyle(
-                      color: Colors.white,
                       fontWeight: FontWeight.w900,
-                      fontSize: 17,
+                      fontSize: 16,
                     ),
                   ),
                 ),
@@ -84,7 +82,6 @@ class RideTile extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                      color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -102,7 +99,6 @@ class RideTile extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                      color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -121,7 +117,6 @@ class RideTile extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                      color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
