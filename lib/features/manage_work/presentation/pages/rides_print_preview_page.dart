@@ -9,7 +9,7 @@ import '../../domain/entities/ride.dart';
 import '../../domain/entities/work_unit.dart';
 
 class RidesPrintPreviewPage extends StatelessWidget {
-  final WorkUnit workUnit;
+  final List<WorkUnit> workUnits;
 
   final int _ridesPerPage = 35;
   final String highlightHexColor = 'E8E8E8';
@@ -18,12 +18,21 @@ class RidesPrintPreviewPage extends StatelessWidget {
   final int _flexDestination = 5;
   final int _flexName = 6;
 
-  const RidesPrintPreviewPage({Key? key, required this.workUnit})
+  const RidesPrintPreviewPage({Key? key, required this.workUnits})
       : super(key: key);
+
+  List<Ride> _combineWorkUnits(List<WorkUnit> workUnits) {
+    List<Ride> rides = [];
+    for (WorkUnit wu in workUnits) {
+      rides += wu.rides;
+    }
+
+    return rides;
+  }
 
   @override
   Widget build(BuildContext context) {
-    var pages = partition(workUnit.rides, _ridesPerPage);
+    var pages = partition(_combineWorkUnits(workUnits), _ridesPerPage);
 
     final doc = pw.Document();
 
@@ -52,12 +61,17 @@ class RidesPrintPreviewPage extends StatelessWidget {
   }
 
   pw.Container _buildPdf(pw.Context context, List<Ride> rides) {
+    final DateTime firstDate = workUnits[0].rides[0].start;
+    final DateTime lastDate = workUnits[workUnits.length - 1]
+        .rides[workUnits[workUnits.length - 1].rides.length - 1]
+        .start;
+
     return pw.Container(
       child: pw.Column(
         crossAxisAlignment: pw.CrossAxisAlignment.start,
         children: [
           pw.Text(
-            '${workUnit.monthName} ${workUnit.rides[0].start.year}\nKrankenfahrten',
+            '${DateTimeFormatter.yearInterval(firstDate, lastDate)}\n${DateTimeFormatter.monthInterval(firstDate, lastDate)}\nKrankenfahrten',
             style: pw.TextStyle(
               fontWeight: pw.FontWeight.bold,
               fontSize: 16,

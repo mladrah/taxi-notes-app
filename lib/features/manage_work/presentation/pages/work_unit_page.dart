@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:taxi_rahmati/constants.dart';
 
 import '../../../../core/presentation/widgets/custom_floating_action_button.dart';
 import '../../../../core/util/date_time_formatter.dart';
@@ -24,36 +25,62 @@ class _WorkUnitPageState extends State<WorkUnitPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          widget.workUnit == null
-              ? 'Neue Liste'
-              : DateTimeFormatter.dayMonthInterval(
-                  widget.workUnit!.rides[0].start,
-                  widget.workUnit!.rides[widget.workUnit!.rides.length - 1]
-                      .start),
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        actions: [
-          widget.workUnit == null
-              ? const SizedBox.shrink()
-              : IconButton(
-                  onPressed: () {
-                    _onPrintButton(context);
-                  },
-                  tooltip: 'Drucken',
-                  icon: const Icon(Icons.print_rounded),
-                )
-        ],
-      ),
+      appBar: _buildAppBar(context),
       body: _buildBody(context),
       floatingActionButton: CustomFloatingActionButton(
         onPressed: () => _onCreateButton(context),
         tooltip: 'Fahrt hinzufügen',
         child: const Icon(Icons.add),
       ),
+    );
+  }
+
+  AppBar _buildAppBar(BuildContext context) {
+    return AppBar(
+      title: Text(
+        widget.workUnit == null
+            ? 'Neue Liste'
+            : DateTimeFormatter.dayMonthInterval(
+                widget.workUnit!.rides[0].start,
+                widget
+                    .workUnit!.rides[widget.workUnit!.rides.length - 1].start),
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      actions: [
+        widget.workUnit == null
+            ? const SizedBox.shrink()
+            : PopupMenuButton<int>(
+                onSelected: (menuItem) => _handlePopMenuClick(menuItem),
+                itemBuilder: (context) => [
+                  const PopupMenuItem<int>(
+                    value: 0,
+                    child: _PopMenuListTile(
+                      icon: Icon(
+                        Icons.print_rounded,
+                      ),
+                      text: Text('Drucken'),
+                    ),
+                  ),
+                  PopupMenuItem<int>(
+                    value: 1,
+                    child: _PopMenuListTile(
+                      icon: Icon(
+                        Icons.delete_forever_rounded,
+                        color: Theme.of(context).errorColor,
+                      ),
+                      text: Text(
+                        'Löschen',
+                        style: TextStyle(
+                            color: Theme.of(context).errorColor,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+      ],
     );
   }
 
@@ -93,13 +120,52 @@ class _WorkUnitPageState extends State<WorkUnitPage> {
     );
   }
 
+  void _handlePopMenuClick(int menuItemIndex) {
+    switch (menuItemIndex) {
+      case 0:
+        _onPrintButton(context);
+        break;
+      case 1:
+        _onDeleteButton(context);
+        break;
+    }
+  }
+
   void _onCreateButton(BuildContext context) {
     Navigator.of(context)
         .pushNamed('/rideForm', arguments: {'workUnit': widget.workUnit});
   }
 
   void _onPrintButton(BuildContext context) async {
-    Navigator.of(context).pushNamed('/ridesPrintPreview',
-        arguments: {'workUnit': widget.workUnit!});
+    Navigator.of(context)
+        .pushNamed(Constants.ROUTING_RIDE_PRINT_PREVIEW_PAGE, arguments: {
+      Constants.ARGS_RIDE_PRINT_PREVIEW_PAGE_WORKUNITS: <WorkUnit>[
+        widget.workUnit!
+      ]
+    });
+  }
+
+  void _onDeleteButton(BuildContext context) async {}
+}
+
+class _PopMenuListTile extends StatelessWidget {
+  const _PopMenuListTile({Key? key, required this.text, required this.icon})
+      : super(key: key);
+
+  final Text text;
+  final Icon icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 24,
+      child: Row(children: [
+        icon,
+        const SizedBox(
+          width: 8,
+        ),
+        text
+      ]),
+    );
   }
 }

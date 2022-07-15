@@ -4,6 +4,7 @@ import 'package:taxi_rahmati/features/manage_work/presentation/pages/main_page.d
 import 'package:taxi_rahmati/features/manage_work/presentation/pages/ride_details_page.dart';
 import 'package:taxi_rahmati/features/manage_work/presentation/pages/ride_form_page.dart';
 
+import '../../constants.dart';
 import '../../features/manage_work/domain/entities/ride.dart';
 import '../../features/manage_work/domain/entities/work_unit.dart';
 import '../../features/manage_work/presentation/pages/rides_print_preview_page.dart';
@@ -49,11 +50,13 @@ class RouteGenerator {
                   ride: ride,
                 ),
             settings: const RouteSettings(name: '/rideDetails'));
-      case '/ridesPrintPreview':
-        final workUnit = args!['workUnit'] as WorkUnit;
+      case Constants.ROUTING_RIDE_PRINT_PREVIEW_PAGE:
+        final workUnits =
+            args![Constants.ARGS_RIDE_PRINT_PREVIEW_PAGE_WORKUNITS]
+                as List<WorkUnit>;
         return MaterialPageRoute(
             builder: (_) => RidesPrintPreviewPage(
-                  workUnit: workUnit,
+                  workUnits: workUnits,
                 ),
             settings: const RouteSettings(name: '/ridesPrintPreview'));
 

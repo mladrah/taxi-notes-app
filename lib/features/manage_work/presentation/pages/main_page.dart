@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:taxi_rahmati/features/manage_work/presentation/pages/ride_form_page.dart';
 
+import '../../../../constants.dart';
 import '../../../../core/presentation/widgets/hint_message.dart';
 import '../../domain/entities/ride.dart';
 import '../../domain/entities/work_unit.dart';
@@ -25,6 +26,24 @@ class MainPage extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+        actions: [
+          BlocBuilder<ManageWorkBloc, ManageWorkState>(
+            builder: (context, state) {
+              if (state is WorkUnitsLoaded) {
+                workUnits = state.workUnits;
+                if (workUnits.isNotEmpty) {
+                  return IconButton(
+                    onPressed: () => _onPrintButton(context),
+                    icon: const Icon(Icons.print_rounded),
+                    tooltip: 'Drucken',
+                  );
+                }
+              }
+
+              return const SizedBox.shrink();
+            },
+          )
+        ],
       ),
       body: _buildBody(context),
     );
@@ -83,5 +102,12 @@ class MainPage extends StatelessWidget {
         SuggestionContainer.addNameSuggestion(ride.name);
       }
     }
+  }
+
+  void _onPrintButton(BuildContext context) async {
+    Navigator.of(context).pushNamed(Constants.ROUTING_RIDE_PRINT_PREVIEW_PAGE,
+        arguments: {
+          Constants.ARGS_RIDE_PRINT_PREVIEW_PAGE_WORKUNITS: workUnits
+        });
   }
 }

@@ -257,14 +257,20 @@ class SuggestionContainer {
   static List<String> get destinationSuggestions => _destinationSuggestions;
 
   static void addNameSuggestion(String name) {
+    name = _removeTrailingWhitespace(name);
     if (!_nameSuggestions.contains(name)) {
       _nameSuggestions.add(name);
     }
   }
 
   static void addDestinationSuggestion(String destination) {
+    destination = _removeTrailingWhitespace(destination);
     if (!_destinationSuggestions.contains(destination)) {
       _destinationSuggestions.add(destination);
     }
+  }
+
+  static String _removeTrailingWhitespace(String string) {
+    return string.replaceFirst(RegExp(r"\s+$"), "");
   }
 }

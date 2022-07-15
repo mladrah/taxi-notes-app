@@ -42,6 +42,7 @@ class AppThemeData {
       primaryColor: _primaryColor,
       hintColor: Colors.grey.withOpacity(0.75),
       focusColor: _primaryColor.withOpacity(0.15),
+      errorColor: Colors.red,
       scaffoldBackgroundColor: Colors.white,
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,

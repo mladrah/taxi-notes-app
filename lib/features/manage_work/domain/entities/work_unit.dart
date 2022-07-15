@@ -10,23 +10,4 @@ class WorkUnit extends Equatable {
 
   @override
   List<Object> get props => [id, rides];
-
-  String get monthName {
-    List<String> months = [
-      'Januar',
-      'Februar',
-      'März',
-      'April',
-      'Mai',
-      'Juni',
-      'Juli',
-      'August',
-      'September',
-      'Oktober',
-      'November',
-      'Dezember'
-    ];
-
-    return months[rides[0].start.month - 1];
-  }
 }
