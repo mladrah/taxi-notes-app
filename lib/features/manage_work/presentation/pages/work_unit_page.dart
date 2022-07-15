@@ -7,6 +7,7 @@ import '../../../../core/util/date_time_formatter.dart';
 import '../../domain/entities/ride.dart';
 import '../../domain/entities/work_unit.dart';
 import '../bloc/manage_work_bloc.dart';
+import '../widgets/delete_alert.dart';
 import '../widgets/empty_list_hint_message.dart';
 import '../widgets/ride_tile.dart';
 
@@ -145,7 +146,14 @@ class _WorkUnitPageState extends State<WorkUnitPage> {
     });
   }
 
-  void _onDeleteButton(BuildContext context) async {}
+  void _onDeleteButton(BuildContext context) async {
+    DeleteAlert(
+            context: context,
+            onPressed: () => (context),
+            title: 'Liste löschen?')
+        .alert
+        .show();
+  }
 }
 
 class _PopMenuListTile extends StatelessWidget {

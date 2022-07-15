@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class AppThemeData {
   // ignore: prefer_const_constructors
-  final _primaryColor = Color(0xff0D0A0B); // default: 0xff0D0A0B
+  // final _primaryColor = Color(0xff0D0A0B); // default: 0xff0D0A0B
+  final _primaryColor = Colors.grey.shade800;
 
   // ignore: prefer_const_constructors
   final _textColor = Color.fromARGB(255, 0, 0, 0);
@@ -33,7 +34,6 @@ class AppThemeData {
 
     return ThemeData(
       textTheme: Theme.of(context).textTheme.apply(
-            fontFamily: 'Kodchasan',
             bodyColor: _textColor,
             displayColor: _textColor,
           ),

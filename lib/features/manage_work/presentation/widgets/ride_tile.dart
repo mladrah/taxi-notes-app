@@ -56,11 +56,11 @@ class RideTile extends StatelessWidget {
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w900,
+                      fontSize: 17,
                     ),
                   ),
                 ),
               ),
-
               Expanded(
                 flex: _flexTime,
                 child: Container(
@@ -70,11 +70,11 @@ class RideTile extends StatelessWidget {
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w900,
+                      fontSize: 17,
                     ),
                   ),
                 ),
               ),
-
               Expanded(
                 flex: _flexDestination,
                 child: Container(
@@ -127,24 +127,6 @@ class RideTile extends StatelessWidget {
                   ),
                 ),
               ),
-              // Expanded(
-              //   flex: 1,
-              //   child: Container(
-              //     height: double.infinity,
-              //     alignment: Alignment.center,
-              //     child: FittedBox(
-              //       child: Text(
-              //         '${ride.price.toString().replaceAll('.', ',')} €',
-              //         textAlign: TextAlign.center,
-              //         style: const TextStyle(
-              //           color: Colors.white,
-              //           fontWeight: FontWeight.bold,
-              //           fontStyle: FontStyle.italic,
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
             ]),
           ),
         ),

@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart' hide Title;
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -11,15 +13,15 @@ import '../../domain/entities/work_unit.dart';
 class RidesPrintPreviewPage extends StatelessWidget {
   final List<WorkUnit> workUnits;
 
-  final int _ridesPerPage = 35;
+  late Iterable<List<Ride>> pages;
+  final int _ridesPerPage = 40;
   final String highlightHexColor = 'E8E8E8';
   final int _flexDate = 4;
   final int _flexTime = 2;
   final int _flexDestination = 5;
   final int _flexName = 6;
 
-  const RidesPrintPreviewPage({Key? key, required this.workUnits})
-      : super(key: key);
+  RidesPrintPreviewPage({Key? key, required this.workUnits}) : super(key: key);
 
   List<Ride> _combineWorkUnits(List<WorkUnit> workUnits) {
     List<Ride> rides = [];
@@ -32,7 +34,7 @@ class RidesPrintPreviewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var pages = partition(_combineWorkUnits(workUnits), _ridesPerPage);
+    pages = partition(_combineWorkUnits(workUnits), _ridesPerPage);
 
     final doc = pw.Document();
 
@@ -40,7 +42,7 @@ class RidesPrintPreviewPage extends StatelessWidget {
       doc.addPage(
         pw.Page(
           pageFormat: PdfPageFormat.a4,
-          build: (context) => _buildPdf(context, pages.elementAt(i)),
+          build: (context) => _buildPdf(context, pages.elementAt(i), i),
         ),
       );
     }
@@ -60,7 +62,7 @@ class RidesPrintPreviewPage extends StatelessWidget {
     );
   }
 
-  pw.Container _buildPdf(pw.Context context, List<Ride> rides) {
+  pw.Container _buildPdf(pw.Context context, List<Ride> rides, int pageIndex) {
     final DateTime firstDate = workUnits[0].rides[0].start;
     final DateTime lastDate = workUnits[workUnits.length - 1]
         .rides[workUnits[workUnits.length - 1].rides.length - 1]
@@ -70,13 +72,24 @@ class RidesPrintPreviewPage extends StatelessWidget {
       child: pw.Column(
         crossAxisAlignment: pw.CrossAxisAlignment.start,
         children: [
-          pw.Text(
-            '${DateTimeFormatter.yearInterval(firstDate, lastDate)}\n${DateTimeFormatter.monthInterval(firstDate, lastDate)}\nKrankenfahrten',
-            style: pw.TextStyle(
-              fontWeight: pw.FontWeight.bold,
-              fontSize: 16,
-            ),
-          ),
+          pw.Row(
+              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+              children: [
+                pw.Text(
+                  '${DateTimeFormatter.monthInterval(firstDate, lastDate)} ${DateTimeFormatter.yearInterval(firstDate, lastDate)} | Krankenfahrten',
+                  style: pw.TextStyle(
+                    fontWeight: pw.FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                pw.Text(
+                  'Seite ${pageIndex + 1} von ${pages.length}',
+                  style: pw.TextStyle(
+                    fontWeight: pw.FontWeight.bold,
+                    fontSize: 12,
+                  ),
+                ),
+              ]),
           pw.SizedBox(height: 16),
           pw.Row(
             children: [

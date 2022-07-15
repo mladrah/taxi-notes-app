@@ -7,6 +7,7 @@ import '../../../../core/presentation/widgets/custom_floating_action_button.dart
 import '../../domain/entities/ride.dart';
 import '../../domain/entities/work_unit.dart';
 import '../bloc/manage_work_bloc.dart';
+import '../widgets/delete_alert.dart';
 
 // ignore: must_be_immutable
 class RideDetailsPage extends StatefulWidget {
@@ -37,7 +38,12 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
               if (state is Loading) {
                 onPressed = null;
               } else {
-                onPressed = () => _dispatchDeleteEvent(context);
+                onPressed = () => DeleteAlert(
+                        context: context,
+                        onPressed: () => _dispatchDeleteEvent(context),
+                        title: 'Fahrt löschen?')
+                    .alert
+                    .show();
               }
               return IconButton(
                 onPressed: onPressed,
@@ -98,13 +104,14 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
               children: [
                 Expanded(
                   child: RideDetailsField(
-                    label: 'Start',
+                    label: 'Datum',
                     value: DateTimeFormatter.dayMonthYear(widget.ride.start),
                   ),
                 ),
                 const SizedBox(width: 8),
                 Expanded(
                   child: RideDetailsField(
+                    label: 'Zeit',
                     value: DateTimeFormatter.hourMinute(widget.ride.start),
                   ),
                 ),

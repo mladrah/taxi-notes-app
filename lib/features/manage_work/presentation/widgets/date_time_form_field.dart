@@ -23,19 +23,19 @@ class DateTimeFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Row(
       children: [
-        Text(
-          label,
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(
-          height: 8,
-        ),
-        Row(
-          children: [
-            Expanded(
-              child: DateTimeField(
+        Expanded(
+          child: Column(
+            children: [
+              const Text(
+                'Datum',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              DateTimeField(
                 onChanged: onChangedDate,
                 validator: (value) {
                   return (value == null) ? '' : null;
@@ -50,12 +50,23 @@ class DateTimeFormField extends StatelessWidget {
                       lastDate: DateTime(2100));
                 },
               ),
-            ),
-            const SizedBox(
-              width: 8,
-            ),
-            Expanded(
-              child: DateTimeField(
+            ],
+          ),
+        ),
+        const SizedBox(
+          width: 8,
+        ),
+        Expanded(
+          child: Column(
+            children: [
+              const Text(
+                'Zeit',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              DateTimeField(
                 onChanged: onChangedTime,
                 validator: (value) {
                   return (value == null) ? '' : null;
@@ -77,8 +88,8 @@ class DateTimeFormField extends StatelessWidget {
                   return DateTimeField.convert(time);
                 },
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );

@@ -16,6 +16,12 @@ class CustomFloatingActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
+      shape: const StadiumBorder(
+        side: BorderSide(
+          color: Colors.white,
+          width: 2,
+        ),
+      ),
       onPressed: onPressed,
       tooltip: tooltip ?? '',
       child: Container(

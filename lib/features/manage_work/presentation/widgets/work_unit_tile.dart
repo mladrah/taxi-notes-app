@@ -46,6 +46,7 @@ class WorkUnitTile extends StatelessWidget {
                       style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w900,
+                        fontSize: 17,
                       ),
                     ),
                   ),
@@ -71,35 +72,6 @@ class WorkUnitTile extends StatelessWidget {
                           ),
                         ),
                       ),
-                      // Expanded(
-                      //   child: Container(
-                      //     alignment: Alignment.center,
-                      //     child: const FittedBox(
-                      //       child: Text(
-                      //         'XX:XXh',
-                      //         style: TextStyle(
-                      //           color: Colors.white,
-                      //           fontWeight: FontWeight.bold,
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-                      // Expanded(
-                      //   child: Container(
-                      //     alignment: Alignment.center,
-                      //     child: const FittedBox(
-                      //       child: Text(
-                      //         'XX €',
-                      //         style: TextStyle(
-                      //           color: Colors.white,
-                      //           fontWeight: FontWeight.bold,
-                      //           fontStyle: FontStyle.italic,
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),
