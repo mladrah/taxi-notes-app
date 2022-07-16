@@ -62,7 +62,6 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
         onPressed: () => _onEditButton(context),
         child: const Icon(
           Icons.edit,
-          color: Colors.black,
         ),
         tooltip: 'Fahrt bearbeiten',
       ),
@@ -120,7 +119,6 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
                 ),
               ],
             ),
-
             const SizedBox(height: 8),
             Row(
               children: [
@@ -158,28 +156,6 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
                 ),
               ],
             ),
-            // const SizedBox(height: 8),
-            // Row(
-            //   children: [
-            //     Expanded(
-            //       child: RideDetailsField(
-            //         label: 'Ende',
-            //         value: _dateFormatter.format(widget.ride.end),
-            //       ),
-            //     ),
-            //     const SizedBox(width: 8),
-            //     Expanded(
-            //       child: RideDetailsField(
-            //         value: _timeFormatter.format(widget.ride.end),
-            //       ),
-            //     ),
-            //   ],
-            // ),
-            // const SizedBox(height: 8),
-            // RideDetailsField(
-            //   label: 'Preis',
-            //   value: '${widget.ride.price.toString().replaceAll('.', ',')} €',
-            // ),
           ],
         ),
       ),

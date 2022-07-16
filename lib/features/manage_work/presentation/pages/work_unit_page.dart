@@ -33,7 +33,6 @@ class _WorkUnitPageState extends State<WorkUnitPage> {
         tooltip: 'Fahrt hinzufügen',
         child: const Icon(
           Icons.add,
-          color: Colors.black,
         ),
       ),
     );
@@ -152,10 +151,16 @@ class _WorkUnitPageState extends State<WorkUnitPage> {
   void _onDeleteButton(BuildContext context) async {
     DeleteAlert(
             context: context,
-            onPressed: () => (context),
+            onPressed: () => _dispatchDeleteEvent(context),
             title: 'Liste löschen?')
         .alert
         .show();
+  }
+
+  void _dispatchDeleteEvent(BuildContext context) {
+    context
+        .read<ManageWorkBloc>()
+        .add(DeleteWorkUnitFromRepository(workUnit: widget.workUnit!));
   }
 }
 

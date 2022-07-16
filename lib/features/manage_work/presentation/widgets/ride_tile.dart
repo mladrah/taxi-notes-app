@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' hide Title;
 
+import '../../../../core/presentation/widgets/custom_box_shadow.dart';
 import '../../../../core/util/date_time_formatter.dart';
 import '../../domain/entities/ride.dart';
 import '../../domain/entities/work_unit.dart';
@@ -22,16 +23,9 @@ class RideTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
+        color: Colors.grey.shade100,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Theme.of(context).primaryColor.withOpacity(0.25),
-            spreadRadius: 3,
-            blurRadius: 7,
-            offset: const Offset(0, 0),
-          ),
-        ],
+        boxShadow: CustomBoxShadow.boxShadow(context),
       ),
       child: Material(
         color: Colors.transparent,

@@ -13,7 +13,7 @@ class WorkUnitTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
+        color: Colors.grey.shade100,
         borderRadius: BorderRadius.circular(16),
         boxShadow: CustomBoxShadow.boxShadow(context),
       ),

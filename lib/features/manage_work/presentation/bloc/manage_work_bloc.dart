@@ -50,6 +50,7 @@ class ManageWorkBloc extends Bloc<ManageWorkEvent, ManageWorkState> {
     on<AddRideInWorkUnit>(_onAddRideToRepository);
     on<DeleteRideFromRepository>(_onDeleteRideFromRepository);
     on<UpdateRideInRepository>(_onUpdateRideInRepository);
+    on<DeleteWorkUnitFromRepository>(_onDeleteWorkUnitFromRepository);
   }
 
   void _onAddRideToRepository(AddRideInWorkUnit event, Emitter emit) async {
@@ -205,6 +206,18 @@ class ManageWorkBloc extends Bloc<ManageWorkEvent, ManageWorkState> {
       _sortWorkUnits(workUnits);
       emit(WorkUnitsLoaded(workUnits: workUnits));
     });
+  }
+
+  void _onDeleteWorkUnitFromRepository(
+      DeleteWorkUnitFromRepository event, Emitter<ManageWorkState> emit) async {
+    emit(Loading());
+
+    final deleteResult =
+        await deleteWorkUnitUseCase(Params(workUnit: event.workUnit));
+
+    deleteResult.fold(
+        (failure) => emit(Error(message: _mapFailureToMessage(failure))),
+        (r) => emit(WorkUnitDeleted()));
   }
 
   void _sortWorkUnits(List<WorkUnit> workUnits) {

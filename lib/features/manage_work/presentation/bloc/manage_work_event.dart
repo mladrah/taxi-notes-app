@@ -120,3 +120,14 @@ class LoadWorkUnitFromRepository extends ManageWorkEvent {
   @override
   List<Object> get props => [workUnit];
 }
+
+class DeleteWorkUnitFromRepository extends ManageWorkEvent {
+  final WorkUnit workUnit;
+
+  const DeleteWorkUnitFromRepository({
+    required this.workUnit,
+  });
+
+  @override
+  List<Object> get props => [workUnit];
+}
