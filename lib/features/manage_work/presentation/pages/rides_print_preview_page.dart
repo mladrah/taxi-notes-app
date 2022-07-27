@@ -76,7 +76,7 @@ class RidesPrintPreviewPage extends StatelessWidget {
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               children: [
                 pw.Text(
-                  '${DateTimeFormatter.monthInterval(firstDate, lastDate)} ${DateTimeFormatter.yearInterval(firstDate, lastDate)} | Krankenfahrten',
+                  '${DateTimeFormatter.monthInterval(firstDate, lastDate)} ${DateTimeFormatter.yearInterval(firstDate, lastDate)} Krankenfahrten',
                   style: pw.TextStyle(
                     fontWeight: pw.FontWeight.bold,
                     fontSize: 16,

@@ -92,7 +92,8 @@ class ManageWorkBloc extends Bloc<ManageWorkEvent, ManageWorkState> {
           (workUnit) => newWorkUnit = workUnit);
     }
 
-    final result = await addRideUseCase(WorkUnitRidesParams(
+    final result = await addRideUseCase(
+      WorkUnitRidesParams(
         workUnit: event.workUnit ?? newWorkUnit,
         ride: Ride(
             id: const Uuid().v1(),
@@ -102,7 +103,9 @@ class ManageWorkBloc extends Bloc<ManageWorkEvent, ManageWorkState> {
             toDestination: event.toDestination,
             start: startParsed,
             end: endParsed,
-            price: priceParsed)));
+            price: priceParsed),
+      ),
+    );
 
     result.fold(
       (failure) => emit(Error(message: _mapFailureToMessage(failure))),

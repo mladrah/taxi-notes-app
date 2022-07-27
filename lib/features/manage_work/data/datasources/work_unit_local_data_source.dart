@@ -8,6 +8,10 @@ import 'package:taxi_rahmati/features/manage_work/data/datasources/work_unit_dat
 import 'package:taxi_rahmati/features/manage_work/data/models/ride_model.dart';
 import 'package:taxi_rahmati/features/manage_work/data/models/work_unit_model.dart';
 import 'package:uuid/uuid.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
+
+import '../../../../core/util/date_time_formatter.dart';
 
 const String WORK_UNITS = 'WORK_UNITS';
 const String INITIALIZE = 'INITIALIZE';
@@ -51,10 +55,17 @@ class WorkUnitLocalDataSourceImpl extends WorkUnitLocalDataSource {
   Future<void> deleteWorkUnit({required WorkUnitModel workUnitModel}) async {
     final List<WorkUnitModel> workUnitModels = await getWorkUnits();
 
-    workUnitModels
-        .removeWhere((element) => element.id.compareTo(workUnitModel.id) == 0);
+    int index = workUnitModels
+        .indexWhere((element) => element.id.compareTo(workUnitModel.id) == 0);
+
+    List<RideModel> rideModels = workUnitModels[index].rideModels;
+    workUnitModels.removeAt(index);
 
     await saveWorkUnits(workUnitModels);
+
+    for (RideModel rm in rideModels) {
+      _writeToLogFile('DELETED: ${rm.toString()}');
+    }
   }
 
   @override
@@ -97,6 +108,8 @@ class WorkUnitLocalDataSourceImpl extends WorkUnitLocalDataSource {
 
     await saveWorkUnits(workUnitModels);
 
+    _writeToLogFile('ADDED: ${rideModel.toString()}');
+
     return workUnitModel;
   }
 
@@ -117,6 +130,8 @@ class WorkUnitLocalDataSourceImpl extends WorkUnitLocalDataSource {
 
     await saveWorkUnits(workUnitModels);
 
+    _writeToLogFile('DELETED: ${rideModel.toString()}');
+
     return workUnitModel;
   }
 
@@ -126,21 +141,39 @@ class WorkUnitLocalDataSourceImpl extends WorkUnitLocalDataSource {
       required RideModel rideModel}) async {
     final List<WorkUnitModel> workUnitModels = await getWorkUnits();
 
+    late RideModel oldRideModel;
     for (WorkUnitModel wum in workUnitModels) {
       if (wum.id.compareTo(workUnitModel.id) == 0) {
-        wum.rideModels[wum.rideModels.indexWhere(
-            (element) => element.id.compareTo(rideModel.id) == 0)] = rideModel;
+        int index = wum.rideModels
+            .indexWhere((element) => element.id.compareTo(rideModel.id) == 0);
+
+        oldRideModel = wum.rideModels[index];
+        wum.rideModels[index] = rideModel;
+
         workUnitModel = wum;
+
         break;
       }
     }
 
     await saveWorkUnits(workUnitModels);
 
+    _writeToLogFile(
+        'UPDATED: [OLD] ${oldRideModel.toString()} -> [NEW] ${rideModel.toString()}');
+
     return workUnitModel;
   }
 
   String _getJsonStringFromWorkUnits(List<WorkUnitModel> workUnits) {
     return jsonEncode(workUnits.map((workUnit) => workUnit.toJson()).toList());
+  }
+
+  void _writeToLogFile(String text) async {
+    text =
+        '${DateTimeFormatter.dayMonthYear(DateTime.now())} ${DateTimeFormatter.hourMinute(DateTime.now())} $text\n';
+    final Directory? directory = await getExternalStorageDirectory();
+    final File file = File('${directory!.path}/logs.txt');
+    log('${directory!.path}/logs.txt');
+    await file.writeAsString(text, mode: FileMode.append);
   }
 }

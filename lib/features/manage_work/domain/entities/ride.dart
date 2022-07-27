@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:decimal/decimal.dart';
 
+import '../../../../core/util/date_time_formatter.dart';
+
 class Ride extends Equatable {
   final String id;
   final Title title;
@@ -24,6 +26,11 @@ class Ride extends Equatable {
   @override
   List<Object> get props =>
       [id, title, name, fromDestination, toDestination, start, end, price];
+
+  @override
+  String toString() {
+    return '(Ride) [${DateTimeFormatter.dayMonthYear(start)}] [${DateTimeFormatter.hourMinute(start)}] | [$fromDestination] -> [$toDestination] | [$title] [$name]';
+  }
 }
 
 enum Title { herr, frau }
