@@ -8,7 +8,7 @@
 # Implementation
 **[Flutter]()** was used to implement the app. The **[Bloc pattern](https://bloclibrary.dev/#/)** was used as state management while also applying **[Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)** principles to create a scalable and maintainable application.
 
-# Screenshots
+# Showcase
 <img src="https://user-images.githubusercontent.com/96650515/181271235-c3d5e432-da6a-43d2-8ca5-09416806a166.png" width="240"> <img src="https://user-images.githubusercontent.com/96650515/181271385-ea53a2ea-7f8e-4a45-92b8-d1f4114ae166.png" width="240">
 <img src="https://user-images.githubusercontent.com/96650515/181271402-fe44ec9e-f760-4680-928d-9c1c5889f9d3.png" width="240">
 <img src="https://user-images.githubusercontent.com/96650515/181271414-57e80e93-6911-44da-8d9f-3bac2a4a8983.png" width="240">
