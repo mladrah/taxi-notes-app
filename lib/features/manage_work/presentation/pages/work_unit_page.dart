@@ -71,12 +71,12 @@ class _WorkUnitPageState extends State<WorkUnitPage> {
                     child: _PopMenuListTile(
                       icon: Icon(
                         Icons.delete_forever_rounded,
-                        color: Theme.of(context).errorColor,
+                        color: Theme.of(context).colorScheme.error,
                       ),
                       text: Text(
                         'Löschen',
                         style: TextStyle(
-                            color: Theme.of(context).errorColor,
+                            color: Theme.of(context).colorScheme.error,
                             fontWeight: FontWeight.bold),
                       ),
                     ),

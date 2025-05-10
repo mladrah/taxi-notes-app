@@ -173,7 +173,7 @@ class WorkUnitLocalDataSourceImpl extends WorkUnitLocalDataSource {
         '${DateTimeFormatter.dayMonthYear(DateTime.now())} ${DateTimeFormatter.hourMinute(DateTime.now())} $text\n';
     final Directory? directory = await getExternalStorageDirectory();
     final File file = File('${directory!.path}/logs.txt');
-    log('${directory!.path}/logs.txt');
+    log('${directory.path}/logs.txt');
     await file.writeAsString(text, mode: FileMode.append);
   }
 }

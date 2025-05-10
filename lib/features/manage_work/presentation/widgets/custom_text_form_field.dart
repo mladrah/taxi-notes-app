@@ -23,16 +23,16 @@ class CustomTextFormField extends StatelessWidget {
       children: [
         SizedBox(
           width: double.infinity,
-          child: TypeAheadFormField(
+          child: TypeAheadField<String>(
             suggestionsCallback: (content) {
               if (content != '') {
                 return suggestions.where((suggestion) =>
-                    suggestion.toLowerCase().contains(content.toLowerCase()));
+                    suggestion.toLowerCase().contains(content.toLowerCase())).toList();
               }
 
               return <String>[];
             },
-            onSuggestionSelected: (String content) {
+            onSelected: (String content) {
               _controller.text = content;
               onChanged(content);
             },
@@ -41,13 +41,14 @@ class CustomTextFormField extends StatelessWidget {
             hideOnEmpty: true,
             hideOnLoading: true,
             animationDuration: const Duration(milliseconds: 250),
-            validator: (value) {
-              return (value == null || value.isEmpty ? '' : null);
-            },
-            textFieldConfiguration: TextFieldConfiguration(
-                controller: _controller,
-                onChanged: onChanged,
-                decoration: InputDecoration(hintText: label)),
+            // validator: (value) {
+            //   return (value == null || value.isEmpty ? '' : null);
+            // },
+            // textFieldConfiguration: TextFieldConfiguration(
+            //     controller: _controller,
+            //     onChanged: onChanged,
+            //     decoration: InputDecoration(hintText: label),
+            // ),
           ),
         ),
       ],

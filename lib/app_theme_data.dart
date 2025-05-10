@@ -11,25 +11,25 @@ class AppThemeData {
   ThemeData lighTheme(BuildContext context) {
     Map<int, Color> primaryColorMap = {
       50: Color.fromRGBO(
-          _primaryColor.red, _primaryColor.green, _primaryColor.blue, .1),
+          _primaryColor.r.toInt(), _primaryColor.g.toInt(), _primaryColor.b.toInt(), .1),
       100: Color.fromRGBO(
-          _primaryColor.red, _primaryColor.green, _primaryColor.blue, .2),
+          _primaryColor.r.toInt(), _primaryColor.g.toInt(), _primaryColor.b.toInt(), .2),
       200: Color.fromRGBO(
-          _primaryColor.red, _primaryColor.green, _primaryColor.blue, .3),
+          _primaryColor.r.toInt(), _primaryColor.g.toInt(), _primaryColor.b.toInt(), .3),
       300: Color.fromRGBO(
-          _primaryColor.red, _primaryColor.green, _primaryColor.blue, .4),
+          _primaryColor.r.toInt(), _primaryColor.g.toInt(), _primaryColor.b.toInt(), .4),
       400: Color.fromRGBO(
-          _primaryColor.red, _primaryColor.green, _primaryColor.blue, .5),
+          _primaryColor.r.toInt(), _primaryColor.g.toInt(), _primaryColor.b.toInt(), .5),
       500: Color.fromRGBO(
-          _primaryColor.red, _primaryColor.green, _primaryColor.blue, .6),
+          _primaryColor.r.toInt(), _primaryColor.g.toInt(), _primaryColor.b.toInt(), .6),
       600: Color.fromRGBO(
-          _primaryColor.red, _primaryColor.green, _primaryColor.blue, 7),
+          _primaryColor.r.toInt(), _primaryColor.g.toInt(), _primaryColor.b.toInt(), .7),
       700: Color.fromRGBO(
-          _primaryColor.red, _primaryColor.green, _primaryColor.blue, .8),
+          _primaryColor.r.toInt(), _primaryColor.g.toInt(), _primaryColor.b.toInt(), .8),
       800: Color.fromRGBO(
-          _primaryColor.red, _primaryColor.green, _primaryColor.blue, .9),
+          _primaryColor.r.toInt(), _primaryColor.g.toInt(), _primaryColor.b.toInt(), .9),
       900: Color.fromRGBO(
-          _primaryColor.red, _primaryColor.green, _primaryColor.blue, 1),
+          _primaryColor.r.toInt(), _primaryColor.g.toInt(), _primaryColor.b.toInt(), 1),
     };
 
     return ThemeData(
@@ -38,11 +38,10 @@ class AppThemeData {
             displayColor: _textColor,
           ),
       primarySwatch:
-          MaterialColor(_primaryColor.value.toInt(), primaryColorMap),
+          MaterialColor(_primaryColor.toARGB32(), primaryColorMap),
       primaryColor: _primaryColor,
-      hintColor: Colors.grey.withOpacity(0.75),
-      focusColor: _primaryColor.withOpacity(0.15),
-      errorColor: Colors.red,
+      hintColor: Colors.grey.withValues(alpha: 0.75),
+      focusColor: _primaryColor.withValues(alpha: 0.15),
       scaffoldBackgroundColor: Colors.white,
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,

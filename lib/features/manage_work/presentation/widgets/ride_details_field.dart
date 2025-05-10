@@ -36,7 +36,7 @@ class RideDetailsField extends StatelessWidget {
           alignment: Alignment.centerLeft,
           padding: const EdgeInsets.only(left: 16, right: 16),
           decoration: BoxDecoration(
-            color: Colors.grey.withOpacity(0.175),
+            color: Colors.grey.withValues(alpha: 0.175),
             borderRadius: BorderRadius.circular(100),
           ),
           child: FittedBox(

@@ -17,8 +17,8 @@ class CreateWorkUnitButton extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: () => _onTap(context),
-          splashColor: Theme.of(context).primaryColor.withOpacity(0.1),
-          highlightColor: Theme.of(context).primaryColor.withOpacity(0.05),
+          splashColor: Theme.of(context).primaryColor.withValues(alpha: 0.1),
+          highlightColor: Theme.of(context).primaryColor.withValues(alpha: 0.05),
           borderRadius: BorderRadius.circular(8),
           child: const Padding(
             padding: EdgeInsets.all(8.0),

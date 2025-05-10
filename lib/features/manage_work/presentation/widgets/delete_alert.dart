@@ -32,7 +32,7 @@ class DeleteAlert {
               style:
                   TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
-            color: Theme.of(context).errorColor,
+            color: Theme.of(context).colorScheme.error,
           ),
         ],
       );
