@@ -7,15 +7,31 @@ import '../../domain/entities/work_unit.dart';
 class WorkUnitTile extends StatelessWidget {
   final WorkUnit workUnit;
 
-  const WorkUnitTile({Key? key, required this.workUnit}) : super(key: key);
+  late Color _backgroundColor;
+  late Color _textColor;
+  late Color _borderColor;
+
+  WorkUnitTile({Key? key, required this.workUnit}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    _backgroundColor = Theme.of(context).colorScheme.secondary;
+    _textColor = Theme.of(context).colorScheme.onSecondary;
+    _borderColor =
+        Theme.of(context).colorScheme.onSecondary.withValues(alpha: 0.1);
+
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey.shade100,
+        color: _backgroundColor,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: CustomBoxShadow.boxShadow(context),
+        border: Border.all(color: _borderColor, width: 2),
+        boxShadow: CustomBoxShadow.boxShadow(
+          context: context,
+          color:
+              Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.125),
+          spreadRadius: 0.0,
+          blurRadius: 23.0,
+        ),
       ),
       child: Material(
         color: Colors.transparent,
@@ -31,11 +47,11 @@ class WorkUnitTile extends StatelessWidget {
                 child: Container(
                   alignment: Alignment.center,
                   padding: const EdgeInsets.all(4),
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     border: Border(
                       bottom: BorderSide(
-                        color: Colors.white,
                         width: 2,
+                        color: _borderColor,
                       ),
                     ),
                   ),
@@ -43,7 +59,8 @@ class WorkUnitTile extends StatelessWidget {
                     child: Text(
                       '${workUnit.rides[0].start.year}\n${DateTimeFormatter.dayMonthInterval(workUnit.rides[0].start, workUnit.rides[workUnit.rides.length - 1].start)}',
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
+                      style: TextStyle(
+                        color: _textColor,
                         fontWeight: FontWeight.w900,
                         fontSize: 17,
                       ),
@@ -63,7 +80,8 @@ class WorkUnitTile extends StatelessWidget {
                           child: FittedBox(
                             child: Text(
                               '${workUnit.rides.length.toString()} ${workUnit.rides.length > 1 ? 'Fahrten' : 'Fahrt'}',
-                              style: const TextStyle(
+                              style: TextStyle(
+                                color: _textColor,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),

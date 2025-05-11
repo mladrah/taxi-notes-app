@@ -16,22 +16,21 @@ class CustomElevatedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 150,
-      height: 60,
+      width: 160,
+      height: 64,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(100),
         color: Colors.transparent,
-        boxShadow: CustomBoxShadow.boxShadow(context),
+        boxShadow: CustomBoxShadow.boxShadow(
+          context: context,
+          color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
+        ),
       ),
       child: ElevatedButton(
         onPressed: onPressed,
         child: child ??
             Text(
               label,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
             ),
       ),
     );

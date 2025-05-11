@@ -48,9 +48,9 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
               return IconButton(
                 onPressed: onPressed,
                 tooltip: 'Löschen',
-                icon: const Icon(
+                icon: Icon(
                   Icons.delete_forever_rounded,
-                  color: Colors.red,
+                  color: Theme.of(context).colorScheme.error,
                 ),
               );
             },

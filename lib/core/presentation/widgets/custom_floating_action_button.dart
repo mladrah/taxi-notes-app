@@ -16,12 +16,6 @@ class CustomFloatingActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      // shape: const StadiumBorder(
-      //   side: BorderSide(
-      //     color: Colors.white,
-      //     width: 2,
-      //   ),
-      // ),
       onPressed: onPressed,
       tooltip: tooltip ?? '',
       child: Container(
@@ -33,7 +27,10 @@ class CustomFloatingActionButton extends StatelessWidget {
           borderRadius: const BorderRadius.all(
             Radius.circular(100),
           ),
-          boxShadow: CustomBoxShadow.boxShadow(context),
+          boxShadow: CustomBoxShadow.boxShadow(
+            context: context,
+            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
+          ),
         ),
       ),
     );

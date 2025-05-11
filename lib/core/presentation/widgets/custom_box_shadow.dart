@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 
 class CustomBoxShadow {
-  static List<BoxShadow> boxShadow(BuildContext context) {
+  static List<BoxShadow> boxShadow(
+      {required BuildContext context,
+      required Color color,
+      spreadRadius = 3.0,
+      blurRadius = 7.0,
+      offset = const Offset(0, 0)}) {
     return [
       BoxShadow(
-        color: Theme.of(context).primaryColor.withValues(alpha: 0.2),
-        spreadRadius: 3,
-        blurRadius: 7,
-        offset: const Offset(0, 0),
+        color: color,
+        spreadRadius: spreadRadius,
+        blurRadius: blurRadius,
+        offset: offset,
       ),
     ];
   }
