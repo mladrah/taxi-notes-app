@@ -9,10 +9,10 @@ import 'package:taxi_rahmati/features/manage_work/domain/entities/ride.dart';
 import 'package:taxi_rahmati/features/manage_work/domain/entities/work_unit.dart';
 import 'package:taxi_rahmati/features/manage_work/presentation/bloc/manage_work_bloc.dart';
 
-// ignore: must_be_immutable
 class RideDetailsPage extends StatefulWidget {
-  late WorkUnit workUnit;
-  late Ride ride;
+  final WorkUnit workUnit;
+  Ride ride;
+
   RideDetailsPage({Key? key, required this.workUnit, required this.ride})
       : super(key: key);
 

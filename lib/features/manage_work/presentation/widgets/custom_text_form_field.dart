@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:taxi_rahmati/injection_container.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final String label;
@@ -25,6 +26,8 @@ class CustomTextFormField extends StatelessWidget {
           child: TypeAheadField<String>(
             builder: (context, controller, focusNode) {
               _controller = controller;
+              controller.text = initialValue;
+
               return TextFormField(
                 controller: controller,
                 focusNode: focusNode,
