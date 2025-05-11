@@ -20,7 +20,7 @@ class RidesPrintPreviewPage extends StatelessWidget {
   final int _flexTime = 2;
   final int _flexDestination = 5;
   final int _flexName = 6;
-  final int _flexLicensePlate = 2;
+  final int _flexLicensePlate = 3;
 
   RidesPrintPreviewPage({Key? key, required this.workUnits}) : super(key: key);
 
