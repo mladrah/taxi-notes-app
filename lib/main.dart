@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart' hide Title;
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:taxi_rahmati/app_theme.dart';
 import 'package:taxi_rahmati/features/manage_work/presentation/bloc/manage_work_bloc.dart';
 
-import 'app_theme_data.dart';
 import 'core/routing/route_generator.dart';
 import 'injection_container.dart' as di;
 import 'injection_container.dart';
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Taxi Notes',
-        theme: AppThemeData().lighTheme(context),
+        theme: AppTheme().lightTheme,
         initialRoute: '/',
         onGenerateRoute: RouteGenerator.generateRoute,
       ),

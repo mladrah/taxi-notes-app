@@ -22,9 +22,6 @@ class MainPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'Taxi Notes',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
         ),
         actions: [
           BlocBuilder<ManageWorkBloc, ManageWorkState>(
@@ -100,6 +97,7 @@ class MainPage extends StatelessWidget {
         SuggestionContainer.addDestinationSuggestion(ride.fromDestination);
         SuggestionContainer.addDestinationSuggestion(ride.toDestination);
         SuggestionContainer.addNameSuggestion(ride.name);
+        SuggestionContainer.addLicensePlateSuggestion(ride.licensePlate);
       }
     }
   }

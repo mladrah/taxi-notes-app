@@ -101,6 +101,7 @@ class ManageWorkBloc extends Bloc<ManageWorkEvent, ManageWorkState> {
             name: event.name,
             fromDestination: event.fromDestination,
             toDestination: event.toDestination,
+            licensePlate: event.licensePlate,
             start: startParsed,
             end: endParsed,
             price: priceParsed),
@@ -179,6 +180,7 @@ class ManageWorkBloc extends Bloc<ManageWorkEvent, ManageWorkState> {
           name: event.name,
           fromDestination: event.fromDestination,
           toDestination: event.toDestination,
+          licensePlate: event.licensePlate,
           start: startParsed,
           end: endParsed,
           price: priceParsed);

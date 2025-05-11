@@ -7,7 +7,6 @@ class CreateWorkUnitButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           width: 3,
@@ -17,15 +16,15 @@ class CreateWorkUnitButton extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: () => _onTap(context),
-          splashColor: Theme.of(context).primaryColor.withOpacity(0.1),
-          highlightColor: Theme.of(context).primaryColor.withOpacity(0.05),
+          splashColor:
+              Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(8),
           child: const Padding(
             padding: EdgeInsets.all(8.0),
             child: Center(
               child: FittedBox(
                 child: Text(
-                  '+ Neue\nListe',
+                  '+ Neue Liste',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,

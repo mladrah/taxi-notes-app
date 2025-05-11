@@ -6,7 +6,7 @@ class CustomTextFormField extends StatelessWidget {
   final String initialValue;
   final void Function(String) onChanged;
   final List<String> suggestions;
-  final TextEditingController _controller = TextEditingController();
+  TextEditingController? _controller;
 
   CustomTextFormField({
     Key? key,
@@ -18,36 +18,49 @@ class CustomTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _controller.text = initialValue;
     return Column(
       children: [
         SizedBox(
           width: double.infinity,
-          child: TypeAheadFormField(
-            suggestionsCallback: (content) {
-              if (content != '') {
-                return suggestions.where((suggestion) =>
-                    suggestion.toLowerCase().contains(content.toLowerCase()));
+          child: TypeAheadField<String>(
+            builder: (context, controller, focusNode) {
+              _controller = controller;
+              return TextFormField(
+                controller: controller,
+                focusNode: focusNode,
+                onChanged: (value) {
+                  onChanged(value);
+                },
+                decoration: InputDecoration(
+                  hintText: label,
+                ),
+                validator: (value) {
+                  return (value == null || value.isEmpty ? '' : null);
+                },
+              );
+            },
+            controller: _controller,
+            suggestionsCallback: (value) {
+              if (value.isEmpty) {
+                return <String>[];
               }
 
-              return <String>[];
+              return suggestions
+                  .where((suggestion) =>
+                      suggestion.toLowerCase().contains(value.toLowerCase()))
+                  .toList();
             },
-            onSuggestionSelected: (String content) {
-              _controller.text = content;
-              onChanged(content);
+            onSelected: (String value) {
+              if (_controller != null) {
+                _controller!.text = value;
+              }
+              onChanged(value);
             },
             itemBuilder: (_, String suggestion) =>
                 ListTile(title: Text(suggestion)),
             hideOnEmpty: true,
             hideOnLoading: true,
-            animationDuration: const Duration(milliseconds: 250),
-            validator: (value) {
-              return (value == null || value.isEmpty ? '' : null);
-            },
-            textFieldConfiguration: TextFieldConfiguration(
-                controller: _controller,
-                onChanged: onChanged,
-                decoration: InputDecoration(hintText: label)),
+            animationDuration: const Duration(milliseconds: 150),
           ),
         ),
       ],

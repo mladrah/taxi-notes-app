@@ -8,12 +8,17 @@ import '../../domain/entities/work_unit.dart';
 class RideTile extends StatelessWidget {
   final WorkUnit workUnit;
   final Ride ride;
-  final int _flexDate = 1;
-  final int _flexTime = 1;
-  final int _flexDestination = 1;
-  final int _flexName = 1;
+  final int _flexDate = 2;
+  final int _flexTime = 2;
+  final int _flexDestination = 2;
+  final int _flexName = 2;
+  final int _flexLicensePlate = 1;
 
-  const RideTile({
+  late Color _backgroundColor;
+  late Color _textColor;
+  late Color _borderColor;
+
+  RideTile({
     Key? key,
     required this.workUnit,
     required this.ride,
@@ -21,11 +26,23 @@ class RideTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _backgroundColor = Theme.of(context).colorScheme.secondary;
+    _textColor = Theme.of(context).colorScheme.onSecondary;
+    _borderColor =
+        Theme.of(context).colorScheme.onSecondary.withValues(alpha: 0.1);
+
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey.shade100,
+        color: _backgroundColor,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: CustomBoxShadow.boxShadow(context),
+        border: Border.all(color: _borderColor, width: 2),
+        boxShadow: CustomBoxShadow.boxShadow(
+          context: context,
+          color:
+              Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.125),
+          spreadRadius: 0.0,
+          blurRadius: 23.0,
+        ),
       ),
       child: Material(
         color: Colors.transparent,
@@ -47,7 +64,8 @@ class RideTile extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     DateTimeFormatter.dayMonth(ride.start),
-                    style: const TextStyle(
+                    style: TextStyle(
+                      color: _textColor,
                       fontWeight: FontWeight.w900,
                       fontSize: 16,
                     ),
@@ -60,7 +78,8 @@ class RideTile extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     DateTimeFormatter.hourMinute(ride.start),
-                    style: const TextStyle(
+                    style: TextStyle(
+                      color: _textColor,
                       fontWeight: FontWeight.w900,
                       fontSize: 16,
                     ),
@@ -75,7 +94,8 @@ class RideTile extends StatelessWidget {
                     ride.fromDestination,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
+                    style: TextStyle(
+                      color: _textColor,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -92,7 +112,8 @@ class RideTile extends StatelessWidget {
                     ride.toDestination,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
+                    style: TextStyle(
+                      color: _textColor,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -110,8 +131,27 @@ class RideTile extends StatelessWidget {
                         .replaceAll('', '\u{200B}'),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
+                    style: TextStyle(
+                      color: _textColor,
                       fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 8,
+              ),
+              Expanded(
+                flex: _flexLicensePlate,
+                child: Container(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    ride.licensePlate,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: _textColor,
+                      fontStyle: FontStyle.italic,
                     ),
                   ),
                 ),

@@ -32,6 +32,8 @@ class _RideFormPageState extends State<RideFormPage> {
       widget.ride == null ? '' : widget.ride!.fromDestination;
   late String _toDestination =
       widget.ride == null ? '' : widget.ride!.toDestination;
+  late String _licensePlate =
+      widget.ride == null ? '' : widget.ride!.licensePlate;
   late String _price = widget.ride == null
       ? '0.0'
       : widget.ride!.price.toString().replaceAll('.', ',');
@@ -44,15 +46,16 @@ class _RideFormPageState extends State<RideFormPage> {
   late DateTime? _endTime =
       widget.ride == null ? DateTime.now() : widget.ride!.end;
 
+  late Color _dividerColor;
+
   @override
   Widget build(BuildContext context) {
+    _dividerColor = Theme.of(context).colorScheme.onSurface;
+
     return Scaffold(
         appBar: AppBar(
           title: Text(
             widget.ride == null ? 'Neue Fahrt erstellen' : 'Fahrt ändern',
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
           ),
         ),
         body: buildBody(context));
@@ -84,15 +87,6 @@ class _RideFormPageState extends State<RideFormPage> {
               key: _formKey,
               child: Column(
                 children: <Widget>[
-                  // const SizedBox(
-                  //   height: 8,
-                  // ),
-                  // CurrencyFormField(
-                  //   label: 'Preis (€)',
-                  //   onChanged: (value) => _price = value,
-                  //   initialValue: _price,
-                  // ),
-
                   DateTimeFormField(
                     label: 'Start',
                     onChangedDate: (value) => _startDate = value,
@@ -104,22 +98,12 @@ class _RideFormPageState extends State<RideFormPage> {
                     height: 8,
                   ),
                   Divider(
-                    color: Theme.of(context).primaryColor,
+                    color: _dividerColor,
                     thickness: 1,
                   ),
                   const SizedBox(
                     height: 8,
                   ),
-                  // DateTimeFormField(
-                  //   label: 'Ende',
-                  //   onChangedDate: (value) => _endDate = value,
-                  //   onChangedTime: (value) => _endTime = value,
-                  //   initialValueDate: _endDate,
-                  //   initialValueTime: _endTime,
-                  // ),
-                  // const SizedBox(
-                  //   height: 16,
-                  // ),
                   Row(
                     children: [
                       Expanded(
@@ -148,11 +132,29 @@ class _RideFormPageState extends State<RideFormPage> {
                   const SizedBox(
                     height: 8,
                   ),
-                  CustomTextFormField(
-                    label: 'Name',
-                    onChanged: (value) => _name = value,
-                    suggestions: SuggestionContainer.nameSuggestions,
-                    initialValue: _name,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CustomTextFormField(
+                          label: 'Name',
+                          onChanged: (value) => _name = value,
+                          suggestions: SuggestionContainer.nameSuggestions,
+                          initialValue: _name,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      Expanded(
+                        child: CustomTextFormField(
+                          label: 'Kennzeichen',
+                          onChanged: (value) => _licensePlate = value,
+                          suggestions:
+                              SuggestionContainer.licensePlateSuggestions,
+                          initialValue: _licensePlate,
+                        ),
+                      ),
+                    ],
                   ),
                   Row(
                     children: [
@@ -223,6 +225,7 @@ class _RideFormPageState extends State<RideFormPage> {
               name: _name,
               fromDestination: _fromDestination,
               toDestination: _toDestination,
+              licensePlate: _licensePlate,
               startDate: _startDate!,
               startTime: _startTime!,
               endDate: _endDate!,
@@ -239,6 +242,7 @@ class _RideFormPageState extends State<RideFormPage> {
             name: _name,
             fromDestination: _fromDestination,
             toDestination: _toDestination,
+            licensePlate: _licensePlate,
             startDate: _startDate!,
             startTime: _startTime!,
             endDate: _endDate!,
@@ -252,9 +256,11 @@ class _RideFormPageState extends State<RideFormPage> {
 class SuggestionContainer {
   static List<String> _nameSuggestions = <String>[];
   static List<String> _destinationSuggestions = <String>[];
+  static List<String> _licensePlateSuggestions = <String>[];
 
   static List<String> get nameSuggestions => _nameSuggestions;
   static List<String> get destinationSuggestions => _destinationSuggestions;
+  static List<String> get licensePlateSuggestions => _licensePlateSuggestions;
 
   static void addNameSuggestion(String name) {
     name = _removeTrailingWhitespace(name);
@@ -267,6 +273,13 @@ class SuggestionContainer {
     destination = _removeTrailingWhitespace(destination);
     if (!_destinationSuggestions.contains(destination)) {
       _destinationSuggestions.add(destination);
+    }
+  }
+
+  static void addLicensePlateSuggestion(String licensePlate) {
+    licensePlate = _removeTrailingWhitespace(licensePlate);
+    if (!_licensePlateSuggestions.contains(licensePlate)) {
+      _licensePlateSuggestions.add(licensePlate);
     }
   }
 

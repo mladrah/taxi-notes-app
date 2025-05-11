@@ -11,7 +11,7 @@ class EmptyListHintMessage extends StatelessWidget {
           style: TextStyle(color: Theme.of(context).hintColor),
           children: [
             const TextSpan(
-              text: 'Keine Arbeit!\n',
+              text: 'Keine Fahrten!\n',
             ),
             WidgetSpan(
               child: Icon(
@@ -20,7 +20,7 @@ class EmptyListHintMessage extends StatelessWidget {
                 color: Theme.of(context).hintColor,
               ),
             ),
-            const TextSpan(text: ' drücken, um zu erstellen.')
+            const TextSpan(text: ' drücken, um eine zu erstellen.')
           ],
         ),
         textAlign: TextAlign.center,

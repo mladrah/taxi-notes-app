@@ -1,0 +1,2 @@
+C:/Users/rahmi/Desktop/dev/taxi-notes-app/android/app/.cxx/RelWithDebInfo/4a606e1d/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/rahmi/Desktop/dev/taxi-notes-app/android/app/.cxx/RelWithDebInfo/4a606e1d/armeabi-v7a/CMakeFiles/rebuild_cache.dir
