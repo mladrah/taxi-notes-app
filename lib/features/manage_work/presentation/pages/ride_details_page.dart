@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart' hide Title;
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:taxi_rahmati/core/presentation/widgets/confirmation_dialog.dart';
 import 'package:taxi_rahmati/core/util/date_time_formatter.dart';
 import 'package:taxi_rahmati/features/manage_work/presentation/widgets/ride_details_field.dart';
-
-import '../../../../core/presentation/widgets/custom_floating_action_button.dart';
-import '../../domain/entities/ride.dart';
-import '../../domain/entities/work_unit.dart';
-import '../bloc/manage_work_bloc.dart';
-import '../widgets/delete_alert.dart';
+import 'package:taxi_rahmati/core/presentation/widgets/custom_floating_action_button.dart';
+import 'package:taxi_rahmati/features/manage_work/domain/entities/ride.dart';
+import 'package:taxi_rahmati/features/manage_work/domain/entities/work_unit.dart';
+import 'package:taxi_rahmati/features/manage_work/presentation/bloc/manage_work_bloc.dart';
 
 // ignore: must_be_immutable
 class RideDetailsPage extends StatefulWidget {
@@ -27,9 +27,6 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
       appBar: AppBar(
         title: const Text(
           'Fahrt',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
         ),
         actions: [
           BlocBuilder<ManageWorkBloc, ManageWorkState>(
@@ -38,12 +35,7 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
               if (state is Loading) {
                 onPressed = null;
               } else {
-                onPressed = () => DeleteAlert(
-                        context: context,
-                        onPressed: () => _dispatchDeleteEvent(context),
-                        title: 'Fahrt löschen?')
-                    .alert
-                    .show();
+                onPressed = () => _onDeleteButton(context);
               }
               return IconButton(
                 onPressed: onPressed,
@@ -156,9 +148,35 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
                 ),
               ],
             ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Expanded(
+                  child: RideDetailsField(
+                    label: 'Kennzeichen',
+                    value: widget.ride.licensePlate,
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
+    );
+  }
+
+  void _onDeleteButton(BuildContext context) async {
+    ConfirmationDialog.show(
+      context: context,
+      title: 'Fahrt löschen?',
+      description: 'Diese Fahrt wird aus der Liste gelöscht.',
+      cancelLabel: 'Abbrechen',
+      confirmLabel: 'Löschen',
+      cancelBackgroundColor: Theme.of(context).colorScheme.primary,
+      cancelForegroundColor: Theme.of(context).colorScheme.onPrimary,
+      confirmBackgroundColor: Theme.of(context).colorScheme.error,
+      confirmForegroundColor: Theme.of(context).colorScheme.onError,
+      onConfirm: () => _dispatchDeleteEvent(context),
     );
   }
 

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:taxi_rahmati/constants.dart';
+import 'package:taxi_rahmati/core/presentation/widgets/confirmation_dialog.dart';
+import 'package:taxi_rahmati/core/presentation/widgets/custom_popup_menu_button.dart';
 
 import '../../../../core/presentation/widgets/custom_floating_action_button.dart';
 import '../../../../core/util/date_time_formatter.dart';
 import '../../domain/entities/ride.dart';
 import '../../domain/entities/work_unit.dart';
 import '../bloc/manage_work_bloc.dart';
-import '../widgets/delete_alert.dart';
 import '../widgets/empty_list_hint_message.dart';
 import '../widgets/ride_tile.dart';
 
@@ -26,7 +27,7 @@ class _WorkUnitPageState extends State<WorkUnitPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(context),
+      appBar: _appBar(context),
       body: _buildBody(context),
       floatingActionButton: CustomFloatingActionButton(
         onPressed: () => _onCreateButton(context),
@@ -38,7 +39,7 @@ class _WorkUnitPageState extends State<WorkUnitPage> {
     );
   }
 
-  AppBar _buildAppBar(BuildContext context) {
+  AppBar _appBar(BuildContext context) {
     return AppBar(
       title: Text(
         widget.workUnit == null
@@ -47,42 +48,25 @@ class _WorkUnitPageState extends State<WorkUnitPage> {
                 widget.workUnit!.rides[0].start,
                 widget
                     .workUnit!.rides[widget.workUnit!.rides.length - 1].start),
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
       ),
       actions: [
         widget.workUnit == null
             ? const SizedBox.shrink()
-            : PopupMenuButton<int>(
-                onSelected: (menuItem) => _handlePopMenuClick(menuItem),
-                itemBuilder: (context) => [
-                  const PopupMenuItem<int>(
-                    value: 0,
-                    child: _PopMenuListTile(
-                      icon: Icon(
-                        Icons.print_rounded,
-                      ),
-                      text: Text('Drucken'),
-                    ),
+            : CustomPopupMenuButton(popupMenuItems: [
+                CustomPopupMenuItem(
+                  onTap: () => _onPrintButton(context),
+                  title: 'Drucken',
+                  leading: const Icon(Icons.print_rounded),
+                ),
+                CustomPopupMenuItem(
+                  onTap: () => _onDeleteButton(context),
+                  title: 'Löschen',
+                  leading: Icon(
+                    Icons.delete_forever_rounded,
+                    color: Theme.of(context).colorScheme.error,
                   ),
-                  PopupMenuItem<int>(
-                    value: 1,
-                    child: _PopMenuListTile(
-                      icon: Icon(
-                        Icons.delete_forever_rounded,
-                        color: Theme.of(context).colorScheme.error,
-                      ),
-                      text: Text(
-                        'Löschen',
-                        style: TextStyle(
-                            color: Theme.of(context).colorScheme.error,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ])
       ],
     );
   }
@@ -123,17 +107,6 @@ class _WorkUnitPageState extends State<WorkUnitPage> {
     );
   }
 
-  void _handlePopMenuClick(int menuItemIndex) {
-    switch (menuItemIndex) {
-      case 0:
-        _onPrintButton(context);
-        break;
-      case 1:
-        _onDeleteButton(context);
-        break;
-    }
-  }
-
   void _onCreateButton(BuildContext context) {
     Navigator.of(context)
         .pushNamed('/rideForm', arguments: {'workUnit': widget.workUnit});
@@ -149,39 +122,23 @@ class _WorkUnitPageState extends State<WorkUnitPage> {
   }
 
   void _onDeleteButton(BuildContext context) async {
-    DeleteAlert(
-            context: context,
-            onPressed: () => _dispatchDeleteEvent(context),
-            title: 'Liste löschen?')
-        .alert
-        .show();
+    ConfirmationDialog.show(
+      context: context,
+      title: 'Liste löschen?',
+      description: 'Alle Fahrten aus dieser Liste werden gelöscht.',
+      cancelLabel: 'Abbrechen',
+      confirmLabel: 'Löschen',
+      cancelBackgroundColor: Theme.of(context).colorScheme.primary,
+      cancelForegroundColor: Theme.of(context).colorScheme.onPrimary,
+      confirmBackgroundColor: Theme.of(context).colorScheme.error,
+      confirmForegroundColor: Theme.of(context).colorScheme.onError,
+      onConfirm: () => _dispatchDeleteEvent(context),
+    );
   }
 
   void _dispatchDeleteEvent(BuildContext context) {
     context
         .read<ManageWorkBloc>()
         .add(DeleteWorkUnitFromRepository(workUnit: widget.workUnit!));
-  }
-}
-
-class _PopMenuListTile extends StatelessWidget {
-  const _PopMenuListTile({Key? key, required this.text, required this.icon})
-      : super(key: key);
-
-  final Text text;
-  final Icon icon;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 24,
-      child: Row(children: [
-        icon,
-        const SizedBox(
-          width: 8,
-        ),
-        text
-      ]),
-    );
   }
 }
