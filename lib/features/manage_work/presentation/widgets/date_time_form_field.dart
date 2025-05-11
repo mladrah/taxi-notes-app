@@ -37,6 +37,9 @@ class DateTimeFormField extends StatelessWidget {
               ),
               DateTimeField(
                 onChanged: onChangedDate,
+                decoration: const InputDecoration(
+                    hintText: 'DD.MM.YYYY',
+                ),
                 validator: (value) {
                   return (value == null) ? '' : null;
                 },
@@ -45,6 +48,8 @@ class DateTimeFormField extends StatelessWidget {
                 onShowPicker: (context, currentValue) {
                   return showDatePicker(
                       context: context,
+                      initialDatePickerMode: DatePickerMode.day,
+                      initialEntryMode: DatePickerEntryMode.calendarOnly,
                       firstDate: DateTime(1900),
                       initialDate: currentValue ?? DateTime.now(),
                       lastDate: DateTime(2100));
@@ -68,6 +73,9 @@ class DateTimeFormField extends StatelessWidget {
               ),
               DateTimeField(
                 onChanged: onChangedTime,
+                decoration: const InputDecoration(
+                    hintText: '00:00',
+                ),
                 validator: (value) {
                   return (value == null) ? '' : null;
                 },
