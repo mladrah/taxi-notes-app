@@ -98,6 +98,7 @@ class WorkUnitRepositoryImpl extends WorkUnitRepository {
       title: ride.title,
       fromDestination: ride.fromDestination,
       toDestination: ride.toDestination,
+      licensePlate: ride.licensePlate,
       start: ride.start,
       end: ride.end,
       price: ride.price,

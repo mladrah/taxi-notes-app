@@ -8,10 +8,11 @@ import '../../domain/entities/work_unit.dart';
 class RideTile extends StatelessWidget {
   final WorkUnit workUnit;
   final Ride ride;
-  final int _flexDate = 1;
-  final int _flexTime = 1;
-  final int _flexDestination = 1;
-  final int _flexName = 1;
+  final int _flexDate = 2;
+  final int _flexTime = 2;
+  final int _flexDestination = 2;
+  final int _flexName = 2;
+  final int _flexLicensePlate = 1;
 
   late Color _backgroundColor;
   late Color _textColor;
@@ -133,6 +134,24 @@ class RideTile extends StatelessWidget {
                     style: TextStyle(
                       color: _textColor,
                       fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 8,
+              ),
+              Expanded(
+                flex: _flexLicensePlate,
+                child: Container(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    ride.licensePlate,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: _textColor,
+                      fontStyle: FontStyle.italic,
                     ),
                   ),
                 ),

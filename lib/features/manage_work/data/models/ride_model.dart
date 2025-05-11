@@ -10,6 +10,7 @@ class RideModel extends Ride {
       required title,
       required fromDestination,
       required toDestination,
+      required licensePlate,
       required start,
       required end,
       required price})
@@ -19,6 +20,7 @@ class RideModel extends Ride {
             title: title,
             fromDestination: fromDestination,
             toDestination: toDestination,
+            licensePlate: licensePlate,
             start: start,
             end: end,
             price: price);
@@ -30,6 +32,7 @@ class RideModel extends Ride {
         title: EnumToString.fromString(Title.values, json['title']),
         fromDestination: json['fromDestination'],
         toDestination: json['toDestination'],
+        licensePlate: json['licensePlate'] ?? '',
         start: DateTime.parse(json['start']),
         end: DateTime.parse(json['end']),
         price: Decimal.fromJson(json['price']));
@@ -42,6 +45,7 @@ class RideModel extends Ride {
       'title': EnumToString.convertToString(title),
       'fromDestination': fromDestination,
       'toDestination': toDestination,
+      'licensePlate': licensePlate,
       'start': start.toString(),
       'end': end.toString(),
       'price': price.toJson()

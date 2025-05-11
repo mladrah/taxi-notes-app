@@ -15,6 +15,7 @@ class AddRideInWorkUnit extends ManageWorkEvent {
   final String name;
   final String fromDestination;
   final String toDestination;
+  final String licensePlate;
   final DateTime startDate;
   final DateTime startTime;
   final DateTime endDate;
@@ -27,6 +28,7 @@ class AddRideInWorkUnit extends ManageWorkEvent {
     required this.name,
     required this.fromDestination,
     required this.toDestination,
+    required this.licensePlate,
     required this.startDate,
     required this.startTime,
     required this.endDate,
@@ -40,6 +42,7 @@ class AddRideInWorkUnit extends ManageWorkEvent {
         name,
         fromDestination,
         toDestination,
+        licensePlate,
         startDate,
         startTime,
         endDate,
@@ -72,6 +75,7 @@ class UpdateRideInRepository extends ManageWorkEvent {
   final String name;
   final String fromDestination;
   final String toDestination;
+  final String licensePlate;
   final DateTime startDate;
   final DateTime startTime;
   final DateTime endDate;
@@ -86,6 +90,7 @@ class UpdateRideInRepository extends ManageWorkEvent {
     required this.name,
     required this.fromDestination,
     required this.toDestination,
+    required this.licensePlate,
     required this.startDate,
     required this.startTime,
     required this.endDate,
@@ -102,6 +107,7 @@ class UpdateRideInRepository extends ManageWorkEvent {
         name,
         fromDestination,
         toDestination,
+        licensePlate,
         startDate,
         startTime,
         endDate,

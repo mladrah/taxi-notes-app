@@ -20,6 +20,7 @@ class RidesPrintPreviewPage extends StatelessWidget {
   final int _flexTime = 2;
   final int _flexDestination = 5;
   final int _flexName = 6;
+  final int _flexLicensePlate = 2;
 
   RidesPrintPreviewPage({Key? key, required this.workUnits}) : super(key: key);
 
@@ -49,10 +50,10 @@ class RidesPrintPreviewPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-          title: const Text('Vorschau',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ))),
+        title: const Text(
+          'Vorschau',
+        ),
+      ),
       body: PdfPreview(
         canChangeOrientation: false,
         canChangePageFormat: false,
@@ -76,7 +77,7 @@ class RidesPrintPreviewPage extends StatelessWidget {
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               children: [
                 pw.Text(
-                  '${DateTimeFormatter.monthInterval(firstDate, lastDate)} ${DateTimeFormatter.yearInterval(firstDate, lastDate)} Krankenfahrten',
+                  'Krankenfahrten ${DateTimeFormatter.monthInterval(firstDate, lastDate)} ${DateTimeFormatter.yearInterval(firstDate, lastDate)}',
                   style: pw.TextStyle(
                     fontWeight: pw.FontWeight.bold,
                     fontSize: 16,
@@ -124,6 +125,13 @@ class RidesPrintPreviewPage extends StatelessWidget {
               _buildHeaderTile(
                 label: 'Name',
                 flex: _flexName,
+              ),
+              pw.SizedBox(
+                width: 8,
+              ),
+              _buildHeaderTile(
+                label: 'KZ',
+                flex: _flexLicensePlate,
               ),
             ],
           ),
@@ -180,6 +188,13 @@ class RidesPrintPreviewPage extends StatelessWidget {
               value: '${ride.title == Title.herr ? 'Hr.' : 'Fr.'} ${ride.name}',
               flex: _flexName,
             ),
+            pw.SizedBox(
+              width: 8,
+            ),
+            _buildRideRowTile(
+              value: ride.licensePlate,
+              flex: _flexLicensePlate,
+            ),
           ],
         ));
   }
@@ -212,10 +227,12 @@ class RidesPrintPreviewPage extends StatelessWidget {
         height: 16,
         child: pw.FittedBox(
           alignment: alignment ?? pw.Alignment.centerLeft,
-          child: pw.Text(value,
-              style: pw.TextStyle(
-                fontWeight: fontWeight ?? pw.FontWeight.normal,
-              )),
+          child: pw.Text(
+            value.isEmpty ? '/' : value,
+            style: pw.TextStyle(
+              fontWeight: fontWeight ?? pw.FontWeight.normal,
+            ),
+          ),
         ),
       ),
     );
