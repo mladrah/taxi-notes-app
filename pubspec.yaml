@@ -43,33 +43,3 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  fonts:
-    - family: Kodchasan
-      fonts:
-        - asset: fonts/kodchasan/Kodchasan-ExtraLight.ttf
-          weight: 200
-        - asset: fonts/kodchasan/Kodchasan-ExtraLightItalic.ttf
-          weight: 200
-          style: italic
-        - asset: fonts/kodchasan/Kodchasan-Light.ttf
-          weight: 300
-        - asset: fonts/kodchasan/Kodchasan-LightItalic.ttf
-          weight: 300
-          style: italic
-        - asset: fonts/kodchasan/Kodchasan-Regular.ttf
-          weight: 400
-        - asset: fonts/kodchasan/Kodchasan-Medium.ttf
-          weight: 500
-        - asset: fonts/kodchasan/Kodchasan-MediumItalic.ttf
-          weight: 500
-          style: italic
-        - asset: fonts/kodchasan/Kodchasan-SemiBold.ttf
-          weight: 600
-        - asset: fonts/kodchasan/Kodchasan-SemiBoldItalic.ttf
-          weight: 600
-          style: italic
-        - asset: fonts/kodchasan/Kodchasan-Bold.ttf
-          weight: 700
-        - asset: fonts/kodchasan/Kodchasan-BoldItalic.ttf
-          weight: 700
-          style: italic
